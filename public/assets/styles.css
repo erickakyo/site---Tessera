@@ -204,6 +204,14 @@ header.site-header {
 .brand-logo svg {
   height: 28px;
   width: auto;
+  display: block;
+}
+
+.brand-logo img {
+  height: 28px;
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
 
 nav.main-nav {
@@ -241,6 +249,11 @@ nav.main-nav a.active {
 
 .mobile-menu-btn:hover {
   background: rgba(20, 17, 46, 0.04);
+}
+
+.mobile-menu-footer,
+nav.main-nav .mobile-menu-footer {
+  display: none !important;
 }
 
 /* Mobile Navigation Backdrop & Drawer (Anthropic Minimalist Editorial Style) */
@@ -363,7 +376,7 @@ nav.main-nav a.active {
   }
 
   nav.main-nav .mobile-menu-footer {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -1214,6 +1227,14 @@ footer.site-footer {
   color: var(--text-muted);
   flex-wrap: wrap;
   gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
 }
 
 /* Cookie Banner (Minimal Anthropic Style) */

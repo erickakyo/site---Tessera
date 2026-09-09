@@ -52,11 +52,19 @@
     }
   };
 
-  let currentLang = localStorage.getItem('tessera_lang') || 'pt';
+  let currentLang = 'pt';
+  try {
+    currentLang = localStorage.getItem('tessera_lang') || 'pt';
+  } catch (e) {
+    currentLang = 'pt';
+  }
 
   window.setLanguage = function(lang) {
     currentLang = lang;
-    localStorage.setItem('tessera_lang', lang);
+    try {
+      localStorage.setItem('tessera_lang', lang);
+    } catch (e) {}
+
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
 
     // Update active button classes
@@ -96,11 +104,13 @@
     if (!targetOutput || !logOutput || !targetDbView) return;
 
     if (module === 'subset') {
-      flowLabelText.textContent = "Tarjan SCC Waves Extraindo Seed";
-      targetBadge.textContent = "SUBSET REFERENCIAL";
-      targetBadge.style.background = "rgba(126,231,135,0.2)";
-      targetBadge.style.color = "#7EE787";
-      targetStatText.textContent = "Volume reduzido em 96.4% · FKs íntegras (Tarjan Waves)";
+      if (flowLabelText) flowLabelText.textContent = "Tarjan SCC Waves Extraindo Seed";
+      if (targetBadge) {
+        targetBadge.textContent = "SUBSET REFERENCIAL";
+        targetBadge.style.background = "rgba(126,231,135,0.2)";
+        targetBadge.style.color = "#7EE787";
+      }
+      if (targetStatText) targetStatText.textContent = "Volume reduzido em 96.4% · FKs íntegras (Tarjan Waves)";
 
       targetDbView.innerHTML = `
         <div class="row-item row-target-ready">
@@ -119,7 +129,7 @@
 
       logOutput.textContent = "> Iniciando resolvedor de grafo Tarjan SCC...\n> Semente relacional: customer_id = 1002\n> Mapeando Foreign Keys: 'accounts', 'orders', 'transactions'\n> Ciclos de dependência quebrados em ondas (Wave 1 & Wave 2)\n> 96.4% de redução de volume preservando integridade referencial.";
       
-      outputTitle.textContent = "Schema de Destino (DEV / QA)";
+      if (outputTitle) outputTitle.textContent = "Schema de Destino (DEV / QA)";
       targetOutput.innerHTML = `
         <table>
           <thead>
@@ -133,11 +143,13 @@
         </table>
       `;
     } else if (module === 'mask') {
-      flowLabelText.textContent = "FF1 NIST Criptografia Preservando Formato";
-      targetBadge.textContent = "PII NEUTRALIZADA";
-      targetBadge.style.background = "rgba(107,75,240,0.25)";
-      targetBadge.style.color = "#8A6BFF";
-      targetStatText.textContent = "Chave AWS KMS · Saídas determinísticas byte-idênticas";
+      if (flowLabelText) flowLabelText.textContent = "FF1 NIST Criptografia Preservando Formato";
+      if (targetBadge) {
+        targetBadge.textContent = "PII NEUTRALIZADA";
+        targetBadge.style.background = "rgba(107,75,240,0.25)";
+        targetBadge.style.color = "#8A6BFF";
+      }
+      if (targetStatText) targetStatText.textContent = "Chave AWS KMS · Saídas determinísticas byte-idênticas";
 
       targetDbView.innerHTML = `
         <div class="row-item row-target-ready">
@@ -156,7 +168,7 @@
 
       logOutput.textContent = "> Motor de Mascaramento Determinístico Key-Driven Ativo\n> Algoritmo: FF1 (NIST SP 800-38G) + SHA-256 Format Salt\n> Provedor de Chave: AWS KMS (ARN: .../tessera-prod-key)\n> Validação: CPF com dígito verificador íntegro, Luhn verificado em cartões\n> Saídas byte-idênticas entre todas as réplicas e microsserviços.";
 
-      outputTitle.textContent = "Auditoria Criptográfica de Campos";
+      if (outputTitle) outputTitle.textContent = "Auditoria Criptográfica de Campos";
       targetOutput.innerHTML = `
         <table>
           <thead>
@@ -170,11 +182,13 @@
         </table>
       `;
     } else if (module === 'cdc') {
-      flowLabelText.textContent = "pgoutput LSN0 Stream & Snapshot";
-      targetBadge.textContent = "CANONICAL JSONL";
-      targetBadge.style.background = "rgba(14,134,173,0.25)";
-      targetBadge.style.color = "#0E86AD";
-      targetStatText.textContent = "Destino: s3://tessera-lake/incremental/ (Sem Kafka/Debezium)";
+      if (flowLabelText) flowLabelText.textContent = "pgoutput LSN0 Stream & Snapshot";
+      if (targetBadge) {
+        targetBadge.textContent = "CANONICAL JSONL";
+        targetBadge.style.background = "rgba(14,134,173,0.25)";
+        targetBadge.style.color = "#0E86AD";
+      }
+      if (targetStatText) targetStatText.textContent = "Destino: s3://tessera-lake/incremental/ (Sem Kafka/Debezium)";
 
       targetDbView.innerHTML = `
         <div class="row-item row-target-ready" style="grid-template-columns: 1fr;">
@@ -191,7 +205,7 @@
 
       logOutput.textContent = "> ChangeSource PostgreSQL 16+ conectado via pgoutput (replicação lógica)\n> Coordinator fixou ponto LSN0: 0/16B3A98\n> Snapshot MVCC-consistente finalizado para arquivos canônicos\n> Stream incremental com commit ordering gravando em S3\n> Zero gap, zero overlap, efetivamente once com marcadores no storage.";
 
-      outputTitle.textContent = "Verificação de Eventos Stream";
+      if (outputTitle) outputTitle.textContent = "Verificação de Eventos Stream";
       targetOutput.innerHTML = `
         <div style="font-size: 0.75rem; line-height: 1.6; color: #7EE787;">
           <span style="color: #848096;">[LSN0: 0/16B3A98]</span> Coordenador inicializado com sucesso.<br>
@@ -207,28 +221,38 @@
   function initCookieNotice() {
     const banner = document.getElementById('cookie-banner');
     if (!banner) return;
-    if (!localStorage.getItem('tessera_cookie_consent')) {
+    try {
+      if (!localStorage.getItem('tessera_cookie_consent')) {
+        banner.style.display = 'block';
+      }
+    } catch (e) {
       banner.style.display = 'block';
     }
   }
 
   window.acceptCookies = function() {
-    localStorage.setItem('tessera_cookie_consent', 'accepted');
+    try {
+      localStorage.setItem('tessera_cookie_consent', 'accepted');
+    } catch (e) {}
     const banner = document.getElementById('cookie-banner');
     if (banner) banner.style.display = 'none';
   };
 
   window.declineCookies = function() {
-    localStorage.setItem('tessera_cookie_consent', 'declined');
+    try {
+      localStorage.setItem('tessera_cookie_consent', 'declined');
+    } catch (e) {}
     const banner = document.getElementById('cookie-banner');
     if (banner) banner.style.display = 'none';
   };
 
   // On DOM Ready
   document.addEventListener('DOMContentLoaded', () => {
-    setLanguage(currentLang);
+    window.setLanguage(currentLang);
     initCookieNotice();
-    setDemoTab('subset');
+    if (document.getElementById('demo-target-output')) {
+      window.setDemoTab('subset');
+    }
   });
 })();
 
@@ -250,8 +274,9 @@
     }
   };
 
-  // Close mobile menu when clicking a link or backdrop
+  // Close mobile menu when clicking a link or backdrop & handle event delegation for controls
   document.addEventListener('click', (e) => {
+    // 1. Mobile menu closing
     const nav = document.querySelector('nav.main-nav');
     const btn = document.querySelector('.mobile-menu-btn');
     const backdrop = document.querySelector('.mobile-menu-backdrop');
@@ -261,6 +286,28 @@
         if (backdrop) backdrop.classList.remove('open');
         if (btn) btn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
+      }
+    }
+
+    // 2. Demo simulator tabs delegation
+    const demoBtn = e.target.closest('.demo-tab-btn');
+    if (demoBtn && demoBtn.dataset.module) {
+      if (typeof window.setDemoTab === 'function') {
+        window.setDemoTab(demoBtn.dataset.module);
+      }
+    }
+
+    // 3. Train toggle buttons delegation
+    const trainBtn = e.target.closest('.train-toggle-btn');
+    if (trainBtn) {
+      if (trainBtn.id === 'btn-train-bottleneck' || trainBtn.getAttribute('onclick')?.includes('bottleneck')) {
+        if (typeof window.setTrainState === 'function') {
+          window.setTrainState('bottleneck');
+        }
+      } else if (trainBtn.id === 'btn-train-tessera' || trainBtn.getAttribute('onclick')?.includes('tessera')) {
+        if (typeof window.setTrainState === 'function') {
+          window.setTrainState('tessera');
+        }
       }
     }
   });
