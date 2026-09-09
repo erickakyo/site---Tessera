@@ -1,0 +1,18 @@
+# Tessera — Data Environment Automation
+> Production-like data. Without production risk.
+
+## Overview
+Tessera is an enterprise developer and data infrastructure platform that automates how realistic, protected data is prepared and delivered for modern engineering, QA, migration, and AI-assisted workflows.
+
+## Core Modular Capabilities (Composable, Non-linear Architecture)
+1. Tessera Discovery [READY]: Classifies sensitive fields (PII/financial) from metadata and samples into a reusable inventory. Recall-first design. Go library with no direct I/O.
+2. Tessera Masking [READY]: Deterministic, format-preserving encryption (FF1 NIST SP 800-38G, SHA-256) and masking framework. Preserves cross-table referential integrity across repeated executions. Key providers: AWS KMS, Kubernetes Secrets.
+3. Tessera Subsetter [READY — CORE COMPLETE]: Creates referentially consistent slices from large relational databases (PostgreSQL, MySQL, SQL Server, Oracle, MongoDB, Object Storage). Resolves circular dependencies using Tarjan SCC. Executable via Web UI, CLI (YAML), and Kubernetes CRDs.
+4. Tessera CDC & Snapshot [AVAILABLE — HARDENING]: Combines an MVCC-consistent snapshot with commit-ordered Change Data Capture for PostgreSQL 16+ and MySQL 8+. Writes canonical JSONL to Amazon S3 or filesystem without requiring Kafka or Debezium.
+5. Tessera Data Environment Lifecycle [ROADMAP / PLANNED]: Kubernetes operator for automated on-demand provisioning, refresh, snapshot, and rollback of non-production database replicas.
+
+## Positioning & Boundaries
+- Category: Data Environment Automation
+- Target Audience: CTOs, Platform Engineers, Data Engineers, QA Leads, CISOs.
+- AI is a consumer of realistic, protected non-production data, not the definition of the platform.
+- Canonical Documentation: https://gettessera.io

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 430" width="100%" height="auto">
+  <defs>
+    <linearGradient id="mShinkansen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A2AC9"/>
+      <stop offset="100%" stop-color="#6B4BF0"/>
+    </linearGradient>
+    <linearGradient id="mWood" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D5A27"/>
+      <stop offset="100%" stop-color="#142B11"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Track Rail Vertical Line -->
+  <line x1="28" y1="20" x2="28" y2="410" stroke="#3A3654" stroke-width="4"/>
+  <line x1="34" y1="20" x2="34" y2="410" stroke="#221F38" stroke-width="2"/>
+
+  <!-- VAGÃO 1: AGENTES DE IA -->
+  <g transform="translate(50, 20)">
+    <rect x="0" y="0" width="310" height="74" rx="6" fill="url(#mShinkansen)"/>
+    <rect x="12" y="12" width="50" height="22" rx="3" fill="#1B1740"/>
+    <rect x="70" y="12" width="50" height="22" rx="3" fill="#1B1740"/>
+    <line x1="0" y1="52" x2="310" y2="52" stroke="#0E86AD" stroke-width="4"/>
+    <line x1="0" y1="44" x2="310" y2="44" stroke="#A9760C" stroke-width="2"/>
+    <text x="135" y="27" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#FFFFFF">01 // AGENTES DE IA</text>
+    <text x="135" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#C5C2E0">Velocidade ultrarrápida</text>
+  </g>
+
+  <!-- Coupling -->
+  <line x1="205" y1="94" x2="205" y2="114" stroke="#6B4BF0" stroke-width="4"/>
+
+  <!-- VAGÃO 2: AUTOMAÇÃO DE CÓDIGO -->
+  <g transform="translate(50, 114)">
+    <rect x="0" y="0" width="310" height="74" rx="6" fill="url(#mShinkansen)"/>
+    <rect x="12" y="12" width="50" height="22" rx="3" fill="#1B1740"/>
+    <rect x="70" y="12" width="50" height="22" rx="3" fill="#1B1740"/>
+    <line x1="0" y1="52" x2="310" y2="52" stroke="#0E86AD" stroke-width="4"/>
+    <line x1="0" y1="44" x2="310" y2="44" stroke="#A9760C" stroke-width="2"/>
+    <text x="135" y="27" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#FFFFFF">02 // AUTOMAÇÃO CÓDIGO</text>
+    <text x="135" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#C5C2E0">CI/CD instantâneo</text>
+  </g>
+
+  <!-- Coupling -->
+  <line x1="205" y1="188" x2="205" y2="208" stroke="#6B4BF0" stroke-width="4"/>
+
+  <!-- VAGÃO 3: AUTOMAÇÃO DE INFRA -->
+  <g transform="translate(50, 208)">
+    <rect x="0" y="0" width="310" height="74" rx="6" fill="url(#mShinkansen)"/>
+    <rect x="12" y="12" width="50" height="22" rx="3" fill="#1B1740"/>
+    <rect x="70" y="12" width="50" height="22" rx="3" fill="#1B1740"/>
+    <line x1="0" y1="52" x2="310" y2="52" stroke="#0E86AD" stroke-width="4"/>
+    <line x1="0" y1="44" x2="310" y2="44" stroke="#A9760C" stroke-width="2"/>
+    <text x="135" y="27" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#FFFFFF">03 // AUTOMAÇÃO INFRA</text>
+    <text x="135" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#C5C2E0">Kubernetes &amp; Cloud</text>
+  </g>
+
+  <!-- Heavy Coupling Under Strain -->
+  <line x1="205" y1="282" x2="205" y2="306" stroke="#FF4D4D" stroke-width="6" stroke-dasharray="3,2"/>
+
+  <!-- VAGÃO 4: O GARGALO DOS DADOS -->
+  <g transform="translate(50, 306)">
+    <rect x="-4" y="-4" width="318" height="96" rx="8" fill="none" stroke="#FF4D4D" stroke-width="2" stroke-dasharray="6,4"/>
+    <rect x="0" y="0" width="310" height="88" rx="6" fill="url(#mWood)" stroke="#11220F" stroke-width="2"/>
+    
+    <!-- Old lantern windows -->
+    <rect x="12" y="14" width="24" height="24" rx="2" fill="#FFB300" stroke="#3E2723" stroke-width="2"/>
+    <rect x="44" y="14" width="24" height="24" rx="2" fill="#FFB300" stroke="#3E2723" stroke-width="2"/>
+    <rect x="76" y="14" width="24" height="24" rx="2" fill="#FFB300" stroke="#3E2723" stroke-width="2"/>
+
+    <text x="115" y="28" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#FF6B6B">04 // AUTOMAÇÃO DADOS</text>
+    <text x="115" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#FFA726">O GARGALO QUE DESACELERA TUDO</text>
+    <text x="115" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#C5C2E0">Dumps manuais, DBAs &amp; PII exposta</text>
+  </g>
+</svg>

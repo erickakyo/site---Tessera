@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem Somos — Visão, Missão e Valores da Tessera</title>
+  <meta name="description" content="Conheça a visão, missão e os princípios de engenharia da Tessera: trazendo os ambientes de dados para a era da automação moderna.">
+  <link rel="canonical" href="https://gettessera.io/quem-somos.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="bg-grid-dots">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 100 100" width="28" height="28">
+          <rect x="5" y="5" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="37" y="5" width="26" height="26" rx="2" fill="#0E86AD" />
+          <rect x="69" y="5" width="26" height="26" rx="2" fill="#8A6BFF" />
+          <rect x="5" y="37" width="26" height="26" rx="2" fill="#0E86AD" />
+          <rect x="37" y="37" width="26" height="26" rx="2" fill="#A9760C" />
+          <rect x="69" y="37" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="5" y="69" width="26" height="26" rx="2" fill="#8A6BFF" />
+          <rect x="37" y="69" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="69" y="69" width="26" height="26" rx="2" fill="#0E86AD" />
+        </svg>
+        <span style="font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.08em; font-size: 1.125rem;">TESSERA</span>
+      </a>
+
+      <!-- Mobile Backdrop Overlay (Anthropic Style) -->
+      <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
+
+      <nav class="main-nav">
+        <a href="produtos.html">Produtos <span>&rarr;</span></a>
+        <a href="quem-somos.html" class="active">Quem Somos <span>&rarr;</span></a>
+        <a href="blog.html">Blog &amp; Insights <span>&rarr;</span></a>
+        <a href="contato.html">Contato <span>&rarr;</span></a>
+
+        <!-- Mobile Menu Footer with Language Switcher -->
+        <div class="mobile-menu-footer">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+        </div>
+        <a href="contato.html" class="btn btn-primary">Agendar Demo</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">VISÃO &amp; PROPÓSITO</span>
+      <h1 class="font-title">Trazendo os ambientes de dados para a era da automação.</h1>
+      <p class="lead">
+        Acreditamos que o acesso a dados não-produtivos de qualidade deve ser tão rápido, autônomo e confiável quanto clonar um repositório Git ou provisionar um cluster Kubernetes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Manifesto / Narrative -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-title">O que nos move</h2>
+      </div>
+
+      <div style="font-size: 1.125rem; line-height: 1.8; color: var(--text-secondary);">
+        <p style="margin-bottom: 24px;">
+          Nas últimas duas décadas, a engenharia de software revolucionou a forma como o código é versionado, testado e implantado. Ferramentas de integração contínua e computação em nuvem transformaram tarefas que levavam meses em rotinas de minutos.
+        </p>
+        <p style="margin-bottom: 24px;">
+          No entanto, <strong>a camada de dados permaneceu analógica</strong>. Quando uma equipe precisa testar uma funcionalidade crítica ou validar um agente de IA, depara-se com bancos compartilhados desatualizados, pedidos de provisionamento lentos e o perigo iminente de vazar dados reais de clientes (PII).
+        </p>
+        <p style="margin-bottom: 24px;">
+          A <strong>Tessera</strong> foi concebida para resolver essa discrepância. Nosso nome remete às tesselas que compõem mosaicos de precisão: dividimos a complexidade dos dados em capacidades modulares, permitindo que as empresas descubram, protejam, reduzam e movimentem informações com máxima integridade matemática.
+        </p>
+      </div>
+
+      <!-- Values Grid -->
+      <div style="margin-top: 56px;">
+        <h3 class="font-title" style="font-size: 1.75rem; margin-bottom: 32px;">Nossos Valores de Engenharia</h3>
+        
+        <div class="cards-grid">
+          <div class="product-card">
+            <span class="eyebrow" style="color: var(--tessera-violet);">01 // DESIGN</span>
+            <h3>Secure by Design</h3>
+            <p>A proteção de dados sensíveis deve ser parte orgânica do fluxo de engenharia, nunca uma camada superficial aplicada tardiamente.</p>
+          </div>
+
+          <div class="product-card">
+            <span class="eyebrow" style="color: var(--tessera-cyan);">02 // FIDELITY</span>
+            <h3>Fidelity Matters</h3>
+            <p>Dados não-produtivos úteis precisam preservar os relacionamentos, tipos e comportamentos reais em que os sistemas corporativos dependem.</p>
+          </div>
+
+          <div class="product-card">
+            <span class="eyebrow" style="color: var(--tessera-gold);">03 // VELOCITY</span>
+            <h3>Automate the Bottleneck</h3>
+            <p>A entrega de dados deve se mover no mesmo ritmo da engenharia de software moderna, eliminando tickets manuais e esperas de DBAs.</p>
+          </div>
+
+          <div class="product-card">
+            <span class="eyebrow" style="color: var(--tessera-violet-light);">04 // COMPOSABILITY</span>
+            <h3>Composable by Default</h3>
+            <p>As equipes devem ter a liberdade de usar apenas os módulos necessários, sem serem forçadas a adotar um pipeline monolítico fechado.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principles & Team Philosophy Section -->
+      <div style="margin-top: 64px; padding-top: 48px; border-top: 1px solid var(--border-subtle);">
+        <div class="section-header" style="margin-bottom: 32px;">
+          <span class="eyebrow">FILOSOFIA DE DESENVOLVIMENTO</span>
+          <h3 class="font-title" style="font-size: 1.75rem;">Feito por e para engenheiros de sistemas distribuídos</h3>
+          <p class="text-muted" style="font-size: 1rem; max-width: 780px;">
+            A equipe da Tessera é composta por especialistas em bancos de dados relacionais, teoria dos grafos e infraestrutura de alta performance. Rejeitamos abstrações lentas que escondem complexidade desnecessária.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+          <div class="product-card" style="background: var(--bg-primary);">
+            <strong style="font-size: 1.0625rem; font-family: var(--font-title); display: block; margin-bottom: 8px;">Zero Bloat &amp; High-Throughput</strong>
+            <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 0;">
+              Construído em Go nativo compilado, sem JVM pesada ou dependências de intermediários legados. Nossos binários rodam direto em contêineres e pods sem sobrecarga de memória.
+            </p>
+          </div>
+          <div class="product-card" style="background: var(--bg-primary);">
+            <strong style="font-size: 1.0625rem; font-family: var(--font-title); display: block; margin-bottom: 8px;">Auditabilidade Matemática</strong>
+            <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 0;">
+              Cada transformação aplicada a dados é determinística, reprodutível e matematicamente verificável, garantindo conformidade irrefutável perante LGPD, GDPR e SOC2.
+            </p>
+          </div>
+          <div class="product-card" style="background: var(--bg-primary);">
+            <strong style="font-size: 1.0625rem; font-family: var(--font-title); display: block; margin-bottom: 8px;">Arquitetura Aberta e Integrável</strong>
+            <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 0;">
+              Interfaces via CLI declarativa em YAML, Web UI intuitiva e operadores Kubernetes nativos para orquestrar dados dentro dos seus pipelines existentes de GitOps e CI/CD.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <img src="assets/tessera-logo-transparent.png" alt="Tessera" style="height: 28px; width: auto; display: block;">
+          </div>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Plataforma de Data Environment Automation para equipes de engenharia, QA e plataformas de dados.
+          </p>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+            Production-like data. Without production risk.
+          </span>
+        </div>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="produtos.html">Visão Geral</a></li>
+            <li><a href="produtos.html#discovery">Discovery</a></li>
+            <li><a href="produtos.html#masking">Masking</a></li>
+            <li><a href="produtos.html#subsetter">Subsetter</a></li>
+            <li><a href="produtos.html#cdc">CDC &amp; Snapshot</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="blog.html">Blog &amp; Insights</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal &amp; Privacy</h4>
+          <ul>
+            <li><a href="privacidade.html">Privacidade</a></li>
+            <li><a href="termos.html">Termos de Uso</a></li>
+            <li><a href="privacidade.html#lgpd">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html#gdpr">Conformidade GDPR</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Tessera. Todos os direitos reservados.</span>
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+          <span>Homologado por <a href="https://salto.solutions" target="_blank" style="color: inherit; text-decoration: underline;">SALTO Solutions</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

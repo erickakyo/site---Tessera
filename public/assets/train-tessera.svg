@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" width="100%" height="auto">
+  <defs>
+    <linearGradient id="shinkansenBodyModern" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A2AC9"/>
+      <stop offset="100%" stop-color="#6B4BF0"/>
+    </linearGradient>
+    <linearGradient id="speedGlassModern" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1B1740"/>
+      <stop offset="100%" stop-color="#0E86AD"/>
+    </linearGradient>
+    <linearGradient id="tesseraDataCarriage" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0E86AD"/>
+      <stop offset="100%" stop-color="#6B4BF0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Track / Ground Rail -->
+  <line x1="20" y1="200" x2="980" y2="200" stroke="#0E86AD" stroke-width="4"/>
+  <line x1="20" y1="206" x2="980" y2="206" stroke="#6B4BF0" stroke-width="2"/>
+  <!-- Sleepers / Ties -->
+  <g stroke="#3A3654" stroke-width="3">
+    <line x1="40" y1="198" x2="40" y2="208"/><line x1="80" y1="198" x2="80" y2="208"/>
+    <line x1="120" y1="198" x2="120" y2="208"/><line x1="160" y1="198" x2="160" y2="208"/>
+    <line x1="200" y1="198" x2="200" y2="208"/><line x1="240" y1="198" x2="240" y2="208"/>
+    <line x1="280" y1="198" x2="280" y2="208"/><line x1="320" y1="198" x2="320" y2="208"/>
+    <line x1="360" y1="198" x2="360" y2="208"/><line x1="400" y1="198" x2="400" y2="208"/>
+    <line x1="440" y1="198" x2="440" y2="208"/><line x1="480" y1="198" x2="480" y2="208"/>
+    <line x1="520" y1="198" x2="520" y2="208"/><line x1="560" y1="198" x2="560" y2="208"/>
+    <line x1="600" y1="198" x2="600" y2="208"/><line x1="640" y1="198" x2="640" y2="208"/>
+    <line x1="680" y1="198" x2="680" y2="208"/><line x1="720" y1="198" x2="720" y2="208"/>
+    <line x1="760" y1="198" x2="760" y2="208"/><line x1="800" y1="198" x2="800" y2="208"/>
+    <line x1="840" y1="198" x2="840" y2="208"/><line x1="880" y1="198" x2="880" y2="208"/>
+    <line x1="920" y1="198" x2="920" y2="208"/><line x1="960" y1="198" x2="960" y2="208"/>
+  </g>
+
+  <!-- ================= CARRIAGE 4: MODERN HIGH SPEED DATA CARRIAGE (TESSERA POWERED ON THE LEFT) ================= -->
+  <g class="tessera-modern-carriage">
+    <rect x="40" y="110" width="280" height="75" rx="4" fill="url(#tesseraDataCarriage)"/>
+    
+    <!-- Modern Aerodynamic Glass -->
+    <rect x="56" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+    <rect x="114" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+    <rect x="172" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+    <rect x="230" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+    
+    <!-- Speed Lines -->
+    <line x1="40" y1="162" x2="320" y2="162" stroke="#7EE787" stroke-width="4"/>
+    <line x1="40" y1="152" x2="320" y2="152" stroke="#A9760C" stroke-width="2"/>
+
+    <!-- High Performance Low Friction Wheels -->
+    <circle cx="100" cy="192" r="9" fill="#14112E" stroke="#7EE787" stroke-width="3"/>
+    <circle cx="260" cy="192" r="9" fill="#14112E" stroke="#7EE787" stroke-width="3"/>
+
+    <!-- Tessera Logo Tag on the Carriage -->
+    <g transform="translate(285, 126)">
+      <rect x="0" y="0" width="4" height="4" fill="#6B4BF0"/>
+      <rect x="6" y="0" width="4" height="4" fill="#0E86AD"/>
+      <rect x="12" y="0" width="4" height="4" fill="#8A6BFF"/>
+      <rect x="0" y="6" width="4" height="4" fill="#0E86AD"/>
+      <rect x="6" y="6" width="4" height="4" fill="#A9760C"/>
+      <rect x="12" y="6" width="4" height="4" fill="#6B4BF0"/>
+      <rect x="0" y="12" width="4" height="4" fill="#8A6BFF"/>
+      <rect x="6" y="12" width="4" height="4" fill="#6B4BF0"/>
+      <rect x="12" y="12" width="4" height="4" fill="#0E86AD"/>
+    </g>
+
+    <!-- Success Badge -->
+    <rect x="70" y="45" width="220" height="38" rx="4" fill="rgba(126, 231, 135, 0.15)" stroke="#7EE787" stroke-width="1.5"/>
+    <text x="180" y="62" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" fill="#7EE787" text-anchor="middle">TESSERA DATA AUTOMATION</text>
+    <text x="180" y="76" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="600" fill="#E2E1EA" text-anchor="middle">VELOCIDADE MÁXIMA ALINHADA</text>
+    <line x1="180" y1="84" x2="180" y2="110" stroke="#7EE787" stroke-width="1.5"/>
+  </g>
+
+  <!-- Modern Coupling -->
+  <line x1="320" y1="155" x2="342" y2="155" stroke="#0E86AD" stroke-width="8"/>
+
+  <!-- ================= CARRIAGE 3: HIGH SPEED INFRA AUTOMATION ================= -->
+  <g class="bullet-train-mid2">
+    <rect x="342" y="110" width="195" height="75" rx="3" fill="url(#shinkansenBodyModern)"/>
+    <rect x="354" y="125" width="30" height="18" rx="2" fill="#1B1740"/>
+    <rect x="395" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+    <rect x="441" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+    <rect x="487" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+    <line x1="342" y1="162" x2="537" y2="162" stroke="#0E86AD" stroke-width="5"/>
+    <line x1="342" y1="150" x2="537" y2="150" stroke="#A9760C" stroke-width="3"/>
+    <circle cx="390" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+    <circle cx="490" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+    <rect x="345" y="55" width="190" height="28" rx="4" fill="rgba(107, 75, 240, 0.2)" stroke="#6B4BF0" stroke-width="1"/>
+    <text x="440" y="73" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#8A6BFF" text-anchor="middle">AUTOMAÇÃO DE INFRA</text>
+    <line x1="440" y1="84" x2="440" y2="110" stroke="#6B4BF0" stroke-width="1.5" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- High speed coupling -->
+  <line x1="537" y1="155" x2="541" y2="155" stroke="#6B4BF0" stroke-width="4"/>
+
+  <!-- ================= CARRIAGE 2: HIGH SPEED CODE AUTOMATION ================= -->
+  <g class="bullet-train-mid1">
+    <rect x="541" y="110" width="195" height="75" rx="3" fill="url(#shinkansenBodyModern)"/>
+    <rect x="554" y="125" width="30" height="18" rx="2" fill="#1B1740"/>
+    <rect x="594" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+    <rect x="640" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+    <rect x="686" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+    <line x1="541" y1="162" x2="736" y2="162" stroke="#0E86AD" stroke-width="5"/>
+    <line x1="541" y1="150" x2="736" y2="150" stroke="#A9760C" stroke-width="3"/>
+    <circle cx="590" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+    <circle cx="690" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+    <rect x="545" y="55" width="190" height="28" rx="4" fill="rgba(107, 75, 240, 0.2)" stroke="#6B4BF0" stroke-width="1"/>
+    <text x="640" y="73" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#8A6BFF" text-anchor="middle">AUTOMAÇÃO DE CÓDIGO</text>
+    <line x1="640" y1="84" x2="640" y2="110" stroke="#6B4BF0" stroke-width="1.5" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- High speed coupling -->
+  <line x1="736" y1="155" x2="740" y2="155" stroke="#6B4BF0" stroke-width="4"/>
+
+  <!-- ================= CARRIAGE 1: HIGH SPEED BULLET TRAIN ENGINE (AI - MOVING RIGHT) ================= -->
+  <g class="bullet-train-lead">
+    <!-- Aerodynamic Locomotive Nose Pointing RIGHT (from 740 to 960) -->
+    <path d="M 740 185 L 860 185 L 960 185 Q 930 120 840 110 L 740 110 Z" fill="url(#shinkansenBodyModern)"/>
+    <!-- Sleek Cockpit Windshield Facing Right -->
+    <path d="M 840 125 Q 870 125 915 140 L 895 145 L 840 145 Z" fill="url(#speedGlassModern)"/>
+    <!-- High speed racing stripes -->
+    <path d="M 740 162 Q 880 162 942 170" stroke="#0E86AD" stroke-width="5" fill="none"/>
+    <path d="M 740 150 Q 860 150 910 156" stroke="#A9760C" stroke-width="3" fill="none"/>
+    <!-- Wheels -->
+    <circle cx="790" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+    <circle cx="900" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+    <!-- Label -->
+    <rect x="760" y="55" width="190" height="28" rx="4" fill="rgba(107, 75, 240, 0.2)" stroke="#6B4BF0" stroke-width="1"/>
+    <text x="855" y="73" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#8A6BFF" text-anchor="middle">AGENTES DE IA</text>
+    <line x1="855" y1="84" x2="855" y2="110" stroke="#6B4BF0" stroke-width="1.5" stroke-dasharray="3,3"/>
+  </g>
+</svg>

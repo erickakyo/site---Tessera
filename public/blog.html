@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog &amp; Insights de Engenharia — Tessera</title>
+  <meta name="description" content="Artigos técnicos, benchmarks e reflexões sobre automação de dados, mascaramento determinístico, Tarjan SCC e o gargalo de dados para IA.">
+  <link rel="canonical" href="https://gettessera.io/blog.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="bg-grid-dots">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 100 100" width="28" height="28">
+          <rect x="5" y="5" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="37" y="5" width="26" height="26" rx="2" fill="#0E86AD" />
+          <rect x="69" y="5" width="26" height="26" rx="2" fill="#8A6BFF" />
+          <rect x="5" y="37" width="26" height="26" rx="2" fill="#0E86AD" />
+          <rect x="37" y="37" width="26" height="26" rx="2" fill="#A9760C" />
+          <rect x="69" y="37" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="5" y="69" width="26" height="26" rx="2" fill="#8A6BFF" />
+          <rect x="37" y="69" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="69" y="69" width="26" height="26" rx="2" fill="#0E86AD" />
+        </svg>
+        <span style="font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.08em; font-size: 1.125rem;">TESSERA</span>
+      </a>
+
+      <!-- Mobile Backdrop Overlay (Anthropic Style) -->
+      <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
+
+      <nav class="main-nav">
+        <a href="produtos.html">Produtos <span>&rarr;</span></a>
+        <a href="quem-somos.html">Quem Somos <span>&rarr;</span></a>
+        <a href="blog.html" class="active">Blog &amp; Insights <span>&rarr;</span></a>
+        <a href="contato.html">Contato <span>&rarr;</span></a>
+
+        <!-- Mobile Menu Footer with Language Switcher -->
+        <div class="mobile-menu-footer">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+        </div>
+        <a href="contato.html" class="btn btn-primary">Agendar Demo</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">ENGENHARIA &amp; PESQUISA</span>
+      <h1 class="font-title">Blog &amp; Insights Técnicos</h1>
+      <p class="lead">
+        Estudos profundos sobre sistemas distribuídos, integridade relacional, criptografia aplicada e a infraestrutura necessária para a era da inteligência artificial.
+      </p>
+    </div>
+  </section>
+
+  <!-- Articles List -->
+  <section>
+    <div class="container">
+      <div style="display: flex; flex-direction: column; gap: 40px; max-width: 860px;">
+        
+        <!-- Post 1 -->
+        <article style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px;">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+            <span class="badge badge-ready">ENGENHARIA DE DADOS</span>
+            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">09 de Setembro, 2026</span>
+          </div>
+          <h2 class="font-title" style="font-size: 1.75rem; margin-bottom: 12px; line-height: 1.25;">
+            <a href="#" style="text-decoration: none; color: inherit;">Por que dados são o verdadeiro gargalo dos agentes de IA</a>
+          </h2>
+          <p class="text-muted" style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
+            A analogia do trem-bala puxando um vagão a vapor: hiper-automatizamos a escrita de código por LLMs, mas os modelos falham miseravelmente ao testar contra esquemas vazios ou dados sintéticos artificiais. Como réplicas reduzidas e determinísticas salvam a fidelidade da entrega.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); font-weight: 600;">
+            Ler artigo completo (8 min de leitura) &rarr;
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px;">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+            <span class="badge badge-core">TEORIA DOS GRAFOS</span>
+            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">28 de Agosto, 2026</span>
+          </div>
+          <h2 class="font-title" style="font-size: 1.75rem; margin-bottom: 12px; line-height: 1.25;">
+            <a href="#" style="text-decoration: none; color: inherit;">Resolvendo ciclos relacionais com Tarjan SCC em bancos de produção</a>
+          </h2>
+          <p class="text-muted" style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
+            Quando tabelas possuem dependências circulares (A &rarr; B &rarr; C &rarr; A) e foreign keys lógicas cross-database, um subsetter ingênuo entra em loop infinito. Veja como o algoritmo de Componentes Fortemente Conectados do Tarjan orquestra a extração em ondas ordenadas.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); font-weight: 600;">
+            Ler artigo completo (11 min de leitura) &rarr;
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px;">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+            <span class="badge badge-hardening">SEGURANÇA &amp; CRIPTOGRAFIA</span>
+            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">14 de Agosto, 2026</span>
+          </div>
+          <h2 class="font-title" style="font-size: 1.75rem; margin-bottom: 12px; line-height: 1.25;">
+            <a href="#" style="text-decoration: none; color: inherit;">FF1 NIST SP 800-38G: Preservando integridade referencial com mascaramento determinístico</a>
+          </h2>
+          <p class="text-muted" style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
+            Por que números aleatórios quebram testes e relatórios contábeis. Exploramos a matemática por trás da criptografia com preservação de formato e por que a mesma semente com AWS KMS garante consistência em dezenas de microsserviços.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); font-weight: 600;">
+            Ler artigo completo (9 min de leitura) &rarr;
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <img src="assets/tessera-logo-transparent.png" alt="Tessera" style="height: 28px; width: auto; display: block;">
+          </div>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Plataforma de Data Environment Automation para equipes de engenharia, QA e plataformas de dados.
+          </p>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+            Production-like data. Without production risk.
+          </span>
+        </div>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="produtos.html">Visão Geral</a></li>
+            <li><a href="produtos.html#discovery">Discovery</a></li>
+            <li><a href="produtos.html#masking">Masking</a></li>
+            <li><a href="produtos.html#subsetter">Subsetter</a></li>
+            <li><a href="produtos.html#cdc">CDC &amp; Snapshot</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="blog.html">Blog de Engenharia</a></li>
+            <li><a href="contato.html">Agendar Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal &amp; Privacy</h4>
+          <ul>
+            <li><a href="privacidade.html">Privacidade</a></li>
+            <li><a href="termos.html">Termos de Uso</a></li>
+            <li><a href="privacidade.html#lgpd">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html#gdpr">Conformidade GDPR</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Tessera. Todos os direitos reservados.</span>
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+          <span>Homologação: <a href="https://salto.solutions" target="_blank" style="color: inherit; text-decoration: underline;">SALTO Solutions</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

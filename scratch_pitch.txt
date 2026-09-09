@@ -1,0 +1,336 @@
+TESSERA
+
+DATA MANAGEMENT
+
+O GARGALO DA IA
+
+DADOS SÃO O GARGALO PARA A IA
+
+AGENTES DE IA
+
+AUTOMAÇÃO
+DE CÓDIGO
+
+AUTOMAÇÃO
+DE INFRA
+
+AUTOMAÇÃO
+DE DADOS
+
+Sem automação de dados, tudo que depende deles desacelera.
+01/06
+
+TESSERA
+
+DATA MANAGEMENT
+
+A REALIDADE DO PIPELINE
+
+IA AGÊNTICA JÁ ESTÁ
+NO SEU PIPELINE
+Desenvolvedores adotaram IA em massa — de baixo pra cima, sem aval da empresa.
+
+84%
+
+51%
+
+41%
+
+usam ou planejam
+usar IA no dia a dia
+
+usam agentes de IA
+TODOS os dias
+
+do código NOVO
+é gerado por IA
+
+Não é mais sobre adotar ou não — a IA já foi adotada.
+02/06
+
+TESSERA
+
+DATA MANAGEMENT
+
+DÉBITO TÉCNICO
+
+O PREÇO DA VELOCIDADE
+
+Sob pressão por entregas mais rápidas, 20 anos de disciplinas maduras ficaram para trás.
+
+O QUE FICOU DE LADO
+✕ Revisão de código e testes
+✕ Segurança by design
+
+45%
+
+do código gerado por IA introduz
+vulnerabilidades de segurança
+OWASP TOP 10
+
+✕ GOVERNANÇA DE DADOS
+✕ PROTEÇÃO DE PII (não-prod)
+
+29%
+
+de confiança no código gerado
+por IA — em queda
+E AINDA VAI PRA PROD
+
+O débito técnico se concentra nos dados: velocidade + proteção de PII viram urgência crítica.
+03/06
+
+TESSERA
+
+DATA MANAGEMENT
+
+GARBAGE IN, GARBAGE OUT
+
+O AMBIENTE DE DADOS DECIDE
+A QUALIDADE DA ENTREGA
+Um agente de IA é tão bom quanto os dados que o cercam — volume, formato e fidelidade do ambiente moldam o que ele produz.
+
+01
+VOLUME
+
+02
+
+FORMATO & ESTRUTURA
+
+03
+
+Escala real revela edge cases e gargalos de
+performance que datasets pequenos
+escondem.
+
+Esquemas, tipos e relações fiéis à
+produção evitam código que só roda no
+caminho feliz.
+
+Dados realistas ensinam o domínio real ao
+agente: regras de negócio, distribuições e
+exceções.
+
+NATUREZA & FIDELIDADE
+
+Dados rápidos e fiéis à produção elevam a entrega e a eficiência do agente — menos incidentes e retrabalho.
+04/06
+
+TESSERA
+
+DATA MANAGEMENT
+
+A PROPOSTA TESSERA
+
+VELOCIDADE DA IA, COM A
+SEGURANÇA DOS SEUS DADOS
+Agentes de IA vieram para ficar. A pergunta não é se seus times vão usar — mas se os dados que os alimentam estão prontos.
+
+DADOS EM MINUTOS,
+NÃO SEMANAS
+
+PII PROTEGIDA EM 100%
+DOS AMBIENTES NÃO-PROD
+
+PRONTO PARA Engenharia,
+ANALYTICS E IA
+
+Subsetting e provisionamento sob demanda
+para dev, teste e IA.
+
+Descoberta + mascaramento determinístico,
+íntegros por padrão.
+
+Web, CLI e operador Kubernetes — plugável
+no seu pipeline.
+
+05/06
+
+TESSERA
+
+CASO DE USO
+
+DATA MNAGEMENT
+
+CASO DE USO · DEVOPS & CI/CD
+
+AMBIENTES DE DEV, TESTE E CI
+PRONTOS EM MINUTOS
+Ambientes não-prod sem PII, sob demanda — subset para réplicas enxutas ou CDC para a base completa.
+EXTRAÇÃO
+
+SUBSET
+PRODUÇÃO
+
+recorte enxuto
+dev · teste · CI
+
+CDC
+OU
+
+MÁSCARA
+
+NÃO-PROD
+
+determinística
+
+efêmeros e íntegros
+
+base completa
+RCA · perf · pré-prod
+
+SUBSET OU CDC
+
+PII MASCARADA EM NÃO-PROD
+
+SELF-SERVICE NO PIPELINE
+
+Recorte enxuto para dev/teste/CI; base
+completa via CDC para RCA, performance e
+pré-prod.
+
+Discovery + mascaramento determinístico
+nos dois caminhos; integridade referencial
+preservada.
+
+Web, CLI e operador Kubernetes —
+plugáveis em qualquer CI/CD.
+
+DevOps: dados de produção seguros, sob demanda, sem sair do fluxo de entrega.
+
+TESSERA
+
+CASO DE USO
+
+DATA MANAGEMENT
+
+CASO DE USO · ANALYTICS, BI & ML
+
+DADOS REALISTAS E SEGUROS
+PARA ANÁLISE, BI E ML
+Dados fiéis e sem PII para BI e ML — subset (recorte pontual) ou CDC (dados atualizados).
+EXTRAÇÃO
+
+PRODUÇÃO
+bancos + streams
+
+SUBSET
+recorte pontual
+preserva formato
+
+INTEGRIDADE
+PRESERVADA
+
+Mascaramento determinístico mantém
+chaves e relações — joins e agregações
+continuam válidos.
+
+MÁSCARA
+CDC
+
+OU
+
+determinística
+
+réplica contínua
+→ S3 / lakehouse
+
+PONTUAL
+OU CONTÍNUO
+
+Subset para um recorte no tempo; CDC
+(snapshot + stream) para acompanhar a
+produção sem gap.
+
+WAREHOUSE
+BI · ML
+consumo seguro
+
+CONFORME
+POR PADRÃO
+
+PII descoberta e mascarada na fronteira —
+LGPD sem esforço manual.
+
+Analytics: análise e ML sobre dados de produção — realistas, íntegros e sem PII.
+
+TESSERA
+
+DATA MANAGEMENT
+
+ONDE ESTAMOS
+
+ESTADO DA PLATAFORMA & ROADMAP
+PRONTO
+
+EM PROGRESSO
+
+PLANEJADO
+
+DISCOVERY
+& MASKING
+
+SUBSETTER
+● NÚCLEO COMPLETO
+
+CDC &
+SNAPSHOT
+
+OPERADOR DE BD
+(KUBERNETES)
+
+● MADURO · EM USO
+
+FEITO
+
+● ENTREGUE · HARDENING
+
+● PLANEJADO · TBD
+
+FEITO
+
+✓ Web + CLI + operador K8s
+✓ 6 plataformas (PG, MySQL, MSSQL,
+Oracle, MongoDB, S3)
+✓ Grafo Neo4j + progresso SSE
+
+FEITO
+
+FEITO
+
+✓ Snapshot + stream coordenados
+✓ Dois motores (PostgreSQL e MySQL)
+✓ DDL, re-snapshot, operador K8s
+
+✓ Ainda não iniciado
+
+FALTA
+
+FALTA
+
+✓ Descoberta e classificação de PII
+✓ Mascaramento determinístico por
+chave
+✓ Integrados ao subsetter (ao vivo)
+FALTA
+
+▸ Novos classificadores e algoritmos
+▸ Tuning de domínios sensíveis
+
+▸ Conector DynamoDB
+▸ Hardening do operador
+▸ Métricas de throughput
+
+▸ Métricas de observabilidade
+▸ Timeouts por operação
+▸ Paridade de CI MySQL
+
+FALTA
+
+▸ Provisionar/gerenciar BDs em K8s
+▸ Ciclo de vida e self-service
+▸ Escopo em definição
+
+06/06
+
+

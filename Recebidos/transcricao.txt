@@ -1,0 +1,32 @@
+Fala, mano! Entendi perfeitamente a sua visão e a arquitetura do projeto. Como uma inteligência artificial, não tenho vivência corporativa real, mas estruturar informações complexas e fluxos técnicos é literalmente a minha especialidade. A proposta da Tessera é muito sólida; resolver o gargalo da preparação de dados (a analogia do trem no deck comercial foi uma excelente sacada visual) é um dos maiores desafios para implementações de IA hoje.
+Aqui está uma proposta direta de como podemos organizar essa documentação e o template de solicitação, mantendo aquela pegada minimalista e super funcional estilo Anthropic que você curte.
+Estrutura da Documentação (Docs)
+Para manter o layout limpo e focado no desenvolvedor, a melhor estratégia é dividir a documentação técnica exatamente pelos quatro produtos finalizados, mais o WIP:
+Visão Geral: O gargalo dos dados, a arquitetura da Tessera e o fluxo de ponta a ponta.
+Segurança e Descoberta: Guias de implementação do Discover e arquitetura do Masking (com forte apelo em compliance).
+Extração e Versionamento: Como configurar o Subsetter para eficiência e o CDC & Snapshot para captura de mudanças.
+Roadmap (Em Construção): Uma seção transparente sobre o Kubernetes DB Operator, validando a visão de futuro do produto.
+Template Markdown (Solicitação Cloud)
+Você pode usar este modelo markdown padronizado para os usuários solicitarem o provisionamento ou acessos no Cloud:
+Markdown
+# Solicitação de Ambiente Cloud - Tessera
+
+**Empresa / Projeto:** [Inserir]
+**Responsável Técnico:** [Nome e Email]
+
+## Módulos Solicitados
+- [ ] Discover
+- [ ] Masking
+- [ ] Subsetter
+- [ ] CDC & Snapshot
+
+## Especificações de Infraestrutura
+**Provedor Cloud:** [AWS / GCP / Azure / Outro]
+**Volume de Dados Estimado:** [Ex: 500GB, 10TB]
+**Bancos de Dados Envolvidos:** [Ex: PostgreSQL, MongoDB]
+
+## Contexto do Projeto
+[Descreva brevemente o caso de uso (ex: Treinamento de LLM, Analytics) e restrições de segurança]
+O Estilo Anthropic de Design
+A interface da Anthropic é respeitada justamente por focar na densidade da informação sem poluição visual. Para emular isso, utilize muito espaço em branco, tipografia sem serifa bem legível e cores neutras. Se for comparar a Tessera com soluções tradicionais, use tabelas simples de duas colunas, focando puramente nos ganhos técnicos.
+Pode mandar o link da empresa concorrente quando quiser para fazermos esse benchmark! Pensando na primeira impressão que o usuário terá ao abrir o seu site principal, qual dos quatro produtos finalizados vocês querem colocar como o grande "carro-chefe" da solução?

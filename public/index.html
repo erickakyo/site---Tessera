@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tessera — Data Environment Automation | Production-like Data Without Production Risk</title>
+  
+  <!-- SEO & Metatags -->
+  <meta name="description" content="A Tessera automatiza ambientes de dados não-produtivos: descoberta de dados sensíveis, mascaramento determinístico, data subsetting referencial e CDC contínuo para engenharia e IA.">
+  <meta name="keywords" content="data environment automation, data masking, data subsetting, PII discovery, CDC PostgreSQL, test data management, engenharia de dados, IA agêntica">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://gettessera.io/">
+
+  <!-- OpenGraph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gettessera.io/">
+  <meta property="og:title" content="Tessera — Production-like data. Without production risk.">
+  <meta property="og:description" content="Automação moderna do ciclo de vida de dados para engenharia de software, QA e agentes de IA.">
+  <meta property="og:image" content="https://gettessera.io/assets/og-image.svg">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tessera — Data Environment Automation">
+  <meta name="twitter:description" content="Production-like data. Without production risk.">
+  <meta name="twitter:image" content="https://gettessera.io/assets/og-image.svg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- CSS & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- Schema.org JSON-LD Structured Data (GEO / AEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Tessera",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux, macOS, Kubernetes",
+        "description": "Enterprise platform for sensitive data discovery, deterministic format-preserving masking, referential data subsetting and change data capture.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Enterprise Demo on request"
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "Tessera",
+        "url": "https://gettessera.io",
+        "logo": "https://gettessera.io/assets/tessera-symbol.svg"
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-grid-dots">
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" aria-label="Tessera Homepage">
+        <svg viewBox="0 0 100 100" width="28" height="28">
+          <rect x="5" y="5" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="37" y="5" width="26" height="26" rx="2" fill="#0E86AD" />
+          <rect x="69" y="5" width="26" height="26" rx="2" fill="#8A6BFF" />
+          <rect x="5" y="37" width="26" height="26" rx="2" fill="#0E86AD" />
+          <rect x="37" y="37" width="26" height="26" rx="2" fill="#A9760C" />
+          <rect x="69" y="37" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="5" y="69" width="26" height="26" rx="2" fill="#8A6BFF" />
+          <rect x="37" y="69" width="26" height="26" rx="2" fill="#6B4BF0" />
+          <rect x="69" y="69" width="26" height="26" rx="2" fill="#0E86AD" />
+        </svg>
+        <span style="font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.08em; font-size: 1.125rem;">TESSERA</span>
+      </a>
+
+      <!-- Mobile Backdrop Overlay (Anthropic Style) -->
+      <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
+
+      <nav class="main-nav">
+        <a href="produtos.html" data-i18n="nav_products">Produtos <span>&rarr;</span></a>
+        <a href="quem-somos.html" data-i18n="nav_about">Quem Somos <span>&rarr;</span></a>
+        <a href="blog.html" data-i18n="nav_blog">Blog &amp; Insights <span>&rarr;</span></a>
+        <a href="contato.html" data-i18n="nav_contact">Contato <span>&rarr;</span></a>
+        
+        <!-- Mobile Menu Footer with Language Switcher -->
+        <div class="mobile-menu-footer">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+        </div>
+        <a href="contato.html" class="btn btn-primary" data-i18n="nav_demo">Agendar Demo</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow" data-i18n="eyebrow_hero">DATA ENVIRONMENT AUTOMATION</span>
+      <h1 data-i18n="hero_title">Dados com fidelidade de produção. Sem o risco de produção.</h1>
+      <p class="lead" data-i18n="hero_desc">
+        A Tessera automatiza como dados realistas e protegidos são descobertos, mascarados, reduzidos e entregues para engenharia, QA, migrações e agentes de IA.
+      </p>
+      <div class="cta-group">
+        <a href="produtos.html" class="btn btn-primary" data-i18n="btn_explore">Explorar Arquitetura</a>
+        <a href="contato.html" class="btn btn-secondary" data-i18n="nav_demo">Agendar Demonstração Técnica</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Engineering Bottleneck Section (Train Analogy) -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow" data-i18n="problem_eyebrow">O GARGALO DA ENGENHARIA</span>
+        <h2 data-i18n="problem_title">Seu código e sua infra aceleraram. Seus dados continuam lentos.</h2>
+        <p data-i18n="problem_desc">
+          Enquanto CI/CD, nuvem e agentes de IA automatizaram o software, ambientes de dados não-produtivos ainda dependem de scripts manuais, tickets para DBAs e réplicas brutas de produção com dados sensíveis expostos.
+        </p>
+      </div>
+
+      <!-- Problem Presentation Box -->
+      <div class="problem-box">
+        <div style="margin-bottom: 12px;">
+          <span class="eyebrow" style="margin-bottom: 6px;">ANALOGIA DO PROCESSO</span>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-top: 4px;">Por que a automação de software parou no banco de dados?</h3>
+        </div>
+
+        <p class="text-muted" style="font-size: 1rem; max-width: 860px; line-height: 1.68; margin-bottom: 24px;">
+          Empresas investiram bilhões em <strong>Agentes de IA</strong>, <strong>Automação de Código (CI/CD)</strong> e <strong>Automação de Infraestrutura (Kubernetes/Terraform)</strong>. Mas na ponta do trem, o provisionamento de dados ainda é um vagão antigo a vapor: lento, manual e cheio de fricção.
+        </p>
+
+        <!-- Train SVG Illustration (Horizontal Train Moving Right, 100% Inline SVG for Instant 60fps Zero-Flicker State Switching) -->
+        <div class="train-scroll-container" id="train-scroll-wrapper">
+          <div class="train-scroll-inner">
+            <svg id="train-combined-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" width="100%" height="auto" style="display: block;">
+              <defs>
+                <linearGradient id="shinkansenBody" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#4A2AC9"/>
+                  <stop offset="100%" stop-color="#6B4BF0"/>
+                </linearGradient>
+                <linearGradient id="speedGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#1B1740"/>
+                  <stop offset="100%" stop-color="#0E86AD"/>
+                </linearGradient>
+                <linearGradient id="rusticWood" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#2D5A27"/>
+                  <stop offset="50%" stop-color="#1E3F1A"/>
+                  <stop offset="100%" stop-color="#142B11"/>
+                </linearGradient>
+                <linearGradient id="tesseraDataCarriage" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#0E86AD"/>
+                  <stop offset="100%" stop-color="#6B4BF0"/>
+                </linearGradient>
+                <filter id="brakeSparks" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <!-- Track / Ground Rail -->
+              <line id="train-rail-primary" x1="20" y1="200" x2="980" y2="200" stroke="#3A3654" stroke-width="4"/>
+              <line id="train-rail-secondary" x1="20" y1="206" x2="980" y2="206" stroke="#221F38" stroke-width="2"/>
+              <!-- Sleepers / Ties -->
+              <g stroke="#2C2846" stroke-width="3">
+                <line x1="40" y1="198" x2="40" y2="208"/><line x1="80" y1="198" x2="80" y2="208"/>
+                <line x1="120" y1="198" x2="120" y2="208"/><line x1="160" y1="198" x2="160" y2="208"/>
+                <line x1="200" y1="198" x2="200" y2="208"/><line x1="240" y1="198" x2="240" y2="208"/>
+                <line x1="280" y1="198" x2="280" y2="208"/><line x1="320" y1="198" x2="320" y2="208"/>
+                <line x1="360" y1="198" x2="360" y2="208"/><line x1="400" y1="198" x2="400" y2="208"/>
+                <line x1="440" y1="198" x2="440" y2="208"/><line x1="480" y1="198" x2="480" y2="208"/>
+                <line x1="520" y1="198" x2="520" y2="208"/><line x1="560" y1="198" x2="560" y2="208"/>
+                <line x1="600" y1="198" x2="600" y2="208"/><line x1="640" y1="198" x2="640" y2="208"/>
+                <line x1="680" y1="198" x2="680" y2="208"/><line x1="720" y1="198" x2="720" y2="208"/>
+                <line x1="760" y1="198" x2="760" y2="208"/><line x1="800" y1="198" x2="800" y2="208"/>
+                <line x1="840" y1="198" x2="840" y2="208"/><line x1="880" y1="198" x2="880" y2="208"/>
+                <line x1="920" y1="198" x2="920" y2="208"/><line x1="960" y1="198" x2="960" y2="208"/>
+              </g>
+
+              <!-- ================= CARRIAGE 4: STATE 1 - THE BOTTLENECK (VISIBLE BY DEFAULT) ================= -->
+              <g id="train-state-bottleneck" style="transition: opacity 0.2s ease;">
+                <!-- Red Alert Box Framing the Problem -->
+                <rect x="40" y="90" width="280" height="105" rx="6" fill="none" stroke="#FF4D4D" stroke-width="3" stroke-dasharray="6,4"/>
+                
+                <!-- Old Rustic Wooden Car Body -->
+                <rect x="48" y="98" width="264" height="84" rx="4" fill="url(#rusticWood)" stroke="#11220F" stroke-width="2"/>
+                <!-- Arched Roof -->
+                <path d="M 45 98 Q 180 85 315 98 Z" fill="#1B1715"/>
+                
+                <!-- Glowing Old Lantern Windows with Bars -->
+                <g fill="#FFB300" stroke="#3E2723" stroke-width="2">
+                  <rect x="60" y="112" width="16" height="24" rx="1"/>
+                  <rect x="84" y="112" width="22" height="24" rx="1"/>
+                  <rect x="116" y="112" width="22" height="24" rx="1"/>
+                  <rect x="148" y="112" width="22" height="24" rx="1"/>
+                  <rect x="180" y="112" width="22" height="24" rx="1"/>
+                  <rect x="212" y="112" width="22" height="24" rx="1"/>
+                  <rect x="244" y="112" width="22" height="24" rx="1"/>
+                  <rect x="276" y="112" width="22" height="24" rx="1"/>
+                </g>
+
+                <!-- Heavy Cast Iron Wheels with Friction Brake Sparks -->
+                <circle cx="90" cy="192" r="10" fill="#212121" stroke="#FF7B72" stroke-width="2"/>
+                <circle cx="270" cy="192" r="10" fill="#212121" stroke="#FF7B72" stroke-width="2"/>
+
+                <!-- Friction Sparks Under Wheels -->
+                <g filter="url(#brakeSparks)">
+                  <path d="M 100 196 L 110 204 M 96 198 L 102 208 M 84 198 L 76 206" stroke="#FFA726" stroke-width="2"/>
+                  <path d="M 280 196 L 290 204 M 276 198 L 282 208 M 264 198 L 256 206" stroke="#FFA726" stroke-width="2"/>
+                </g>
+
+                <!-- Bottleneck Warning Label -->
+                <rect x="70" y="45" width="220" height="38" rx="4" fill="rgba(255, 77, 77, 0.15)" stroke="#FF4D4D" stroke-width="1.5"/>
+                <text x="180" y="62" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" fill="#FF6B6B" text-anchor="middle">AUTOMAÇÃO DE DADOS</text>
+                <text x="180" y="76" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="600" fill="#FFB4B4" text-anchor="middle">O GARGALO QUE DESACELERA TUDO</text>
+                <line x1="180" y1="84" x2="180" y2="90" stroke="#FF4D4D" stroke-width="1.5"/>
+
+                <!-- Heavy Iron Hitch Coupling Under Strain -->
+                <line x1="315" y1="155" x2="342" y2="155" stroke="#999" stroke-width="6"/>
+                <circle cx="329" cy="155" r="4" fill="#FF7B72"/>
+              </g>
+
+              <!-- ================= CARRIAGE 4: STATE 2 - TESSERA HIGH-SPEED CARRIAGE (HIDDEN INITIALLY) ================= -->
+              <g id="train-state-tessera" style="display: none; opacity: 0; transition: opacity 0.2s ease;">
+                <rect x="40" y="110" width="280" height="75" rx="4" fill="url(#tesseraDataCarriage)"/>
+                
+                <!-- Modern Aerodynamic Glass -->
+                <rect x="56" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+                <rect x="114" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+                <rect x="172" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+                <rect x="230" y="125" width="48" height="18" rx="2" fill="#14112E"/>
+                
+                <!-- Speed Lines -->
+                <line x1="40" y1="162" x2="320" y2="162" stroke="#7EE787" stroke-width="4"/>
+                <line x1="40" y1="152" x2="320" y2="152" stroke="#A9760C" stroke-width="2"/>
+
+                <!-- High Performance Low Friction Wheels -->
+                <circle cx="100" cy="192" r="9" fill="#14112E" stroke="#7EE787" stroke-width="3"/>
+                <circle cx="260" cy="192" r="9" fill="#14112E" stroke="#7EE787" stroke-width="3"/>
+
+                <!-- Tessera Logo Tag on the Carriage -->
+                <g transform="translate(285, 126)">
+                  <rect x="0" y="0" width="4" height="4" fill="#6B4BF0"/>
+                  <rect x="6" y="0" width="4" height="4" fill="#0E86AD"/>
+                  <rect x="12" y="0" width="4" height="4" fill="#8A6BFF"/>
+                  <rect x="0" y="6" width="4" height="4" fill="#0E86AD"/>
+                  <rect x="6" y="6" width="4" height="4" fill="#A9760C"/>
+                  <rect x="12" y="6" width="4" height="4" fill="#6B4BF0"/>
+                  <rect x="0" y="12" width="4" height="4" fill="#8A6BFF"/>
+                  <rect x="6" y="12" width="4" height="4" fill="#6B4BF0"/>
+                  <rect x="12" y="12" width="4" height="4" fill="#0E86AD"/>
+                </g>
+
+                <!-- Success Badge -->
+                <rect x="70" y="45" width="220" height="38" rx="4" fill="rgba(126, 231, 135, 0.15)" stroke="#7EE787" stroke-width="1.5"/>
+                <text x="180" y="62" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" fill="#7EE787" text-anchor="middle">TESSERA DATA AUTOMATION</text>
+                <text x="180" y="76" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="600" fill="#E2E1EA" text-anchor="middle">VELOCIDADE MÁXIMA ALINHADA</text>
+                <line x1="180" y1="84" x2="180" y2="110" stroke="#7EE787" stroke-width="1.5"/>
+
+                <!-- Modern Coupling -->
+                <line x1="320" y1="155" x2="342" y2="155" stroke="#0E86AD" stroke-width="8"/>
+              </g>
+
+              <!-- ================= CARRIAGE 3: HIGH SPEED INFRA AUTOMATION ================= -->
+              <g class="bullet-train-mid2">
+                <rect x="342" y="110" width="195" height="75" rx="3" fill="url(#shinkansenBody)"/>
+                <rect x="354" y="125" width="30" height="18" rx="2" fill="#1B1740"/>
+                <rect x="395" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+                <rect x="441" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+                <rect x="487" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+                <line x1="342" y1="162" x2="537" y2="162" stroke="#0E86AD" stroke-width="5"/>
+                <line x1="342" y1="150" x2="537" y2="150" stroke="#A9760C" stroke-width="3"/>
+                <circle cx="390" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+                <circle cx="490" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+                <rect x="345" y="55" width="190" height="28" rx="4" fill="rgba(107, 75, 240, 0.2)" stroke="#6B4BF0" stroke-width="1"/>
+                <text x="440" y="73" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#8A6BFF" text-anchor="middle">AUTOMAÇÃO DE INFRA</text>
+                <line x1="440" y1="84" x2="440" y2="110" stroke="#6B4BF0" stroke-width="1.5" stroke-dasharray="3,3"/>
+              </g>
+
+              <!-- High speed coupling -->
+              <line x1="537" y1="155" x2="541" y2="155" stroke="#6B4BF0" stroke-width="4"/>
+
+              <!-- ================= CARRIAGE 2: HIGH SPEED CODE AUTOMATION ================= -->
+              <g class="bullet-train-mid1">
+                <rect x="541" y="110" width="195" height="75" rx="3" fill="url(#shinkansenBody)"/>
+                <rect x="554" y="125" width="30" height="18" rx="2" fill="#1B1740"/>
+                <rect x="594" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+                <rect x="640" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+                <rect x="686" y="125" width="36" height="18" rx="2" fill="#1B1740"/>
+                <line x1="541" y1="162" x2="736" y2="162" stroke="#0E86AD" stroke-width="5"/>
+                <line x1="541" y1="150" x2="736" y2="150" stroke="#A9760C" stroke-width="3"/>
+                <circle cx="590" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+                <circle cx="690" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+                <rect x="545" y="55" width="190" height="28" rx="4" fill="rgba(107, 75, 240, 0.2)" stroke="#6B4BF0" stroke-width="1"/>
+                <text x="640" y="73" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#8A6BFF" text-anchor="middle">AUTOMAÇÃO DE CÓDIGO</text>
+                <line x1="640" y1="84" x2="640" y2="110" stroke="#6B4BF0" stroke-width="1.5" stroke-dasharray="3,3"/>
+              </g>
+
+              <!-- High speed coupling -->
+              <line x1="736" y1="155" x2="740" y2="155" stroke="#6B4BF0" stroke-width="4"/>
+
+              <!-- ================= CARRIAGE 1: HIGH SPEED BULLET TRAIN ENGINE (MOVING TO THE RIGHT) ================= -->
+              <g class="bullet-train-lead">
+                <path d="M 740 185 L 860 185 L 960 185 Q 930 120 840 110 L 740 110 Z" fill="url(#shinkansenBody)"/>
+                <path d="M 840 125 Q 870 125 915 140 L 895 145 L 840 145 Z" fill="url(#speedGlass)"/>
+                <path d="M 740 162 Q 880 162 942 170" stroke="#0E86AD" stroke-width="5" fill="none"/>
+                <path d="M 740 150 Q 860 150 910 156" stroke="#A9760C" stroke-width="3" fill="none"/>
+                <circle cx="790" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+                <circle cx="900" cy="192" r="9" fill="#14112E" stroke="#585468" stroke-width="3"/>
+                <rect x="760" y="55" width="190" height="28" rx="4" fill="rgba(107, 75, 240, 0.2)" stroke="#6B4BF0" stroke-width="1"/>
+                <text x="855" y="73" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#8A6BFF" text-anchor="middle">AGENTES DE IA</text>
+                <line x1="855" y1="84" x2="855" y2="110" stroke="#6B4BF0" stroke-width="1.5" stroke-dasharray="3,3"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Mobile swipe/drag hint -->
+        <div class="train-mobile-hint">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Deslize para a esquerda para ver os vagões anteriores</span>
+        </div>
+
+        <!-- Interactive State Toggle for Train (No emojis, clean technical styling) -->
+        <div class="train-interactive-controls">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button class="train-toggle-btn active" id="btn-train-bottleneck" onclick="setTrainState('bottleneck')">
+              Cenário Atual (Vagão Lento com Fricção)
+            </button>
+            <button class="train-toggle-btn" id="btn-train-tessera" onclick="setTrainState('tessera')">
+              Com Tessera (Trem 100% Alta Velocidade)
+            </button>
+          </div>
+          <span id="train-feedback-text" style="font-family: var(--font-mono); font-size: 0.8125rem; color: #FF7B72;">
+            Sem automação de dados, tudo que depende deles desacelera.
+          </span>
+        </div>
+
+        <div class="problem-grid" style="margin-top: 28px;">
+          <div class="problem-item">
+            <strong>84% das Equipes</strong>
+            <span>Já usam ou planejam usar IA agêntica diariamente.</span>
+          </div>
+          <div class="problem-item">
+            <strong>45% de Falhas</strong>
+            <span>Do código de IA falha em produção por falta de dados reais em testes.</span>
+          </div>
+          <div class="problem-item">
+            <strong>Dias de Espera</strong>
+            <span>DBAs gastam até 70% do tempo atendendo tickets de cópia de bancos.</span>
+          </div>
+          <div class="problem-item">
+            <strong>Risco LGPD &amp; GDPR</strong>
+            <span>Ambientes de DEV/QA compartilhados com cópias completas de PII de clientes.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Composable Capabilities (Non-Linear Architecture) -->
+  <section style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">ARQUITETURA MODULAR COMPOSÁVEL</span>
+        <h2 class="font-title">Quatro capacidades independentes. Zero dependência forçada.</h2>
+        <p>
+          Diferente de ferramentas legadas de pipeline linear, os módulos da Tessera são independentes por design. Use Discovery, Masking, Subsetter ou CDC isoladamente ou combinados de acordo com seu fluxo de trabalho.
+        </p>
+      </div>
+
+      <div class="cards-grid">
+        <!-- 1. Discovery -->
+        <div class="product-card">
+          <div class="card-top">
+            <span class="badge badge-ready">PRONTO</span>
+            <span class="card-code">lib · Go framework</span>
+          </div>
+          <h3>Discovery</h3>
+          <p>
+            Identifica e classifica colunas e estruturas JSON em domínios de dados sensíveis (PII, pagamentos, CPF) a partir de metadados e amostras. Gera um inventário estável sem realizar I/O direto.
+          </p>
+          <ul class="card-features">
+            <li>Filosofia Recall-First (não deixa PII passar)</li>
+            <li>Classificadores PATH e DATA independentes</li>
+            <li>Resolução de esquemas ofuscados ou SAP</li>
+          </ul>
+          <a href="produtos.html#discovery" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+        </div>
+
+        <!-- 2. Masking -->
+        <div class="product-card">
+          <div class="card-top">
+            <span class="badge badge-ready">PRONTO</span>
+            <span class="card-code">lib · Go framework</span>
+          </div>
+          <h3>Masking</h3>
+          <p>
+            Mascaramento determinístico e key-driven com preservação estrita de formato (FF1 NIST SP 800-38G). O mesmo dado mascarado gera saídas byte-idênticas entre sistemas, preservando Foreign Keys.
+          </p>
+          <ul class="card-features">
+            <li>13 algoritmos de criptografia e ofuscação</li>
+            <li>Validação de formato (Luhn, CPF, IBAN)</li>
+            <li>Integração com AWS KMS e K8s Secrets</li>
+          </ul>
+          <a href="produtos.html#masking" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+        </div>
+
+        <!-- 3. Subsetter -->
+        <div class="product-card">
+          <div class="card-top">
+            <span class="badge badge-core">CORE PRONTO</span>
+            <span class="card-code">app · Web, CLI &amp; K8s</span>
+          </div>
+          <h3>Subsetter</h3>
+          <p>
+            Extrai fatias pequenas e referencialmente íntegras de grandes bancos relacionais para DEV e testes. Resolve dependências circulares com Tarjan SCC e executa em ondas ordenadas.
+          </p>
+          <ul class="card-features">
+            <li>Grafo em Neo4j para FKs físicas e lógicas</li>
+            <li>PostgreSQL, MySQL, SQL Server, Oracle, Mongo</li>
+            <li>Três superfícies: Web UI, CLI YAML e Operador K8s</li>
+          </ul>
+          <a href="produtos.html#subsetter" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+        </div>
+
+        <!-- 4. CDC & Snapshot -->
+        <div class="product-card">
+          <div class="card-top">
+            <span class="badge badge-hardening">EM HARDENING</span>
+            <span class="card-code">app · Go engine</span>
+          </div>
+          <h3>CDC &amp; Snapshot</h3>
+          <p>
+            Coordena um snapshot inicial MVCC-consistente com stream incremental ordenado por commit (LSN/GTID), gravando JSONL canônico no Amazon S3 ou disco. Sem Debezium ou Kafka.
+          </p>
+          <ul class="card-features">
+            <li>PostgreSQL 16+ (pgoutput) e MySQL 8+ (binlog)</li>
+            <li>Entrega Effectively-Once com marcadores S3</li>
+            <li>Captura de DDL (ALTER, CREATE, DROP)</li>
+          </ul>
+          <a href="produtos.html#cdc" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Roadmap Box -->
+      <div style="margin-top: 32px; background: var(--bg-primary); border: 1px dashed rgba(74, 20, 140, 0.4); border-radius: var(--radius-md); padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <span class="badge badge-roadmap">ROADMAP</span>
+            <strong style="font-size: 1.0625rem;">Data Environment Lifecycle (Operador Kubernetes)</strong>
+          </div>
+          <p class="text-muted" style="font-size: 0.875rem; max-width: 750px;">
+            Orquestração completa de réplicas efêmeras de banco de dados em contêineres: provisionamento, refresh, snapshot instantâneo e rollback sob demanda para desenvolvedores e agentes autônomos.
+          </p>
+        </div>
+        <a href="produtos.html#lifecycle" class="btn btn-secondary" style="font-size: 0.8125rem;">Ver Visão &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Data Showcase (Tonic Benchmark Reinterpreted) -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">DEMONSTRAÇÃO INTERATIVA</span>
+        <h2 class="font-title" data-i18n="demo_title">Simulação Interativa de Ambientes de Dados</h2>
+        <p data-i18n="demo_desc">
+          Alterne os módulos para ver como a Tessera isola fatias íntegras, neutraliza PII e preserva as relações relacionais.
+        </p>
+      </div>
+
+      <div class="demo-container">
+        <div class="demo-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-pulse"></span>
+              <strong style="font-family: var(--font-mono); font-size: 0.9375rem; color: #FFFFFF;">engine: tessera-sandbox-orchestrator</strong>
+            </div>
+            <span style="font-size: 0.8125rem; color: #C5C2E0; display: block; margin-top: 5px;">
+              Experimente a engine: <strong style="color: #7EE787;">toque ou clique em uma das 3 opções ao lado</strong> para ver o comportamento do fluxo e das tabelas &rarr;
+            </span>
+          </div>
+
+          <div class="demo-tabs">
+            <button class="demo-tab-btn active" data-module="subset" onclick="setDemoTab('subset')">1. Data Subsetting (Tarjan SCC)</button>
+            <button class="demo-tab-btn" data-module="mask" onclick="setDemoTab('mask')">2. Deterministic Masking (FF1)</button>
+            <button class="demo-tab-btn" data-module="cdc" onclick="setDemoTab('cdc')">3. CDC &amp; Snapshot (LSN0)</button>
+          </div>
+        </div>
+
+        <!-- Animated Graphical Transformation Visualizer -->
+        <div class="visual-pipeline">
+          <div class="pipeline-card">
+            <div class="pipeline-title">
+              <span>PROD DATABASE (SOURCE)</span>
+              <span class="badge" style="background: rgba(255,123,114,0.2); color: #FF7B72;">4.2 TB · 100% EXPOSURE</span>
+            </div>
+            <div class="pipeline-db-view">
+              <div class="row-item row-excluded">
+                <span class="col-id">#1001</span>
+                <span class="col-pii">maria.silva@empresa.com</span>
+                <span class="col-cpf">341.890.122-10</span>
+                <span class="col-amt">$4,850.00</span>
+              </div>
+              <div class="row-item row-active" id="source-row-highlight">
+                <span class="col-id">#1002</span>
+                <span class="col-pii">carlos.eduardo@corp.com</span>
+                <span class="col-cpf">890.124.908-55</span>
+                <span class="col-amt">$1,250.00</span>
+              </div>
+              <div class="row-item row-excluded">
+                <span class="col-id">#1003</span>
+                <span class="col-pii">ana.pereira@tech.io</span>
+                <span class="col-cpf">120.481.992-33</span>
+                <span class="col-amt">$9,100.00</span>
+              </div>
+              <div class="row-item row-excluded">
+                <span class="col-id">#1004</span>
+                <span class="col-pii">joao.vitor@fintech.br</span>
+                <span class="col-cpf">540.912.834-01</span>
+                <span class="col-amt">$320.00</span>
+              </div>
+            </div>
+            <div class="pipeline-stat" id="source-stat-text">Fonte: 18.500.000 registros relacionais</div>
+          </div>
+
+          <div class="pipeline-connector">
+            <div class="flow-arrow">
+              <span class="flow-pulse"></span>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6B4BF0" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+            <span class="flow-label" id="flow-label-text">Tarjan Waves Extraindo Seed</span>
+          </div>
+
+          <div class="pipeline-card pipeline-target">
+            <div class="pipeline-title">
+              <span>DEV / QA SANDBOX (TARGET)</span>
+              <span class="badge" style="background: rgba(126,231,135,0.2); color: #7EE787;" id="target-badge">REFERENTIAL &amp; SAFE</span>
+            </div>
+            <div class="pipeline-db-view" id="target-db-view">
+              <!-- Dynamically populated with smooth transitions -->
+            </div>
+            <div class="pipeline-stat" id="target-stat-text" style="color: #7EE787;">Volume reduzido em 96.4% · Integridade de FKs 100% preservada</div>
+          </div>
+        </div>
+
+        <div class="demo-body" style="margin-top: 24px;">
+          <!-- Execution Log -->
+          <div class="code-panel">
+            <div class="code-panel-header">
+              <span>Engine Execution Stream</span>
+              <span style="color: #6B4BF0;">HOT PATH / NO-I/O</span>
+            </div>
+            <pre id="demo-log" style="color: #A6A3B8; line-height: 1.6; font-size: 0.75rem; white-space: pre-wrap; margin: 0;"></pre>
+          </div>
+
+          <!-- Target Output JSON/Schema -->
+          <div class="code-panel">
+            <div class="code-panel-header">
+              <span id="output-panel-title">Target Schema Verification</span>
+              <span style="color: #7EE787;" id="output-panel-status">CONSISTENT</span>
+            </div>
+            <div id="demo-target-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">CASOS DE USO EMPRESARIAIS</span>
+        <h2 class="font-title">Projetado para os desafios mais críticos da engenharia de dados</h2>
+      </div>
+
+      <div class="cards-grid">
+        <div class="product-card">
+          <h3>Test Data Provisioning</h3>
+          <p>Subsets rápidos e sob demanda para CI/CD e ambientes de homologação sem clonar terabytes de produção.</p>
+        </div>
+        <div class="product-card">
+          <h3>Sandboxes para IA Agêntica</h3>
+          <p>Alimente agentes de geração de código e modelos com esquemas e dados realistas sem expor clientes reais.</p>
+        </div>
+        <div class="product-card">
+          <h3>Reprodução de Incidentes</h3>
+          <p>Isole uma transação crítica e todas as entidades conectadas a ela para debugar bugs sem acessar a produção.</p>
+        </div>
+        <div class="product-card">
+          <h3>Migrações &amp; Modernização</h3>
+          <p>Alimente data lakes e valide modernizações de banco com snapshots consistentes e CDC para S3.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <img src="assets/tessera-logo-transparent.png" alt="Tessera" style="height: 28px; width: auto; display: block;">
+          </div>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); max-width: 320px; line-height: 1.5; margin-bottom: 16px;">
+            Plataforma de Data Environment Automation para equipes de engenharia, QA e plataformas de dados.
+          </p>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+            Production-like data. Without production risk.
+          </span>
+        </div>
+
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="produtos.html#discovery">Discovery</a></li>
+            <li><a href="produtos.html#masking">Masking</a></li>
+            <li><a href="produtos.html#subsetter">Subsetter</a></li>
+            <li><a href="produtos.html#cdc">CDC &amp; Snapshot</a></li>
+            <li><a href="produtos.html#lifecycle">K8s Operator (Roadmap)</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="blog.html">Blog de Engenharia</a></li>
+            <li><a href="contato.html">Agendar Demo</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal &amp; Privacy</h4>
+          <ul>
+            <li><a href="privacidade.html">Privacidade</a></li>
+            <li><a href="termos.html">Termos de Uso</a></li>
+            <li><a href="privacidade.html#lgpd">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html#gdpr">Conformidade GDPR</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Tessera. Todos os direitos reservados.</span>
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+          <span>Homologado por <a href="https://salto.solutions" target="_blank" style="color: inherit; text-decoration: underline;">SALTO Solutions</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" role="dialog" aria-labelledby="cookie-title">
+    <strong id="cookie-title" style="display: block; font-size: 0.9375rem; margin-bottom: 6px;">Privacidade e Cookies</strong>
+    <p data-i18n="cookie_text">
+      Utilizamos cookies técnicos mínimos e anonimizados para aprimorar sua experiência e avaliar o desempenho do site, em conformidade com a LGPD e GDPR.
+    </p>
+    <div class="cookie-actions">
+      <button class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.8125rem;" onclick="declineCookies()" data-i18n="cookie_decline">Recusar</button>
+      <button class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8125rem;" onclick="acceptCookies()" data-i18n="cookie_accept">Aceitar</button>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+TESSERA
+DATA PLATFORM
+Descoberta, mascaramento, subsetting e CDC para
+ambientes não-produtivos rápidos e seguros.
+VISÃO TÉCNICA DOS MÓDULOS
+
+01/08
+
+TESSERA
+
+DATA MANAGEMENT
+
+COMO OS MÓDULOS SE ENCAIXAM
+
+VISÃO GERAL DA PLATAFORMA
+Dois frameworks de conformidade alimentam dois produtores de dados; um operador orquestra as réplicas.
+
+FRAMEWORKS
+
+PRODUTORES
+
+AMBIENTES SEGUROS
+
+Discovery — classifica PII
+Masking — mascara determinístico
+(bibliotecas, sem I/O)
+
+Subsetter — subsets íntegros
+CDC & Snapshot — export contínuo
+(consomem os frameworks)
+
+Dados não-prod mascarados
+Bancos, subsets e JSONL
+prontos p/ dev, teste e IA
+
+ORQUESTRAÇÃO
+
+Operador de BD (Kubernetes) · roadmap
+
+Gerencia réplicas não-produtivas em containers — provision, refresh, snapshot e rollback — sobre Subsetter e CDC.
+
+● Pronto: Discovery · Masking · Subsetter · CDC
+
+● Roadmap: Operador de BD (K8s)
+
+02/08
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+FRAMEWORK · BIBLIOTECA GO
+
+DISCOVERY
+Classifica colunas em domínios de dados sensíveis e produz um inventário — função pura, sem I/O.
+Colunas + amostras
+
+Classificadores
+
+Agregação
+
+Inventário
+
+metadados e valores
+
+TYPE · PATH · DATA
+
+noisy-OR / max + needs_review
+
+path → domínio + algoritmo
+
+■ PATH e DATA independentes
+
+cada um classifica sozinho — funciona em
+esquemas ofuscados (SAP, legado, nomes localizados).
+
+■ Classificadores
+
+prioriza não deixar coluna sensível passar; match de fonte
+única vira needs_review automático.
+
+■ Modelo unificado
+
+■ Recall-first
+
+■ Determinístico
+
+mesmos inputs → mesma classificação, para diffs de
+
+inventário estáveis.
+
+Contrato de saída:
+
+type, path (regex), data (regex), luhn, dictionary,
+entropy — extensível via RegisterClassifierType.
+relacional e JSON tratados por path[]; sem código
+
+separado por formato.
+harness de corpus rotulado calcula precision/recall/F1
+por domínio (regressão empírica).
+■ Acurácia medida
+
+o inventário (path · domínio · algoritmo) é a interface consumida pelo Masking.
+
+03/08
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+ARQUITETURA · ALTO NÍVEL
+
+DISCOVERY · ARQUITETURA
+PATH e DATA são evidências independentes que convergem para uma classificação.
+discovery · biblioteca (sem I/O)
+
+TYPE
+
+PATH
+
+Agregação
+
+Resolução
+
+gate por tipo
+
+por nome/caminho
+
+noisy-OR / max
+
++ needs_review
+→ inventário
+
+DATA
+por valores
+
+Função pura: o host faz todo o I/O; a integração com o Masking é apenas o arquivo de inventário.
+Classificadores plugáveis: type, path, data, luhn, dictionary, entropy…
+
+04/11
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+FRAMEWORK · BIBLIOTECA GO
+
+MASKING
+Mascaramento determinístico e key-driven — o determinismo é o que preserva a integridade referencial.
+Valor + instância
+
+Framework
+
+CryptoService
+
+Valor mascarado
+
+String / Number / Date
+
+registry de algoritmos
+
+FF1 (NIST) · SHA-256
+
+byte-idêntico entre execuções
+
+■ Determinismo garantido
+
+mesma chave + config + input → saída
+byte-idêntica entre processos, máquinas e versões.
+
+■ 13 algoritmos
+
+implementação validada contra vetores
+publicados; vetores congelados por algoritmo no CI.
+
+■ Formato preservado
+
+■ FF1 NIST SP 800-38G
+
+■ Chaves protegidas
+
+chave nunca sai do engine.
+
+Independência:
+
+providers de arquivo (dev/K8s Secret) e AWS KMS; a
+
+Secure Lookup, Character/Numeric/Segment Mapping,
+Date Shift/Replacement, Full Name, Email…
+Payment Card (Luhn), IBAN (dígito), Mod
+Checksum (CPF/CNPJ) — bijetivos, formato válido.
+algoritmos encadeáveis com detecção de ciclo
+no load; thread-safe e sem I/O na execução.
+■ Chaining + hot path
+
+Masking e Discovery não se importam entre si — comunicam-se só pelo formato de inventário.
+
+04/08
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+ARQUITETURA · ALTO NÍVEL
+
+MASKING · ARQUITETURA
+Framework despacha para o algoritmo; o CryptoService faz a matemática determinística.
+masking · biblioteca (determinística)
+
+Framework
+Mask
+String/Num/Date
+
+Registry +
+Algoritmos
+catálogo (13)
+
+CryptoService
+FF1 (NIST) ·
+SHA-256
+
+Determinismo: mesma chave + config + input → saída byte-idêntica → integridade referencial.
+Chave: via arquivo ou AWS KMS, carregada no Setup, nunca sai do engine; hot path sem I/O.
+
+06/11
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+APLICAÇÃO · ENTREGA PRINCIPAL
+
+SUBSETTER · ARQUITETURA
+Subsets referencialmente íntegros de bancos de produção para dev, teste e staging.
+
+Fontes
+
+Schema Graph
+
+Planner
+
+Executor
+
+Subset alvo
+
+6 plataformas
+
+Neo4j · FKs + lógicas
+
+Tarjan SCC · waves
+
+masking + discovery ao vivo
+
+referencialmente íntegro
+
+■ Integridade referencial
+
+planner monta o grafo de dependências e
+resolve ciclos (Tarjan SCC) em waves; seeds + WHERE.
+
+■ Grafo de esquema
+
+frameworks embarcados aplicam
+classificação e mascaramento durante a extração.
+
+■ Determinístico e observável
+
+■ Masking + Discovery ao vivo
+
+Um único caminho de execução
+
+tabelas, colunas e FKs em Neo4j, com relações
+lógicas cross-DB ou inferidas.
+vetores de determinismo no CI;
+métricas Prometheus de chamadas de masking.
+
+(engine.RunWithConfig) serve web, CLI e operador — detalhado no próximo slide.
+
+05/08
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+APLICAÇÃO · ENTREGA PRINCIPAL
+
+SUBSETTER · SUPERFÍCIES
+Três formas de rodar o mesmo motor, plugáveis em qualquer pipeline.
+
+WEB
+
+CLI HEADLESS
+
+OPERADOR K8s
+
+App React + REST API
+
+subsetter-job / -discover
+
+CRDs SubsetJob / DiscoveryJob
+
+■ UI de conectores e grafo
+
+■ Roda a partir de YAML
+
+■ Reconciliação controller-runtime
+
+■ Jobs assíncronos + progresso SSE
+
+■ Sem PostgreSQL/Neo4j
+
+■ Secrets → credenciais
+
+■ Metadados em PostgreSQL
+
+■ Ideal para CI/CD
+
+■ ConfigMaps de masking/inventário
+
+PLATAFORMAS SUPORTADAS
+PostgreSQL
+
+MySQL
+
+SQL Server
+
+Oracle
+
+MongoDB
+
+Object Storage (S3, Azure)
+
+Particionadas: tabelas declarativas do PostgreSQL fluem como unidade lógica com leitura paralela por partição.
+DynamoDB está especificado (enum de plataforma), ainda não implementado.
+
+06/08
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+ARQUITETURA · ALTO NÍVEL
+
+SUBSETTER · ARQUITETURA
+Três superfícies, um único motor; conectores isolam as fontes e o alvo.
+engine.RunWithConfig
+
+Conectores
+
+Superfícies
+Web · CLI ·
+Operador K8s
+
+Planner
+
+Executor
+
+grafo dep ·
+Tarjan SCC · waves
+
+extração por waves +
+Masking/Discovery
+
+6 plataformas
+
+Fontes
+produção
+
+Subset alvo
+referenc. íntegro
+
+Mesmo motor para as três superfícies; os frameworks Masking + Discovery rodam embarcados durante a extração.
+Estado: grafo de esquema em Neo4j · metadados em PostgreSQL.
+
+07/11
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+APLICAÇÃO · CAPTURA CONTÍNUA
+
+CDC & SNAPSHOT
+Snapshot MVCC-consistente + stream incremental ordenado por commit + DDL — para JSONL em S3/FS. Sem Debezium/Kafka.
+Snapshot Job
+
+Fonte
+
+Coordinator
+
+PostgreSQL 16+ / MySQL 8+
+
+fixa LSN0 (bootstrap)
+
+full/ · chunked · resumível
+
+JSONL canônico
+
+Streamer
+
+S3 / filesystem
+
+incremental/ · commit-ordered
+
+tudo < LSN0 é do snapshot, ≥ LSN0 é do stream
+— zero transações perdidas (gap test).
+
+■ Dois motores, paridade
+
+■ Effectively-once
+
+at-least-once + escritas idempotentes determinísticas;
+markers no S3 são a fonte de verdade.
+
+■ DDL + re-snapshot
+
+ordem de campos estável, numéricos como
+string, ISO-8601, base64 — recuperação byte-idêntica.
+
+■ Operador K8s
+
+■ Sem gap, sem overlap
+
+■ Serialização canônica
+
+RDS/Aurora e self-managed
+
+abstração ChangeSource; a suíte de testes
+
+do PostgreSQL roda igual no MySQL.
+ALTER/CREATE/DROP viram registros op=DDL;
+backpressure com buffer no próprio log.
+controller-runtime, 4 CRDs (CaptureSource, ReSnapshot,
+CaptureDestination, CaptureClass).
+
+· pglogrepl/pgoutput (sem extensão) · go-mysql (binlog ROW/GTID) · aws-sdk-go-v2
+
+07/08
+
+TESSERA
+
+PRONTO
+
+DATA MANAGEMENT
+
+ARQUITETURA · ALTO NÍVEL
+
+CDC & SNAPSHOT · ARQUITETURA
+Coordinator fixa o ponto LSN0; Snapshot e Streamer produzem sem gap nem overlap.
+ChangeSource
+
+Fontes
+
+Coordinator
+
+Snapshot Job
+
+PostgreSQL ·
+MySQL
+
+fixa LSN0
+
+full/ · chunked
+
+JSONL
+Streamer
+
+Object Storage / filesystem
+
+incremental/ · commit-ordered
+
+Só compartilham LSN0: tudo < LSN0 é do snapshot, ≥ LSN0 é do stream; markers no S3 = fonte de verdade; effectively-once.
+Control plane: operador K8s (controller-runtime) — 4 CRDs.
+
+10/11
+
+TESSERA
+
+PLACEHOLDER
+
+DATA MANAGEMENT
+
+ROADMAP · ARQUITETURA CONCEITUAL
+
+OPERADOR DE BD · KUBERNETES
+Lifecycle de réplicas não-produtivas em containers Kubernetes.
+Kubernetes
+
+Fontes
+produção
+
+Subsetter /
+CDC
+
+Container
+intermediário
+
+sincronização
+(mascarado ou não)
+
+réplica não-prod em sync
+
+Clones
+dev · teste · IA
+
+Storage nativo: Block Storage · EFS · OCI ZFS appliance (extensível)
+
+OPERAÇÕES
+provision
+
+refresh
+
+⚠ PLACEHOLDER
+
+snapshot
+
+rollback
+
+Diagrama conceitual — arquitetura e escopo ainda em definição.
+
+11/11
+
+
