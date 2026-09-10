@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/styles.css?v=20260910_18">
-  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_18">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_19">
 </head>
 <body class="bg-grid-dots">
 
@@ -185,32 +185,156 @@
 
     </div>
 
-    <!-- Architectural Rationale & Strategy for Tessera -->
-    <div class="rationale-grid">
-      <div class="rationale-card">
-        <h3>
-          <span class="bullet-violet">&bull;</span>
-          Por que animações em grafo funcionam tão bem?
-        </h3>
-        <p>
-          Test Data Management e Subsetting são conceitos difíceis de explicar apenas com texto. Quando CTOs e engenheiros veem o grafo de dependências sendo percorrido em tempo real — com as tabelas fora do escopo ficando apagadas —, eles compreendem instantaneamente como a Tessera economiza <strong>90%+ de storage</strong> sem quebrar chaves estrangeiras.
+    <!-- Seção: Animações Recomendadas por Produto -->
+    <section class="blueprint-section">
+      <div class="blueprint-header">
+        <span class="preview-badge">ESPECIFICAÇÃO DE PRODUTO // FRONTEND INTERATIVO</span>
+        <h2 class="font-title">Animações Recomendadas para Cada Produto Tessera</h2>
+        <p class="lead">
+          Conceitos avançados de engenharia de dados (como determinismo de JOINs, travessia de grafos cíclicos e replicação contínua sem Kafka) tornam-se imediatamente compreensíveis para CTOs e Tech Leads quando transformados em microssimulações visuais e interativas.
         </p>
       </div>
 
-      <div class="rationale-card">
-        <h3>
-          <span class="bullet-green">&bull;</span>
-          Cabe uma animação para cada um dos 4 produtos?
-        </h3>
-        <p>
-          <strong>Sim!</strong> Nossa recomendação técnica e estratégica:
-          <br>1. <strong>Subsetter (este módulo):</strong> Grafo de ondas Tarjan resolvendo dependências circulares.
-          <br>2. <strong>Masking:</strong> Pipeline criptográfico demonstrando entrada com PII &rarr; saída determinística preservando formato FF1 e integridade de JOINs.
-          <br>3. <strong>Discovery:</strong> Scanner de amostragem identificando colunas sensíveis em tempo real.
-          <br>4. <strong>CDC &amp; Snapshot:</strong> Linha do tempo com fronteira LSN0 e stream contínuo de mutações para S3.
-        </p>
+      <div class="blueprint-grid">
+        
+        <!-- 1. Discovery -->
+        <div class="blueprint-card">
+          <div class="blueprint-top">
+            <span class="blueprint-status status-ready">PRODUTO 1 · READY</span>
+            <span class="blueprint-anim-title">Scanner &amp; Radar de PII</span>
+          </div>
+          <h3 class="blueprint-title">Tessera Discovery</h3>
+          <p class="blueprint-desc">
+            Biblioteca Go pura sem I/O direto que analisa metadados e amostras fornecidos pelo chamador, aplicando heurísticas <em>Recall-First</em> para detectar campos sensíveis sem falsos negativos.
+          </p>
+          <div class="blueprint-points">
+            <div class="blueprint-point">
+              <span class="bullet-violet">&bull;</span>
+              <span><strong>Animação recomendada:</strong> "Live Schema Scanner &amp; PII Radar".</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-violet">&bull;</span>
+              <span><strong>O que demonstrar:</strong> Uma esteira de colunas e dados amostrados passando sob uma lente de escaneamento. O motor decompõe o caminho e valor, executando validações em tempo real (Regex, Luhn, Entropia de Shannon) e rotulando cada campo com score de confiança e algoritmo sugerido.</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-violet">&bull;</span>
+              <span><strong>Diferencial comprovado:</strong> Mostra como tabelas legadas com nomes crípticos (ex: <code>sap.FLD_019</code>) são descobertas pelo conteúdo da amostra, sem depender apenas do nome da coluna.</span>
+            </div>
+          </div>
+          <div class="blueprint-visual-mockup">// FLUXO VISUAL DA ANIMAÇÃO:
+[customers.cpf]   ──> [Regex + Validador Luhn] ──> CONFIRMED: BR_CPF (1.00) ──> Sugestão: CPF Masker
+[billing.num_cc]  ──> [Luhn Checksum + Mod10 ] ──> CONFIRMED: CC_PAN (0.98) ──> Sugestão: Luhn FPE
+[sap.FLD_019]     ──> [Entropia de Shannon   ] ──> NEEDS_REVIEW (0.75)     ──> Alerta no Dashboard</div>
+        </div>
+
+        <!-- 2. Masking -->
+        <div class="blueprint-card">
+          <div class="blueprint-top">
+            <span class="blueprint-status status-ready">PRODUTO 2 · READY</span>
+            <span class="blueprint-anim-title">Pipeline FPE &amp; JOINs Determinísticos</span>
+          </div>
+          <h3 class="blueprint-title">Tessera Masking</h3>
+          <p class="blueprint-desc">
+            Motor criptográfico determinístico (FF1 NIST SP 800-38G): <code>mesma chave + mesmo input = saída byte-idêntica</code>. Garante integridade referencial entre microsserviços sem revelar o dado real.
+          </p>
+          <div class="blueprint-points">
+            <div class="blueprint-point">
+              <span class="bullet-green">&bull;</span>
+              <span><strong>Animação recomendada:</strong> "Deterministic FPE Pipeline &amp; Cross-Service JOIN Preserver".</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-green">&bull;</span>
+              <span><strong>O que demonstrar:</strong> Dois bancos isolados (ex: <em>PostgreSQL Clientes</em> e <em>Oracle Faturamento</em>) que compartilham a chave <code>customer_id = 1042</code>. Ao acionar o mascaramento, o motor criptográfico substitui o ID por <code>"US-981-D"</code> em ambos os bancos. Um raio de JOIN relacional conecta as tabelas comprovando que a consulta multi-banco continua íntegra!</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-green">&bull;</span>
+              <span><strong>Diferencial comprovado:</strong> Elimina o maior receio técnico de times de QA: que anonimizar os dados destrua os testes integrados de ponta a ponta.</span>
+            </div>
+          </div>
+          <div class="blueprint-visual-mockup">// FLUXO VISUAL DA ANIMAÇÃO:
+Postgres: customers.id (#1042) ──[ KMS + FF1 Engine ]──> "US-981-D" ──┐
+                                                                       ├─► JOIN ON id = fk (100% ÍNTEGRO)
+Oracle:   billing.fk   (#1042) ──[ KMS + FF1 Engine ]──> "US-981-D" ──┘</div>
+        </div>
+
+        <!-- 3. Subsetter -->
+        <div class="blueprint-card active-prototype">
+          <div class="blueprint-top">
+            <span class="blueprint-status status-core">PRODUTO 3 · CORE</span>
+            <span class="status-active-badge">&check; Protótipo Ativo Acima</span>
+          </div>
+          <h3 class="blueprint-title">Tessera Subsetter</h3>
+          <p class="blueprint-desc">
+            Solver de grafos relacionais e ondas Tarjan SCC: extrai fatias coerentes guiadas por sementes e poda tabelas desnecessárias, reduzindo 90%+ do volume de storage sem criar chaves estrangeiras órfãs.
+          </p>
+          <div class="blueprint-points">
+            <div class="blueprint-point">
+              <span class="bullet-violet">&bull;</span>
+              <span><strong>Animação recomendada:</strong> "Tarjan Waves Relational Traversal Graph" <em>(Implementada no simulador acima)</em>.</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-violet">&bull;</span>
+              <span><strong>O que demonstra:</strong> O grafo com 14 nós expandindo em 3 ondas a partir da semente <code>customers</code>. Demonstra graficamente a detecção e quebra da dependência circular <code>orders &harr; transactions</code> com o algoritmo de componentes fortemente conexos (Tarjan SCC).</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-violet">&bull;</span>
+              <span><strong>Diferencial comprovado:</strong> Torna visual a economia de espaço de 96.4% em staging/testes mantendo chaves estrangeiras 100% íntegras.</span>
+            </div>
+          </div>
+          <div class="blueprint-visual-mockup">// FLUXO VISUAL DA ANIMAÇÃO (EM EXECUÇÃO NO TOPO):
+[customers (SEED)] ──> Onda 1 (accounts, addresses) ──> Onda 2 (orders, invoices)
+                      └── Resolução de Ciclo Tarjan SCC: orders &harr; transactions (2 etapas)
+                      └── Poda de 96.4% do volume (tabelas fora de escopo desvanecem)</div>
+        </div>
+
+        <!-- 4. CDC & Snapshot -->
+        <div class="blueprint-card">
+          <div class="blueprint-top">
+            <span class="blueprint-status status-hardening">PRODUTO 4 · HARDENING</span>
+            <span class="blueprint-anim-title">Fronteira LSN0 &amp; Stream Contínuo</span>
+          </div>
+          <h3 class="blueprint-title">Tessera CDC &amp; Snapshot</h3>
+          <p class="blueprint-desc">
+            Captura contínua de mutações diretamente da replicação lógica nativa do PostgreSQL (pgoutput) e MySQL (binlog), sem necessidade de instalar Kafka, ZooKeeper ou Debezium.
+          </p>
+          <div class="blueprint-points">
+            <div class="blueprint-point">
+              <span class="bullet-green">&bull;</span>
+              <span><strong>Animação recomendada:</strong> "LSN0 Horizon &amp; Continuous Stream to S3".</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-green">&bull;</span>
+              <span><strong>O que demonstrar:</strong> Uma linha do tempo horizontal dividida por um feixe vertical pulsante (**Fronteira LSN0**). À esquerda, o snapshot estático inicial consolida o estado do banco. À direita, mutações em tempo real (WAL/binlog) fluem continuamente através do serializador Go para arquivos JSONL no bucket S3.</span>
+            </div>
+            <div class="blueprint-point">
+              <span class="bullet-green">&bull;</span>
+              <span><strong>Diferencial comprovado:</strong> Demonstra como a coordenação LSN0 elimina transações duplicadas e janelas cegas, além de capturar DDLs estruturados sem derrubar o pipeline.</span>
+            </div>
+          </div>
+          <div class="blueprint-visual-mockup">// FLUXO VISUAL DA ANIMAÇÃO:
+PostgreSQL / MySQL ──> [ Coordenador CDC Go ] ──> MARCO TEMPORAL LSN0
+                          ├── [ Snapshot MVCC ]  ──> Base sólida inicial
+                          └── [ Stream Contínuo] ──> Eventos JSONL compactados gravados no S3</div>
+        </div>
+
       </div>
-    </div>
+
+      <!-- Conclusão e Próximos Passos -->
+      <div class="rationale-card" style="margin-top: 32px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h3 style="margin-bottom: 8px;">
+              <span class="bullet-green">&bull;</span>
+              Recomendação para a Página Oficial de Produtos
+            </h3>
+            <p style="max-width: 820px; font-size: 0.875rem; line-height: 1.6; color: var(--text-secondary);">
+              Nossa recomendação é manter o simulador do <strong>Subsetter</strong> como a grande âncora interativa da seção de produtos (pois grafos têm altíssimo impacto visual imediato) e, nas seções de <strong>Discovery</strong>, <strong>Masking</strong> e <strong>CDC</strong>, inserir micro-animações leves focadas nos seus respectivos diferenciais técnicos.
+            </p>
+          </div>
+          <a href="../contato/" class="btn btn-primary" style="align-self: center;">Solicitar Implementação &rarr;</a>
+        </div>
+      </div>
+    </section>
 
   </main>
 
