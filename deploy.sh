@@ -2,7 +2,7 @@
 # Deploy do Site Tessera pro VPS Hostinger.
 # Uso:
 #   ./deploy.sh          # Sincroniza a pasta public/ com /var/www/salto/tessera (ou /var/www/tessera)
-#   ./deploy.sh prod     # Sincroniza para /var/www/tessera (domínio próprio gettessera.io)
+#   ./deploy.sh prod     # Sincroniza para /var/www/tessera (domínio próprio tessera.com.br)
 #   ./deploy.sh salto    # Sincroniza para /var/www/salto/tessera (homologação em salto.solutions/tessera)
 set -euo pipefail
 

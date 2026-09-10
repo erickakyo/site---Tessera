@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gettessera.io/sitemap.xml
+Sitemap: https://tessera.com.br/sitemap.xml

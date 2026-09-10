@@ -199,19 +199,23 @@ header.site-header {
   gap: 12px;
   text-decoration: none;
   color: var(--text-primary);
+  flex-shrink: 0;
 }
 
 .brand-logo svg {
   height: 28px;
   width: auto;
   display: block;
+  flex-shrink: 0;
 }
 
 .brand-logo img {
-  height: 28px;
-  width: auto;
+  height: 28px !important;
+  max-height: 28px !important;
+  width: auto !important;
   display: block;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 nav.main-nav {
@@ -284,6 +288,18 @@ nav.main-nav .mobile-menu-footer {
   .nav-wrapper {
     position: relative;
     z-index: 1021;
+  }
+
+  .brand-logo {
+    flex-shrink: 0;
+  }
+
+  .brand-logo img {
+    height: 24px !important;
+    max-height: 24px !important;
+    width: auto !important;
+    display: block;
+    flex-shrink: 0;
   }
 
   .mobile-menu-btn {

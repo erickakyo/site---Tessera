@@ -15,4 +15,4 @@ Tessera is an enterprise developer and data infrastructure platform that automat
 - Category: Data Environment Automation
 - Target Audience: CTOs, Platform Engineers, Data Engineers, QA Leads, CISOs.
 - AI is a consumer of realistic, protected non-production data, not the definition of the platform.
-- Canonical Documentation: https://gettessera.io
+- Canonical Documentation: https://tessera.com.br
