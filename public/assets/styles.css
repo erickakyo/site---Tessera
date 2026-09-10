@@ -670,6 +670,28 @@ section {
   color: var(--text-secondary);
 }
 
+/* Roadmap Card (Home) */
+.roadmap-card {
+  margin-top: 56px !important;
+  background: var(--bg-primary);
+  border: 1px dashed rgba(107, 75, 240, 0.35);
+  border-radius: var(--radius-md);
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  clear: both;
+}
+
+@media (max-width: 768px) {
+  .roadmap-card {
+    margin-top: 40px !important;
+    padding: 20px;
+  }
+}
+
 /* Product Cards Grid */
 .cards-grid {
   display: grid;
@@ -888,18 +910,18 @@ section {
   margin-bottom: 20px;
   flex-wrap: wrap;
   gap: 16px;
-  position: relative;
-  z-index: 10;
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--header-height);
+  z-index: 100;
+  background: var(--bg-dark);
+  padding-top: 12px;
 }
 
 /* Fixação fluida dos seletores no topo no Mobile */
 @media (max-width: 860px) {
   .demo-header {
-    position: -webkit-sticky;
-    position: sticky;
     top: var(--header-height);
-    z-index: 100;
-    background: #121024;
     margin: -16px -16px 20px -16px;
     padding: 14px 16px;
     border-radius: var(--radius-md) var(--radius-md) 0 0;
