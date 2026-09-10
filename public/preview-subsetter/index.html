@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Preview: Animação do Grafo de Subsetting (Tarjan Waves) — Tessera</title>
+  
+  <!-- CSS & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_17">
+
+  <style>
+    /* Preview Page Specific Styles */
+    .preview-hero {
+      padding: clamp(36px, 5vw, 60px) 0 24px;
+      text-align: center;
+    }
+    .preview-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(138, 107, 255, 0.12);
+      border: 1px solid rgba(138, 107, 255, 0.3);
+      color: var(--tessera-violet);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .sim-container {
+      background: #0B0A16;
+      border: 1px solid rgba(138, 107, 255, 0.2);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    /* Top Control Bar */
+    .sim-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(14, 12, 28, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sim-info-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .sim-info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+    .sim-info-item strong {
+      color: #FFF;
+      font-weight: 600;
+    }
+    .sim-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sim-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #E2E1EC;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .sim-btn:hover {
+      background: rgba(138, 107, 255, 0.2);
+      border-color: var(--tessera-violet);
+      color: #FFF;
+    }
+    .sim-btn.active {
+      background: var(--tessera-violet);
+      border-color: var(--tessera-violet);
+      color: #FFF;
+      box-shadow: 0 0 12px rgba(138, 107, 255, 0.4);
+    }
+
+    /* Stage Canvas */
+    .sim-stage-wrapper {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      background: radial-gradient(circle at 50% 50%, #131024 0%, #0B0A16 100%);
+      background-size: cover;
+      min-height: 560px;
+    }
+    .sim-stage-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+    .sim-stage-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(138, 107, 255, 0.3);
+      border-radius: 3px;
+    }
+    .sim-stage {
+      position: relative;
+      width: 1060px;
+      height: 580px;
+      margin: 0 auto;
+    }
+
+    /* SVG Overlay */
+    .sim-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Nodes */
+    .sim-nodes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+    .node-wrap {
+      position: absolute;
+      width: 180px;
+      height: 68px;
+      box-sizing: border-box;
+      transition: transform 0.3s ease;
+    }
+    .node-card {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border-radius: 8px;
+      padding: 9px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      background: rgba(22, 19, 39, 0.6);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      color: #6C6882;
+      box-shadow: none;
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+      user-select: none;
+    }
+    .node-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .node-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: #7E7A94;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .node-badge {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #7E7A94;
+    }
+    .node-sub {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: #55516B;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* State Styles for Active Nodes */
+    .node-wrap.state-anchor .node-card {
+      background: #1B1238;
+      border: 1.5px solid #8A6BFF;
+      box-shadow: 0 0 24px rgba(138, 107, 255, 0.35);
+    }
+    .node-wrap.state-anchor .node-title { color: #FFF; }
+    .node-wrap.state-anchor .node-badge { background: #8A6BFF; color: #FFF; }
+    .node-wrap.state-anchor .node-sub { color: #D2C4FF; }
+
+    .node-wrap.state-lookup .node-card {
+      background: #1F190E;
+      border: 1.5px solid #D29922;
+      box-shadow: 4px 4px 0 rgba(210, 153, 34, 0.25), 0 0 16px rgba(210, 153, 34, 0.2);
+    }
+    .node-wrap.state-lookup .node-title { color: #F7E4B6; }
+    .node-wrap.state-lookup .node-badge { background: #D29922; color: #1F190E; }
+    .node-wrap.state-lookup .node-sub { color: #D8BD82; }
+
+    .node-wrap.state-wave1 .node-card {
+      background: #0E1E17;
+      border: 1.5px solid #7EE787;
+      box-shadow: 0 0 20px rgba(126, 231, 135, 0.25);
+    }
+    .node-wrap.state-wave1 .node-title { color: #FFF; }
+    .node-wrap.state-wave1 .node-badge { background: #7EE787; color: #072212; }
+    .node-wrap.state-wave1 .node-sub { color: #A8F5B0; }
+
+    .node-wrap.state-wave2 .node-card {
+      background: #0D1A2B;
+      border: 1.5px solid #58A6FF;
+      box-shadow: 0 0 18px rgba(88, 166, 255, 0.25);
+    }
+    .node-wrap.state-wave2 .node-title { color: #FFF; }
+    .node-wrap.state-wave2 .node-badge { background: #58A6FF; color: #081B33; }
+    .node-wrap.state-wave2 .node-sub { color: #A5D1FF; }
+
+    .node-wrap.state-wave3 .node-card {
+      background: #141228;
+      border: 1.5px solid #BC8CFF;
+      box-shadow: 0 0 18px rgba(188, 140, 255, 0.25);
+    }
+    .node-wrap.state-wave3 .node-title { color: #FFF; }
+    .node-wrap.state-wave3 .node-badge { background: #BC8CFF; color: #160B29; }
+    .node-wrap.state-wave3 .node-sub { color: #DDC8FF; }
+
+    /* Pulsing Seed Ring */
+    .seed-pulse-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 12px;
+      border: 2px solid #8A6BFF;
+      animation: seedPulse 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+      pointer-events: none;
+      display: none;
+    }
+    @keyframes seedPulse {
+      0% { transform: scale(0.98); opacity: 0.9; }
+      70% { transform: scale(1.08); opacity: 0; }
+      100% { transform: scale(1.08); opacity: 0; }
+    }
+
+    /* Edge Animation */
+    @keyframes dashflow {
+      to { stroke-dashoffset: -28; }
+    }
+    .edge-flow {
+      stroke-dasharray: 6 5;
+      animation: dashflow 1s linear infinite;
+    }
+
+    /* Tarjan SCC Warning Tag */
+    .tarjan-banner {
+      background: rgba(230, 81, 0, 0.12);
+      border: 1px solid rgba(230, 81, 0, 0.35);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #FFB74D;
+      margin: 16px 20px;
+    }
+
+    /* Legend / Bottom Bar */
+    .sim-legend-bar {
+      padding: 16px 20px;
+      background: rgba(14, 12, 28, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .legend-items {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #A6A3B8;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* Comparison Table / Architectural Rationale */
+    .rationale-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    @media (max-width: 768px) {
+      .rationale-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .rationale-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+    .rationale-card h3 {
+      font-size: 1.125rem;
+      margin-top: 0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body class="bg-grid-dots">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../" class="brand-logo" aria-label="Tessera Homepage">
+        <img src="../assets/tessera-logo-transparent.png" alt="Tessera Data Automation">
+      </a>
+
+      <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
+
+      <nav class="main-nav">
+        <a href="../produtos/">Produtos <span>&rarr;</span></a>
+        <a href="../quem-somos/">Quem Somos <span>&rarr;</span></a>
+        <a href="../blog/">Blog &amp; Insights <span>&rarr;</span></a>
+        <a href="../contato/">Contato <span>&rarr;</span></a>
+
+        <div class="mobile-menu-footer">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
+        </div>
+        <a href="../contato/" class="btn btn-primary">Agendar Demo</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container" style="padding-top: 20px;">
+    
+    <div class="preview-hero">
+      <span class="preview-badge">LAB DE VALIDAÇÃO // TESSERA SUBSETTER</span>
+      <h1 class="font-title" style="font-size: clamp(2rem, 3.8vw, 3rem); margin-bottom: 16px;">
+        Simulador de Traversal Relacional &amp; Tarjan Waves
+      </h1>
+      <p class="lead" style="max-width: 800px; margin: 0 auto;">
+        Demonstração interativa do motor de fatiamento determinístico da Tessera: como uma semente de dados (<code style="font-family: var(--font-mono); color: var(--tessera-violet);">customers</code>) navega pelas chaves estrangeiras, resolve ciclos relacionais com o algoritmo Tarjan SCC e descarta 96.4% do volume desnecessário.
+      </p>
+    </div>
+
+    <!-- Simulator Container -->
+    <div class="sim-container">
+      
+      <!-- Topbar Controls -->
+      <div class="sim-topbar">
+        <div class="sim-info-group">
+          <div class="sim-info-item">
+            <span>Semente:</span>
+            <strong style="color: #BC8CFF;">customers (WHERE region = 'BR-SP')</strong>
+          </div>
+          <div class="sim-info-item">
+            <span>Tabelas no Subset:</span>
+            <strong id="stat-reached" style="color: #7EE787;">1 / 14</strong>
+          </div>
+          <div class="sim-info-item">
+            <span>Redução de Volume:</span>
+            <strong id="stat-reduction" style="color: #58A6FF;">96.4%</strong>
+          </div>
+          <div class="sim-info-item">
+            <span>Integridade FK:</span>
+            <strong style="color: #7EE787;">100% Íntegro</strong>
+          </div>
+        </div>
+
+        <div class="sim-controls">
+          <button id="btn-play" class="sim-btn" onclick="togglePlay()">
+            <span id="play-icon">&#9654;</span> <span id="play-text">Auto Play</span>
+          </button>
+          <button class="sim-btn" onclick="setHop(0)">Semente</button>
+          <button class="sim-btn" onclick="setHop(1)">Onda 1 (FKs)</button>
+          <button class="sim-btn" onclick="setHop(2)">Onda 2 (Itens)</button>
+          <button class="sim-btn" onclick="setHop(3)">Onda 3 (Tarjan)</button>
+          <button class="sim-btn" onclick="resetSim()" title="Reiniciar">&#8635;</button>
+        </div>
+      </div>
+
+      <!-- Live Notification for Tarjan Cycle -->
+      <div id="tarjan-alert" class="tarjan-banner" style="display: none;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1rem;">&#9888;</span>
+          <span><strong>Ciclo Relacional Detectado:</strong> <code>orders &harr; transactions</code> (dependência circular bidirecional).</span>
+        </div>
+        <span style="color: #7EE787; font-weight: 600;">&check; Resolvido via Tarjan SCC Waves em 2 etapas</span>
+      </div>
+
+      <!-- Interactive Stage -->
+      <div class="sim-stage-wrapper">
+        <div class="sim-stage" id="stage">
+          
+          <!-- SVG Paths for Foreign Keys -->
+          <svg class="sim-svg" id="svg-layer" viewBox="0 0 1060 580">
+            <defs>
+              <!-- Arrowheads -->
+              <marker id="arrow-dead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 1 L 9 5 L 0 9 z" fill="#3A3654"></path>
+              </marker>
+              <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 1 L 9 5 L 0 9 z" fill="#7EE787"></path>
+              </marker>
+              <marker id="arrow-cycle" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 1 L 9 5 L 0 9 z" fill="#E65100"></path>
+              </marker>
+            </defs>
+
+            <!-- Group for Dead Edges (pruned) -->
+            <g id="dead-edges"></g>
+
+            <!-- Group for Live Active Edges -->
+            <g id="live-edges"></g>
+          </svg>
+
+          <!-- DOM Nodes Layer -->
+          <div class="sim-nodes" id="nodes-layer"></div>
+
+        </div>
+      </div>
+
+      <!-- Legend & Execution Status -->
+      <div class="sim-legend-bar">
+        <div class="legend-items">
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #8A6BFF; box-shadow: 0 0 8px #8A6BFF;"></div>
+            <span>Semente / Âncora</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #7EE787; box-shadow: 0 0 8px #7EE787;"></div>
+            <span>Onda 1 (FKs Diretas)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #58A6FF; box-shadow: 0 0 8px #58A6FF;"></div>
+            <span>Onda 2 (Cascata)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #D29922; box-shadow: 0 0 8px #D29922;"></div>
+            <span>Tabela Lookup (Full)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #3A3654;"></div>
+            <span>Fora do Subset (Descartada)</span>
+          </div>
+        </div>
+
+        <div style="color: #C5C2E0; font-family: var(--font-mono); font-size: 0.75rem;">
+          Status: <span id="status-text" style="color: #7EE787; font-weight: 600;">Aguardando execução...</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Architectural Rationale & Strategy for Tessera -->
+    <div class="rationale-grid">
+      <div class="rationale-card">
+        <h3>
+          <span style="color: #8A6BFF;">&bull;</span>
+          Por que animações em grafo funcionam tão bem?
+        </h3>
+        <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.6;">
+          Test Data Management e Subsetting são conceitos difíceis de explicar apenas com texto. Quando CTOs e engenheiros veem o grafo de dependências sendo percorrido em tempo real — com as tabelas fora do escopo ficando apagadas —, eles compreendem instantaneamente como a Tessera economiza <strong>90%+ de storage</strong> sem quebrar chaves estrangeiras.
+        </p>
+      </div>
+
+      <div class="rationale-card">
+        <h3>
+          <span style="color: #7EE787;">&bull;</span>
+          Cabe uma animação para cada um dos 4 produtos?
+        </h3>
+        <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.6;">
+          <strong>Sim!</strong> Nossa recomendação técnica e estratégica:
+          <br>1. <strong>Subsetter (este módulo):</strong> Grafo de ondas Tarjan resolvendo dependências circulares.
+          <br>2. <strong>Masking:</strong> Pipeline criptográfico demonstrando entrada com PII &rarr; saída determinística preservando formato FF1 e integridade de JOINs.
+          <br>3. <strong>Discovery:</strong> Scanner de amostragem identificando colunas sensíveis em tempo real.
+          <br>4. <strong>CDC &amp; Snapshot:</strong> Linha do tempo com fronteira LSN0 e stream contínuo de mutações para S3.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <img src="../assets/tessera-logo-transparent.png" alt="Tessera" style="height: 28px; width: auto; display: block;">
+          </div>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Plataforma de Data Environment Automation para equipes de engenharia, QA e plataformas de dados.
+          </p>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+            Production-like data. Without production risk.
+          </span>
+        </div>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="../produtos/#discovery">Discovery</a></li>
+            <li><a href="../produtos/#masking">Masking</a></li>
+            <li><a href="../produtos/#subsetter">Subsetter</a></li>
+            <li><a href="../produtos/#cdc">CDC &amp; Snapshot</a></li>
+            <li><a href="../produtos/#lifecycle">K8s Operator (Roadmap)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="../">Home</a></li>
+            <li><a href="../quem-somos/">Quem Somos</a></li>
+            <li><a href="../blog/">Blog de Engenharia</a></li>
+            <li><a href="../contato/">Agendar Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal &amp; Privacy</h4>
+          <ul>
+            <li><a href="../privacidade/">Privacidade</a></li>
+            <li><a href="../termos/">Termos de Uso</a></li>
+            <li><a href="../privacidade/#lgpd">Conformidade LGPD</a></li>
+            <li><a href="../privacidade/#gdpr">Conformidade GDPR</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
+          </div>
+        </div>
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 12px;">
+          <span>&copy; 2026 Tessera. Todos os direitos reservados.</span>
+          <span>Desenvolvido por <a href="https://salto.solutions" target="_blank" style="color: inherit; text-decoration: underline;">Salto Solutions</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/app.js?v=20260910_17"></script>
+
+  <!-- Interactive Graph Engine Script -->
+  <script>
+    (function() {
+      'use strict';
+
+      var W = 180, H = 68;
+
+      var NODES = [
+        // Wave 0: Anchor Seed
+        { id: 'customers', name: 'customers', cols: 'id · cpf · email', x: 60, y: 220, depth: 0, kind: 'seed' },
+        
+        // Lookup Tables (Full Copies)
+        { id: 'regions', name: 'regions', cols: 'id · state_code', x: 60, y: 70, depth: 1, kind: 'lookup' },
+        { id: 'currency_rates', name: 'currency_rates', cols: 'id · rate_brl', x: 820, y: 410, depth: 3, kind: 'lookup' },
+
+        // Wave 1: Direct FK dependencies
+        { id: 'accounts', name: 'accounts', cols: 'id · customer_id', x: 310, y: 130, depth: 1 },
+        { id: 'addresses', name: 'addresses', cols: 'id · customer_id', x: 310, y: 310, depth: 1 },
+
+        // Wave 2: Cascading dependencies
+        { id: 'orders', name: 'orders', cols: 'id · account_id', x: 560, y: 70, depth: 2 },
+        { id: 'payment_methods', name: 'payment_methods', cols: 'id · account_id', x: 560, y: 220, depth: 2 },
+        { id: 'invoices', name: 'invoices', cols: 'id · address_id', x: 560, y: 370, depth: 2 },
+
+        // Wave 3: Leaf nodes & Tarjan cycles
+        { id: 'order_items', name: 'order_items', cols: 'id · order_id', x: 820, y: 70, depth: 3 },
+        { id: 'transactions', name: 'transactions', cols: 'id · order_id · fk_cycle', x: 820, y: 220, depth: 3, isCycle: true },
+
+        // Dead nodes (Not included in subset)
+        { id: 'audit_events', name: 'audit_events', cols: 'id · actor_id', x: 60, y: 460, depth: null },
+        { id: 'employee_shifts', name: 'employee_shifts', cols: 'id · manager_id', x: 310, y: 470, depth: null },
+        { id: 'internal_tickets', name: 'internal_tickets', cols: 'id · team_id', x: 560, y: 490, depth: null },
+        { id: 'archived_logs', name: 'archived_logs', cols: 'id · raw_payload', x: 820, y: 510, depth: null }
+      ];
+
+      var EDGES = [
+        // Live Foreign Keys
+        { from: 'customers', to: 'accounts', label: 'customer_id', wave: 1 },
+        { from: 'customers', to: 'addresses', label: 'customer_id', wave: 1 },
+        { from: 'customers', to: 'regions', label: 'region_id', wave: 1, lookup: true },
+        { from: 'accounts', to: 'orders', label: 'account_id', wave: 2 },
+        { from: 'accounts', to: 'payment_methods', label: 'account_id', wave: 2 },
+        { from: 'addresses', to: 'invoices', label: 'address_id', wave: 2 },
+        { from: 'orders', to: 'order_items', label: 'order_id', wave: 3 },
+        { from: 'orders', to: 'transactions', label: 'order_id', wave: 3 },
+        { from: 'payment_methods', to: 'transactions', label: 'method_id', wave: 3 },
+        { from: 'invoices', to: 'currency_rates', label: 'currency_id', wave: 3, lookup: true },
+
+        // Circular FK resolved by Tarjan SCC
+        { from: 'transactions', to: 'orders', label: 'Tarjan SCC Wave 2', wave: 3, isCycle: true },
+
+        // Dead edges (not part of the seed slice)
+        { from: 'audit_events', to: 'customers', label: '', dead: true },
+        { from: 'employee_shifts', to: 'accounts', label: '', dead: true },
+        { from: 'internal_tickets', to: 'orders', label: '', dead: true },
+        { from: 'archived_logs', to: 'transactions', label: '', dead: true }
+      ];
+
+      var nodeMap = {};
+      NODES.forEach(function(n) { nodeMap[n.id] = n; });
+
+      // Calculate smooth Bezier Curve between two boxes
+      function calcBezier(a, b) {
+        var ac = { x: a.x + W / 2, y: a.y + H / 2 };
+        var bc = { x: b.x + W / 2, y: b.y + H / 2 };
+        var dx = bc.x - ac.x;
+        var dy = bc.y - ac.y;
+
+        var p0, p3, c1, c2;
+        if (Math.abs(dx) > Math.abs(dy) * 0.85) {
+          var s = dx > 0 ? 1 : -1;
+          var off = Math.max(45, Math.abs(dx) * 0.45);
+          p0 = { x: a.x + (s > 0 ? W : 0), y: ac.y };
+          p3 = { x: b.x + (s > 0 ? 0 : W), y: bc.y };
+          c1 = { x: p0.x + s * off, y: p0.y };
+          c2 = { x: p3.x - s * off, y: p3.y };
+        } else {
+          var s2 = dy > 0 ? 1 : -1;
+          var off2 = Math.max(35, Math.abs(dy) * 0.45);
+          p0 = { x: ac.x, y: a.y + (s2 > 0 ? H : 0) };
+          p3 = { x: bc.x, y: b.y + (s2 > 0 ? 0 : H) };
+          c1 = { x: p0.x, y: p0.y + s2 * off2 };
+          c2 = { x: p3.x - s2 * off2, y: p3.y };
+        }
+
+        var d = 'M ' + p0.x + ' ' + p0.y + ' C ' + c1.x + ' ' + c1.y + ', ' + c2.x + ' ' + c2.y + ', ' + p3.x + ' ' + p3.y;
+        var mx = (p0.x + 3 * c1.x + 3 * c2.x + p3.x) / 8;
+        var my = (p0.y + 3 * c1.y + 3 * c2.y + p3.y) / 8;
+
+        return { d: d, mx: mx, my: my };
+      }
+
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      var nodesLayer = document.getElementById('nodes-layer');
+      var liveEdgesGroup = document.getElementById('live-edges');
+      var deadEdgesGroup = document.getElementById('dead-edges');
+
+      // 1. Build Dead Edges
+      EDGES.filter(function(e) { return e.dead; }).forEach(function(e) {
+        var a = nodeMap[e.from], b = nodeMap[e.to];
+        var geom = calcBezier(a, b);
+        var path = document.createElementNS(SVG_NS, 'path');
+        path.setAttribute('d', geom.d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', '#28243D');
+        path.setAttribute('stroke-width', '1.5');
+        path.setAttribute('stroke-dasharray', '3 5');
+        path.setAttribute('marker-end', 'url(#arrow-dead)');
+        deadEdgesGroup.appendChild(path);
+      });
+
+      // 2. Build Live Edges
+      var liveEdgeElements = [];
+      EDGES.filter(function(e) { return !e.dead; }).forEach(function(e) {
+        var a = nodeMap[e.from], b = nodeMap[e.to];
+        var geom = calcBezier(a, b);
+        var g = document.createElementNS(SVG_NS, 'g');
+        g.style.transition = 'opacity 0.4s ease';
+        g.style.opacity = '0';
+
+        var strokeColor = e.isCycle ? '#FF7B72' : (e.lookup ? '#D29922' : '#7EE787');
+        var marker = e.isCycle ? 'url(#arrow-cycle)' : 'url(#arrow-active)';
+
+        var path = document.createElementNS(SVG_NS, 'path');
+        path.setAttribute('d', geom.d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', strokeColor);
+        path.setAttribute('stroke-width', e.isCycle ? '2.5' : '2');
+        path.setAttribute('marker-end', marker);
+        path.classList.add('edge-flow');
+        g.appendChild(path);
+
+        // Edge label (FK column)
+        if (e.label) {
+          var text = document.createElementNS(SVG_NS, 'text');
+          text.setAttribute('x', geom.mx);
+          text.setAttribute('y', geom.my - 4);
+          text.setAttribute('text-anchor', 'middle');
+          text.setAttribute('font-family', "'JetBrains Mono', monospace");
+          text.setAttribute('font-size', '10');
+          text.setAttribute('font-weight', '600');
+          text.setAttribute('fill', strokeColor);
+          text.setAttribute('stroke', '#0B0A16');
+          text.setAttribute('stroke-width', '3');
+          text.setAttribute('paint-order', 'stroke');
+          text.textContent = e.label;
+          g.appendChild(text);
+        }
+
+        liveEdgesGroup.appendChild(g);
+        liveEdgeElements.push({ edge: e, el: g, wave: e.wave });
+      });
+
+      // 3. Build Nodes
+      var nodeElements = [];
+      NODES.forEach(function(n) {
+        var wrap = document.createElement('div');
+        wrap.className = 'node-wrap';
+        wrap.style.left = n.x + 'px';
+        wrap.style.top = n.y + 'px';
+
+        var pulseRing = document.createElement('div');
+        pulseRing.className = 'seed-pulse-ring';
+
+        var card = document.createElement('div');
+        card.className = 'node-card';
+
+        var header = document.createElement('div');
+        header.className = 'node-header';
+
+        var title = document.createElement('span');
+        title.className = 'node-title';
+        title.innerHTML = (n.kind === 'seed' ? '&#9679; ' : '') + n.name;
+
+        var badge = document.createElement('span');
+        badge.className = 'node-badge';
+        badge.textContent = n.depth === null ? 'PRUNED' : (n.kind === 'seed' ? 'SEED' : (n.kind === 'lookup' ? 'FULL' : 'W' + n.depth));
+
+        header.appendChild(title);
+        header.appendChild(badge);
+
+        var sub = document.createElement('div');
+        sub.className = 'node-sub';
+        sub.textContent = n.cols;
+
+        card.appendChild(header);
+        card.appendChild(sub);
+        wrap.appendChild(pulseRing);
+        wrap.appendChild(card);
+        nodesLayer.appendChild(wrap);
+
+        nodeElements.push({ node: n, wrap: wrap, pulse: pulseRing });
+      });
+
+      // Simulation State
+      var currentHop = 0;
+      var isPlaying = false;
+      var playTimer = null;
+
+      window.setHop = function(hop) {
+        currentHop = hop;
+        updateStage();
+      };
+
+      window.resetSim = function() {
+        stopPlay();
+        window.setHop(0);
+      };
+
+      function updateStage() {
+        var reachedCount = 0;
+
+        nodeElements.forEach(function(item) {
+          var n = item.node;
+          var inHop = n.depth !== null && n.depth <= currentHop;
+
+          item.wrap.className = 'node-wrap';
+          item.pulse.style.display = 'none';
+
+          if (inHop) {
+            reachedCount++;
+            if (n.kind === 'seed') {
+              item.wrap.classList.add('state-anchor');
+              item.pulse.style.display = 'block';
+            } else if (n.kind === 'lookup') {
+              item.wrap.classList.add('state-lookup');
+            } else if (n.depth === 1) {
+              item.wrap.classList.add('state-wave1');
+            } else if (n.depth === 2) {
+              item.wrap.classList.add('state-wave2');
+            } else if (n.depth === 3) {
+              item.wrap.classList.add('state-wave3');
+            }
+          }
+        });
+
+        // Toggle Live Edges
+        liveEdgeElements.forEach(function(item) {
+          var on = item.wave <= currentHop;
+          item.el.style.opacity = on ? '1' : '0';
+        });
+
+        // Tarjan alert visibility
+        var tarjanAlert = document.getElementById('tarjan-alert');
+        if (tarjanAlert) {
+          tarjanAlert.style.display = currentHop >= 3 ? 'flex' : 'none';
+        }
+
+        // Update stats
+        var statReached = document.getElementById('stat-reached');
+        if (statReached) statReached.textContent = reachedCount + ' / ' + NODES.length;
+
+        var statusText = document.getElementById('status-text');
+        if (statusText) {
+          if (currentHop === 0) {
+            statusText.textContent = "Semente customers ativada. Traversal inicializado.";
+            statusText.style.color = "#8A6BFF";
+          } else if (currentHop === 1) {
+            statusText.textContent = "Onda 1: Resolvidas FKs diretas (accounts, addresses, regions).";
+            statusText.style.color = "#7EE787";
+          } else if (currentHop === 2) {
+            statusText.textContent = "Onda 2: Cascata de tabelas filhas (orders, payments, invoices).";
+            statusText.style.color = "#58A6FF";
+          } else if (currentHop >= 3) {
+            statusText.textContent = "Onda 3 Completa: Tarjan SCC quebrou ciclo orders <-> transactions. Fatiamento íntegro!";
+            statusText.style.color = "#7EE787";
+          }
+        }
+      }
+
+      window.togglePlay = function() {
+        if (isPlaying) {
+          stopPlay();
+        } else {
+          startPlay();
+        }
+      };
+
+      function startPlay() {
+        isPlaying = true;
+        var btn = document.getElementById('btn-play');
+        var icon = document.getElementById('play-icon');
+        var text = document.getElementById('play-text');
+        if (btn) btn.classList.add('active');
+        if (icon) icon.innerHTML = '&#10074;&#10074;';
+        if (text) text.textContent = 'Pausar';
+
+        function step() {
+          currentHop = (currentHop + 1) % 4;
+          updateStage();
+          playTimer = setTimeout(step, 2400);
+        }
+
+        playTimer = setTimeout(step, 1800);
+      }
+
+      function stopPlay() {
+        isPlaying = false;
+        if (playTimer) clearTimeout(playTimer);
+        var btn = document.getElementById('btn-play');
+        var icon = document.getElementById('play-icon');
+        var text = document.getElementById('play-text');
+        if (btn) btn.classList.remove('active');
+        if (icon) icon.innerHTML = '&#9654;';
+        if (text) text.textContent = 'Auto Play';
+      }
+
+      // Initial execution on load
+      window.addEventListener('DOMContentLoaded', function() {
+        updateStage();
+      });
+    })();
+  </script>
+
+</body>
+</html>
