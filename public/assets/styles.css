@@ -1198,6 +1198,13 @@ footer.site-footer {
   }
 }
 
+.footer-col img {
+  height: 20px !important;
+  max-height: 20px !important;
+  width: auto;
+  display: block;
+}
+
 .footer-col h4 {
   font-size: 0.875rem;
   font-family: var(--font-mono);
