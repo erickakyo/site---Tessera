@@ -263,23 +263,29 @@ nav.main-nav .mobile-menu-footer {
 
 @media (max-width: 768px) {
   header.site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 1000;
+    left: 0;
+    width: 100%;
+    z-index: 1020;
     background-color: #FAF9F5;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 
+  body {
+    padding-top: var(--header-height);
+  }
+
   .nav-wrapper {
     position: relative;
-    z-index: 1001;
+    z-index: 1021;
   }
 
   .mobile-menu-btn {
     display: inline-flex;
     position: relative;
-    z-index: 1015;
+    z-index: 1030;
     height: 38px;
     width: 38px;
     padding: 7px;
@@ -291,7 +297,7 @@ nav.main-nav .mobile-menu-footer {
     align-items: center;
     gap: 10px;
     position: relative;
-    z-index: 1015;
+    z-index: 1030;
   }
 
   .nav-actions .btn {
@@ -318,7 +324,7 @@ nav.main-nav .mobile-menu-footer {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
-    z-index: 1005;
+    z-index: 1015;
   }
 
   .mobile-menu-backdrop.open {
@@ -333,6 +339,8 @@ nav.main-nav .mobile-menu-footer {
     left: 0;
     right: 0;
     width: 100%;
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
     box-sizing: border-box;
     background: #FAF9F5;
     border-bottom: 1px solid var(--border-strong);
@@ -341,7 +349,7 @@ nav.main-nav .mobile-menu-footer {
     gap: 0;
     display: none;
     box-shadow: 0 16px 36px rgba(18, 16, 36, 0.15);
-    z-index: 1010;
+    z-index: 1025;
     overflow-x: hidden;
   }
 
@@ -622,7 +630,6 @@ section {
 .problem-box {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
-  border-left: 4px solid var(--tessera-violet);
   padding: 40px;
   border-radius: var(--radius-sm);
   margin: 40px 0;

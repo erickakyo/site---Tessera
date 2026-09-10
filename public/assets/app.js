@@ -259,6 +259,9 @@
     if (document.getElementById('demo-target-output')) {
       window.setDemoTab('subset');
     }
+    if (document.getElementById('train-scroll-wrapper')) {
+      window.setTrainState('bottleneck');
+    }
   });
 })();
 
