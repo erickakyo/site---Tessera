@@ -2,6 +2,17 @@
 (function() {
   'use strict';
 
+  // Clean URL: Remove trailing 'index.html' or '/index' from browser address bar without reload
+  try {
+    if (window.history && window.history.replaceState) {
+      var pathname = window.location.pathname;
+      if (pathname.endsWith('/index.html') || pathname.endsWith('/index')) {
+        var cleanPath = pathname.replace(/\/index(\.html)?$/, '/') + window.location.search + window.location.hash;
+        window.history.replaceState(null, '', cleanPath);
+      }
+    }
+  } catch (e) {}
+
   // Translations Dictionary
   const translations = {
     pt: {

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termos de Uso — Tessera</title>
+  <meta name="description" content="Termos gerais de navegação e uso das soluções e materiais da Tessera.">
+  <link rel="canonical" href="https://gettessera.io/termos/">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_15">
+</head>
+<body class="bg-grid-dots">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../" class="brand-logo" aria-label="Tessera Homepage">
+        <img src="../assets/tessera-logo-transparent.png" alt="Tessera Data Automation" style="height: 32px; width: auto; display: block;">
+      </a>
+
+      <!-- Mobile Backdrop Overlay (Anthropic Style) -->
+      <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
+
+      <nav class="main-nav">
+        <a href="../produtos/">Produtos <span>&rarr;</span></a>
+        <a href="../quem-somos/">Quem Somos <span>&rarr;</span></a>
+        <a href="../blog/">Blog &amp; Insights <span>&rarr;</span></a>
+        <a href="../contato/">Contato <span>&rarr;</span></a>
+
+        <!-- Mobile Menu Footer with Language Switcher -->
+        <div class="mobile-menu-footer">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+        </div>
+        <a href="../contato/" class="btn btn-primary">Agendar Demo</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container-narrow">
+      <span class="eyebrow">DOCUMENTO LEGAL</span>
+      <h1 class="font-title">Termos de Uso</h1>
+      <p class="lead">Condições aplicáveis ao acesso a este site e ao agendamento de serviços da Tessera.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-narrow" style="line-height: 1.8; color: var(--text-secondary);">
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 40px;">
+        <h2 class="font-title" style="color: var(--text-primary); margin-bottom: 16px;">1. Aceitação dos Termos</h2>
+        <p style="margin-bottom: 24px;">
+          Ao acessar e navegar no website da Tessera, você concorda com estes termos de uso e com todas as leis e regulamentações aplicáveis à propriedade intelectual e proteção de dados.
+        </p>
+
+        <h2 class="font-title" style="color: var(--text-primary); margin-bottom: 16px;">2. Propriedade Intelectual</h2>
+        <p style="margin-bottom: 24px;">
+          Todo o conteúdo deste website, incluindo código-fonte, arquitetura descrita, marcas, logotipos, especificações técnicas e designs visuais, pertence à Tessera e está protegido pelas leis internacionais de direitos autorais.
+        </p>
+
+        <h2 class="font-title" style="color: var(--text-primary); margin-bottom: 16px;">3. Limites de Responsabilidade</h2>
+        <p>
+          As informações técnicas contidas neste site refletem com exatidão a maturidade do produto, dividida entre funcionalidades em produção, em fase de endurecimento (hardening) e em roadmap. Nenhuma alegação neste website deve ser interpretada como garantia ilimitada de detecção total de PII sem parametrização prévia das políticas de dados da organização.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <img src="../assets/tessera-logo-transparent.png" alt="Tessera" style="height: 28px; width: auto; display: block;">
+          </div>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Plataforma de Data Environment Automation para equipes de engenharia, QA e plataformas de dados.
+          </p>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+            Production-like data. Without production risk.
+          </span>
+        </div>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="../produtos/#discovery">Discovery</a></li>
+            <li><a href="../produtos/#masking">Masking</a></li>
+            <li><a href="../produtos/#subsetter">Subsetter</a></li>
+            <li><a href="../produtos/#cdc">CDC &amp; Snapshot</a></li>
+            <li><a href="../produtos/#lifecycle">K8s Operator (Roadmap)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="../">Home</a></li>
+            <li><a href="../quem-somos/">Quem Somos</a></li>
+            <li><a href="../blog/">Blog de Engenharia</a></li>
+            <li><a href="../contato/">Agendar Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal &amp; Privacy</h4>
+          <ul>
+            <li><a href="../privacidade/">Privacidade</a></li>
+            <li><a href="../termos/">Termos de Uso</a></li>
+            <li><a href="../privacidade/#lgpd">Conformidade LGPD</a></li>
+            <li><a href="../privacidade/#gdpr">Conformidade GDPR</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+          </div>
+        </div>
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 12px;">
+          <span>&copy; 2026 Tessera. Todos os direitos reservados.</span>
+          <span>Desenvolvido por <a href="https://salto.solutions" target="_blank" style="color: inherit; text-decoration: underline;">Salto Solutions</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/app.js?v=20260910_15"></script>
+</body>
+</html>

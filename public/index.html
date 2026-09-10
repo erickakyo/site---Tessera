@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=20260910_14">
+  <link rel="stylesheet" href="assets/styles.css?v=20260910_15">
 
   <!-- Schema.org JSON-LD Structured Data (GEO / AEO) -->
   <script type="application/ld+json">
@@ -66,7 +66,7 @@
   <!-- Site Header -->
   <header class="site-header">
     <div class="container nav-wrapper">
-      <a href="index.html" class="brand-logo" aria-label="Tessera Homepage">
+      <a href="./" class="brand-logo" aria-label="Tessera Homepage">
         <img src="assets/tessera-logo-transparent.png" alt="Tessera Data Automation" style="height: 32px; width: auto; display: block;">
       </a>
 
@@ -74,10 +74,10 @@
       <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
 
       <nav class="main-nav">
-        <a href="produtos.html" data-i18n="nav_products">Produtos <span>&rarr;</span></a>
-        <a href="quem-somos.html" data-i18n="nav_about">Quem Somos <span>&rarr;</span></a>
-        <a href="blog.html" data-i18n="nav_blog">Blog &amp; Insights <span>&rarr;</span></a>
-        <a href="contato.html" data-i18n="nav_contact">Contato <span>&rarr;</span></a>
+        <a href="produtos/" data-i18n="nav_products">Produtos <span>&rarr;</span></a>
+        <a href="quem-somos/" data-i18n="nav_about">Quem Somos <span>&rarr;</span></a>
+        <a href="blog/" data-i18n="nav_blog">Blog &amp; Insights <span>&rarr;</span></a>
+        <a href="contato/" data-i18n="nav_contact">Contato <span>&rarr;</span></a>
         
         <!-- Mobile Menu Footer with Language Switcher -->
         <div class="mobile-menu-footer">
@@ -94,7 +94,7 @@
           <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
           <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
         </div>
-        <a href="contato.html" class="btn btn-primary" data-i18n="nav_demo">Agendar Demo</a>
+        <a href="contato/" class="btn btn-primary" data-i18n="nav_demo">Agendar Demo</a>
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu de Navegação" aria-expanded="false">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -115,8 +115,8 @@
         A Tessera automatiza como dados realistas e protegidos são descobertos, mascarados, reduzidos e entregues para engenharia, QA, migrações e agentes de IA.
       </p>
       <div class="cta-group">
-        <a href="produtos.html" class="btn btn-primary" data-i18n="btn_explore">Explorar Arquitetura</a>
-        <a href="contato.html" class="btn btn-secondary" data-i18n="nav_demo">Agendar Demonstração Técnica</a>
+        <a href="produtos/" class="btn btn-primary" data-i18n="btn_explore">Explorar Arquitetura</a>
+        <a href="contato/" class="btn btn-secondary" data-i18n="nav_demo">Agendar Demonstração Técnica</a>
       </div>
     </div>
   </section>
@@ -404,7 +404,7 @@
             <li>Classificadores PATH e DATA independentes</li>
             <li>Resolução de esquemas ofuscados ou SAP</li>
           </ul>
-          <a href="produtos.html#discovery" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+          <a href="produtos/#discovery" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
         </div>
 
         <!-- 2. Masking -->
@@ -422,7 +422,7 @@
             <li>Validação de formato (Luhn, CPF, IBAN)</li>
             <li>Integração com AWS KMS e K8s Secrets</li>
           </ul>
-          <a href="produtos.html#masking" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+          <a href="produtos/#masking" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
         </div>
 
         <!-- 3. Subsetter -->
@@ -440,7 +440,7 @@
             <li>PostgreSQL, MySQL, SQL Server, Oracle, Mongo</li>
             <li>Três superfícies: Web UI, CLI YAML e Operador K8s</li>
           </ul>
-          <a href="produtos.html#subsetter" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+          <a href="produtos/#subsetter" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
         </div>
 
         <!-- 4. CDC & Snapshot -->
@@ -458,7 +458,7 @@
             <li>Entrega Effectively-Once com marcadores S3</li>
             <li>Captura de DDL (ALTER, CREATE, DROP)</li>
           </ul>
-          <a href="produtos.html#cdc" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
+          <a href="produtos/#cdc" class="btn btn-secondary" style="font-size: 0.8125rem;">Especificações &rarr;</a>
         </div>
       </div>
 
@@ -473,7 +473,7 @@
             Orquestração completa de réplicas efêmeras de banco de dados em contêineres: provisionamento, refresh, snapshot instantâneo e rollback sob demanda para desenvolvedores e agentes autônomos.
           </p>
         </div>
-        <a href="produtos.html#lifecycle" class="btn btn-secondary" style="font-size: 0.8125rem;">Ver Visão &rarr;</a>
+        <a href="produtos/#lifecycle" class="btn btn-secondary" style="font-size: 0.8125rem;">Ver Visão &rarr;</a>
       </div>
     </div>
   </section>
@@ -638,30 +638,31 @@
         <div class="footer-col">
           <h4>Plataforma</h4>
           <ul>
-            <li><a href="produtos.html#discovery">Discovery</a></li>
-            <li><a href="produtos.html#masking">Masking</a></li>
-            <li><a href="produtos.html#subsetter">Subsetter</a></li>
-            <li><a href="produtos.html#cdc">CDC &amp; Snapshot</a></li>
-            <li><a href="produtos.html#lifecycle">K8s Operator (Roadmap)</a></li>
+            <li><a href="produtos/#discovery">Discovery</a></li>
+            <li><a href="produtos/#masking">Masking</a></li>
+            <li><a href="produtos/#subsetter">Subsetter</a></li>
+            <li><a href="produtos/#cdc">CDC &amp; Snapshot</a></li>
+            <li><a href="produtos/#lifecycle">K8s Operator (Roadmap)</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Institucional</h4>
           <ul>
-            <li><a href="quem-somos.html">Quem Somos</a></li>
-            <li><a href="blog.html">Blog de Engenharia</a></li>
-            <li><a href="contato.html">Agendar Demo</a></li>
+            <li><a href="./">Home</a></li>
+            <li><a href="quem-somos/">Quem Somos</a></li>
+            <li><a href="blog/">Blog de Engenharia</a></li>
+            <li><a href="contato/">Agendar Demo</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Legal &amp; Privacy</h4>
           <ul>
-            <li><a href="privacidade.html">Privacidade</a></li>
-            <li><a href="termos.html">Termos de Uso</a></li>
-            <li><a href="privacidade.html#lgpd">Conformidade LGPD</a></li>
-            <li><a href="privacidade.html#gdpr">Conformidade GDPR</a></li>
+            <li><a href="privacidade/">Privacidade</a></li>
+            <li><a href="termos/">Termos de Uso</a></li>
+            <li><a href="privacidade/#lgpd">Conformidade LGPD</a></li>
+            <li><a href="privacidade/#gdpr">Conformidade GDPR</a></li>
           </ul>
         </div>
       </div>
@@ -693,6 +694,6 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260910_13"></script>
+  <script src="assets/app.js?v=20260910_15"></script>
 </body>
 </html>
