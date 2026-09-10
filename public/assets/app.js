@@ -263,26 +263,30 @@
 })();
 
   // Mobile Hamburger Menu Toggle with Backdrop
-  window.toggleMobileMenu = function() {
+  window.toggleMobileMenu = function(e) {
+    if (e && e.stopPropagation) e.stopPropagation();
     const nav = document.querySelector('nav.main-nav');
     const btn = document.querySelector('.mobile-menu-btn');
     const backdrop = document.querySelector('.mobile-menu-backdrop');
     if (nav) {
-      nav.classList.toggle('open');
-      const isOpen = nav.classList.contains('open');
-      if (btn) {
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      }
-      if (backdrop) {
-        backdrop.classList.toggle('open', isOpen);
-      }
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      const isOpening = !nav.classList.contains('open');
+      nav.classList.toggle('open', isOpening);
+      if (btn) btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+      if (backdrop) backdrop.classList.toggle('open', isOpening);
+      document.body.style.overflow = isOpening ? 'hidden' : '';
     }
   };
 
   // Close mobile menu when clicking a link or backdrop & handle event delegation for controls
   document.addEventListener('click', (e) => {
-    // 0. Cookie banner actions delegation
+    // 0. Mobile menu button delegation
+    const mobileBtn = e.target.closest('.mobile-menu-btn');
+    if (mobileBtn) {
+      window.toggleMobileMenu(e);
+      return;
+    }
+
+    // 1. Cookie banner actions delegation
     if (e.target.closest('button[onclick*="acceptCookies"]') || e.target.getAttribute('data-i18n') === 'cookie_accept') {
       window.acceptCookies();
       return;
@@ -292,12 +296,12 @@
       return;
     }
 
-    // 1. Mobile menu closing
+    // 2. Mobile menu closing on link or backdrop click
     const nav = document.querySelector('nav.main-nav');
     const btn = document.querySelector('.mobile-menu-btn');
     const backdrop = document.querySelector('.mobile-menu-backdrop');
     if (nav && nav.classList.contains('open')) {
-      if (e.target.closest('nav.main-nav a') || e.target.classList.contains('mobile-menu-backdrop') || (!e.target.closest('nav.main-nav') && !e.target.closest('.mobile-menu-btn') && !e.target.closest('#cookie-banner'))) {
+      if (e.target.closest('nav.main-nav a') || e.target.classList.contains('mobile-menu-backdrop')) {
         nav.classList.remove('open');
         if (backdrop) backdrop.classList.remove('open');
         if (btn) btn.setAttribute('aria-expanded', 'false');
