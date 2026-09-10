@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produtos e Arquitetura Modular — Tessera</title>
-  <meta name="description" content="Especificações técnicas dos quatro produtos da Tessera: Discovery, Masking, Subsetter e CDC & Snapshot, além do roadmap para o Operador Kubernetes.">
+  <meta name="description" content="Especificações técnicas e simulações interativas dos quatro produtos da Tessera: Discovery, Masking, Subsetter e CDC & Snapshot, além do roadmap para o Operador Kubernetes.">
   <link rel="canonical" href="https://tessera.com.br/produtos/">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260910_17">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_22">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_22">
+  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_22">
 </head>
 <body class="bg-grid-dots">
 
@@ -21,7 +23,7 @@
         <img src="../assets/tessera-logo-transparent.png" alt="Tessera Data Automation">
       </a>
 
-      <!-- Mobile Backdrop Overlay (Anthropic Style) -->
+      <!-- Mobile Backdrop Overlay -->
       <div class="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
 
       <nav class="main-nav">
@@ -30,13 +32,12 @@
         <a href="../blog/">Blog &amp; Insights <span>&rarr;</span></a>
         <a href="../contato/">Contato <span>&rarr;</span></a>
 
-        <!-- Mobile Menu Footer with Language Switcher -->
         <div class="mobile-menu-footer">
           <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
           <div class="lang-switch" role="group" aria-label="Language selector">
             <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
             <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
-          <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
+            <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
           </div>
         </div>
       </nav>
@@ -62,17 +63,21 @@
   <!-- Hero Header -->
   <section class="section" style="padding-top: clamp(40px, 6vw, 70px); padding-bottom: clamp(32px, 5vw, 50px);">
     <div class="container">
-      <div style="max-width: 820px;">
+      <div style="max-width: 860px;">
         <span class="eyebrow" style="color: var(--tessera-violet);">ARQUITETURA &amp; PRODUTOS</span>
-        <h1 class="font-title" style="margin-top: 12px; margin-bottom: 20px;">Componentes desacoplados. Integridade contínua.</h1>
+        <h1 class="font-title" style="margin-top: 12px; margin-bottom: 20px;">
+          Componentes desacoplados. Integridade contínua.
+        </h1>
         <p class="lead" style="margin-bottom: 0;">
-          A Tessera é um conjunto de ferramentas modulares de engenharia de dados projetadas para operar independentemente ou como uma malha coordenada de automação não-produtiva.
+          A Tessera é um conjunto de ferramentas modulares de engenharia de dados projetadas para operar independentemente ou como uma malha coordenada de automação não-produtiva. Abaixo, explore as <strong>especificações técnicas e simulações interativas</strong> de cada produto.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Deep Dive Sections -->
+  <!-- ======================================================================
+       1. TESSERA DISCOVERY
+       ====================================================================== -->
   <section id="discovery">
     <div class="container">
       <div class="product-header-block">
@@ -88,6 +93,76 @@
         <p class="product-lead-desc">
           O <strong>Discovery</strong> é uma biblioteca Go reutilizável e desacoplada, projetada sem I/O direto: ela consome metadados e amostras fornecidos pelo chamador e devolve um inventário auditável com domínios de dados, algoritmos de mascaramento recomendados e grau de confiança.
         </p>
+
+        <!-- SIMULADOR INTERATIVO: DISCOVERY SCANNER -->
+        <div class="prod-sim-container" id="sim-discovery">
+          <div class="prod-sim-topbar">
+            <div class="prod-sim-title">
+              <span class="dot"></span>
+              <span>// SIMULADOR: LIVE SCHEMA SCANNER &amp; RECALL-FIRST PII DETECTION</span>
+            </div>
+            <div class="prod-sim-stats">
+              <span>Recall-First: <strong style="color: #7EE787;">Ativo</strong></span>
+              <span>Falsos Negativos: <strong style="color: #7EE787;">Zero</strong></span>
+              <span>Modo: <strong style="color: #BC8CFF;">Regex + Luhn + Shannon</strong></span>
+            </div>
+            <div class="prod-sim-controls">
+              <button id="disc-btn-play" class="sim-btn-sm">▶ Auto Scan</button>
+              <button id="disc-btn-next" class="sim-btn-sm">Próxima Amostra &rarr;</button>
+            </div>
+          </div>
+
+          <div class="discovery-stage">
+            <!-- Colunas Disponíveis -->
+            <div class="discovery-feed">
+              <div class="discovery-feed-header">Colunas Inspecionadas</div>
+              <div id="disc-feed"></div>
+            </div>
+
+            <!-- Câmara de Inspeção -->
+            <div class="scanner-chamber">
+              <div class="scanner-beam-box">
+                <div id="disc-laser" class="scanner-laser"></div>
+                <div id="disc-target-label" class="target-col-label">Amostra sob inspeção: customers.cpf</div>
+                <div id="disc-target-val" class="target-col-val">341.890.122-10</div>
+              </div>
+
+              <div class="pass-grid">
+                <div class="pass-card">
+                  <span class="pass-title">Pass 1: Path Classifier</span>
+                  <div id="disc-pass1" class="pass-val pass-ok">Regex: /(cpf|doc_fed)/i ✓ Match</div>
+                </div>
+                <div class="pass-card">
+                  <span class="pass-title">Pass 2: Value Validator</span>
+                  <div id="disc-pass2" class="pass-val pass-ok">Validador Luhn/Mod11 ✓ Válido</div>
+                </div>
+                <div class="pass-card">
+                  <span class="pass-title">Pass 3: Shannon Entropy</span>
+                  <div id="disc-pass3" class="pass-val">3.1 bits/byte (Formatado)</div>
+                </div>
+              </div>
+
+              <div class="discovery-result-box">
+                <div class="result-main">
+                  <span style="font-family: var(--font-mono); font-size: 0.625rem; color: #8C88A8; text-transform: uppercase;">Classificação Auditável Gerada:</span>
+                  <div id="disc-res-domain" class="result-domain">BR_CPF // DADO PESSOAL SENSÍVEL</div>
+                  <div id="disc-res-action" class="result-action">Algoritmo: CPF Format-Preserving Masker (NIST FF1)</div>
+                </div>
+                <div style="text-align: right;">
+                  <span style="font-family: var(--font-mono); font-size: 0.6875rem; color: #8C88A8;">Grau de Confiança: <strong id="disc-res-score" style="color: #7EE787;">100%</strong></span>
+                  <div class="result-score-bar">
+                    <div id="disc-res-score-fill" class="result-score-fill" style="width: 100%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prod-sim-footer">
+            <span>Diferencial: Detecta colunas ofuscadas em SAP/Legado (ex: <code>FLD_019</code>) pela amostragem de dados com entropia matemática.</span>
+            <span style="color: #7EE787;">Zero I/O direto · Totalmente thread-safe</span>
+          </div>
+        </div>
 
         <!-- Technical Architecture Block -->
         <div class="tech-spec-block">
@@ -136,6 +211,9 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
     </div>
   </section>
 
+  <!-- ======================================================================
+       2. TESSERA MASKING
+       ====================================================================== -->
   <section id="masking" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="product-header-block">
@@ -152,7 +230,133 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
           O determinismo matemático é o pilar da integridade relacional da Tessera: <code>mesma chave + mesma config + mesmo input = saída byte-idêntica</code>. Ao aplicar o mascaramento em repouso (Static Masking), chaves estrangeiras e identificadores entre diferentes microsserviços continuam se relacionando perfeitamente sem nunca revelar dados brutos.
         </p>
 
-        <!-- Masking Core Architecture Block -->
+        <!-- Explicação Didática do Problema & Solução -->
+        <div class="masking-concept-box">
+          <div class="concept-col">
+            <h4 style="color: #FF7B72;">✕ O Problema: Mascaramento Comum Quebra Testes</h4>
+            <p>
+              Ao mascarar bancos para ambientes de testes e QA, ferramentas tradicionais geram valores aleatórios desconectados. O mesmo cliente <code>1042</code> vira <code>FAKE-119</code> no PostgreSQL e vira <code>RANDOM-842</code> no Oracle.
+            </p>
+            <p style="margin-top: 8px;">
+              <strong style="color: #FF7B72;">Impacto:</strong> A chave estrangeira (FK) se quebra. As consultas com <code>JOIN</code> retornam zero registros e toda a suíte de testes de software falha!
+            </p>
+          </div>
+          <div class="concept-col">
+            <h4 style="color: #7EE787;">✓ A Solução Tessera: Criptografia Determinística (NIST FF1)</h4>
+            <p>
+              A Tessera garante consistência matemática via KMS: <code>mesma chave + mesmo dado = mesma saída mascarada</code>, mesmo operando em bancos de dados totalmente separados.
+            </p>
+            <p style="margin-top: 8px;">
+              <strong style="color: #7EE787;">Benefício:</strong> O cliente <code>1042</code> vira <strong>exatamente <code>"US-981-D"</code> em todos os microsserviços simultaneamente</strong>. As consultas e testes funcionam 100%, com dados sensíveis (PII) totalmente anônimos e protegidos (LGPD).
+            </p>
+          </div>
+        </div>
+
+        <!-- SIMULADOR INTERATIVO: MASKING & JOIN PRESERVER -->
+        <div class="prod-sim-container" id="sim-masking">
+          <div class="prod-sim-topbar">
+            <div class="prod-sim-title">
+              <span class="dot"></span>
+              <span>// SIMULADOR: DETERMINISMO CRIPTOGRÁFICO &amp; PRESERVAÇÃO DE JOINS</span>
+            </div>
+            <div class="prod-sim-stats">
+              <span>Padrão: <strong style="color: #7EE787;">FF1 NIST SP 800-38G</strong></span>
+              <span>Chave KMS: <strong id="mask-kms-key-label" style="color: #BC8CFF;">aws-kms://tessera-prod-key</strong></span>
+              <span>Integridade: <strong style="color: #7EE787;">100%</strong></span>
+            </div>
+            <div class="prod-sim-controls">
+              <button id="mask-btn-tessera" class="sim-btn-sm active">✓ Tessera FPE (JOIN Íntegro)</button>
+              <button id="mask-btn-naive" class="sim-btn-sm">✗ Mascaramento Comum (Quebra JOIN)</button>
+              <button id="mask-btn-real" class="sim-btn-sm">⚠ Dados Reais (Risco)</button>
+              <button id="mask-btn-key" class="sim-btn-sm">⚿ Girar Chave KMS</button>
+            </div>
+          </div>
+
+          <div class="masking-stage">
+            <div class="services-dual-grid">
+              <!-- Serviço A: Postgres Customers -->
+              <div class="service-card">
+                <div class="service-header">
+                  <span class="service-title">
+                    <span style="color: #58A6FF;">◆</span> auth_service.customers
+                  </span>
+                  <span class="service-badge">PostgreSQL 16</span>
+                </div>
+                <table class="service-table">
+                  <thead>
+                    <tr>
+                      <th>id (PK)</th>
+                      <th>nome</th>
+                      <th>cpf</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="cell-key cell-val" id="cell-p-id1">US-981-D</td>
+                      <td class="cell-val" id="cell-p-name1">Fernanda Castro</td>
+                      <td class="cell-val" id="cell-p-cpf1">582.109.844-32</td>
+                    </tr>
+                    <tr>
+                      <td class="cell-key cell-val" id="cell-p-id2">US-204-K</td>
+                      <td class="cell-val" id="cell-p-name2">Carlos Eduardo</td>
+                      <td class="cell-val" id="cell-p-cpf2">512.390.871-00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Módulo Central FPE -->
+              <div class="fpe-center-module">
+                <div class="kms-vault-icon">⚿</div>
+                <span class="kms-label">FPE FF1 Engine</span>
+              </div>
+
+              <!-- Serviço B: Oracle Invoices -->
+              <div class="service-card">
+                <div class="service-header">
+                  <span class="service-title">
+                    <span style="color: #FFB74D;">◆</span> billing_service.invoices
+                  </span>
+                  <span class="service-badge">Oracle 19c</span>
+                </div>
+                <table class="service-table">
+                  <thead>
+                    <tr>
+                      <th>invoice_id</th>
+                      <th>customer_id (FK)</th>
+                      <th>total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>INV-9021</td>
+                      <td class="cell-key cell-val" id="cell-o-fk1">US-981-D</td>
+                      <td>R$ 4.520,00</td>
+                    </tr>
+                    <tr>
+                      <td>INV-9022</td>
+                      <td class="cell-key cell-val" id="cell-o-fk2">US-204-K</td>
+                      <td>R$ 1.180,50</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Faixa de Confirmação do JOIN -->
+            <div id="mask-join-banner" class="join-bridge-banner">
+              <span><strong style="color:#7EE787;">✓ JOIN PRESERVADO:</strong> <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); border:1px solid rgba(126,231,135,0.4); padding:3px 8px; border-radius:4px;">customers.id ("US-981-D") == invoices.customer_id ("US-981-D")</code></span>
+              <span style="color:#7EE787; font-weight:700;">100% Íntegro em Testes</span>
+            </div>
+          </div>
+
+          <div class="prod-sim-footer">
+            <span id="mask-status-text" style="color: #7EE787; font-weight: 600;"><strong style="color: #7EE787;">A Solução Tessera:</strong> Criptografia determinística (FF1). O mesmo ID de entrada gera exatamente a mesma saída no Postgres e no Oracle. Testes funcionam sem expor PII real.</span>
+            <span style="color: #E2E1EC;">Garantia: mesma chave KMS = saída byte-idêntica entre microsserviços.</span>
+          </div>
+        </div>
+
+        <!-- Technical Block -->
         <div class="tech-spec-block">
           <div class="tech-spec-header">
             <span class="tech-spec-title" style="color: #7EE787;">// FLUXO DE MASCARAMENTO DETERMINÍSTICO (FF1 NIST SP 800-38G)</span>
@@ -173,33 +377,6 @@ Fontes de Produção (PostgreSQL / MySQL / Oracle / S3 JSONL)
         │
         ▼
 Bancos de Testes &amp; Sandboxes de IA &rarr; Preservação relacional sem expor PII real</pre>
-        </div>
-
-        <!-- Masking Core Matrix -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
-          <div class="tech-spec-block" style="margin-bottom: 0;">
-            <div class="tech-spec-header" style="margin-bottom: 8px;">
-              <span class="tech-spec-title" style="color: #7EE787;">// PRINCÍPIO DO DETERMINISMO</span>
-              <span class="mobile-scroll-hint">// deslize &rarr;</span>
-            </div>
-            <pre style="margin: 0; color: #A6A3B8; line-height: 1.5;">
-customers.customer_id (#1042) &rarr; "US-981-D"
-payments.customer_id  (#1042) &rarr; "US-981-D"
-
-Integridade de JOIN preservada a 100%.</pre>
-          </div>
-
-          <div class="tech-spec-block" style="margin-bottom: 0;">
-            <div class="tech-spec-header" style="margin-bottom: 8px;">
-              <span class="tech-spec-title" style="color: #8A6BFF;">// GESTÃO SEGURA DE CHAVES</span>
-            </div>
-            <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.8; color: #A6A3B8; font-size: 0.8125rem;">
-              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> AWS KMS Key Provider nativo</li>
-              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> Provedor de Arquivos &amp; K8s Secrets</li>
-              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> Execução 100% Thread-safe em Go</li>
-              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> Detecção automática de ciclos de cadeia</li>
-            </ul>
-          </div>
         </div>
 
         <div class="problem-grid">
@@ -224,6 +401,9 @@ Integridade de JOIN preservada a 100%.</pre>
     </div>
   </section>
 
+  <!-- ======================================================================
+       3. TESSERA SUBSETTER
+       ====================================================================== -->
   <section id="subsetter">
     <div class="container">
       <div class="product-header-block">
@@ -240,7 +420,104 @@ Integridade de JOIN preservada a 100%.</pre>
           Em vez de sincronizar terabytes inteiros de produção para desenvolvimento, o Subsetter isola fatias orientadas a sementes (ex: <em>"todas as contas ativas no Brasil criadas em 2026"</em>) e resolve recursivamente todas as chaves primárias e estrangeiras dependentes, inclusive através de grafos complexos e dependências circulares.
         </p>
 
-        <!-- Subsetter Flow Architecture -->
+        <!-- SIMULADOR INTERATIVO: SUBSETTER TARJAN WAVES GRAPH -->
+        <div class="sim-container">
+          <div class="sim-topbar">
+            <div class="sim-info-group">
+              <div class="sim-info-item">
+                <span>Semente:</span>
+                <strong class="stat-seed">customers (WHERE region = 'BR-SP')</strong>
+              </div>
+              <div class="sim-info-item">
+                <span>Tabelas no Subset:</span>
+                <strong id="stat-reached" class="stat-reached">1 / 14</strong>
+              </div>
+              <div class="sim-info-item">
+                <span>Redução de Volume:</span>
+                <strong id="stat-reduction" class="stat-reduction">96.4%</strong>
+              </div>
+              <div class="sim-info-item">
+                <span>Integridade FK:</span>
+                <strong class="stat-integrity">100% Íntegro</strong>
+              </div>
+            </div>
+
+            <div class="sim-controls">
+              <button id="btn-play" class="sim-btn">
+                <span id="play-icon">&#9654;</span> <span id="play-text">Auto Play</span>
+              </button>
+              <button class="sim-btn" data-hop="0">Semente</button>
+              <button class="sim-btn" data-hop="1">Onda 1 (FKs)</button>
+              <button class="sim-btn" data-hop="2">Onda 2 (Itens)</button>
+              <button class="sim-btn" data-hop="3">Onda 3 (Tarjan)</button>
+              <button id="btn-reset" class="sim-btn" title="Reiniciar">&#8635;</button>
+            </div>
+          </div>
+
+          <div id="tarjan-alert" class="tarjan-banner">
+            <div class="tarjan-alert-content">
+              <span class="tarjan-alert-icon">&#9888;</span>
+              <span><strong>Ciclo Relacional Detectado:</strong> <code>orders &harr; transactions</code> (dependência circular bidirecional).</span>
+            </div>
+            <span class="tarjan-resolved">&check; Resolvido via Tarjan SCC Waves em 2 etapas</span>
+          </div>
+
+          <div class="mobile-scroll-hint">
+            <span>&harr; Deslize horizontalmente para navegar pelo grafo completo</span>
+          </div>
+
+          <div class="sim-stage-wrapper">
+            <div class="sim-stage" id="stage">
+              <svg class="sim-svg" id="svg-layer" viewBox="0 0 1060 580">
+                <defs>
+                  <marker id="arrow-dead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#3A3654"></path>
+                  </marker>
+                  <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#7EE787"></path>
+                  </marker>
+                  <marker id="arrow-cycle" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#FF7B72"></path>
+                  </marker>
+                </defs>
+                <g id="dead-edges"></g>
+                <g id="live-edges"></g>
+              </svg>
+              <div class="sim-nodes" id="nodes-layer"></div>
+            </div>
+          </div>
+
+          <div class="sim-legend-bar">
+            <div class="legend-items">
+              <div class="legend-item">
+                <div class="legend-dot dot-seed"></div>
+                <span>Semente / Âncora</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-wave1"></div>
+                <span>Onda 1 (FKs Diretas)</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-wave2"></div>
+                <span>Onda 2 (Cascata)</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-lookup"></div>
+                <span>Tabela Lookup (Full)</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-pruned"></div>
+                <span>Fora do Subset (Descartada)</span>
+              </div>
+            </div>
+
+            <div class="sim-status-box">
+              Status: <span id="status-text" class="stat-reached">Aguardando execução...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Architecture Block -->
         <div class="tech-spec-block">
           <div class="tech-spec-header">
             <span class="tech-spec-title" style="color: #7EE787;">// ARQUITETURA DO MOTOR DE SUBSETTING (SCHEMA GRAPH &amp; TARJAN WAVES)</span>
@@ -258,72 +535,38 @@ Bancos de Dados de Origem (PostgreSQL / MySQL / SQL Server / Oracle / MongoDB)
         ▼
 [ Executor em Ondas (Waves) ]
    ├── Wave 1: Tabelas raiz independentes filtradas por seed
-   ├── Wave 2: Dependências filhas diretas via batch de chaves
-   └── Wave 3: Resolução de tabelas com auto-relacionamentos
-        │ (Opcional: Mascaramento determinístico inline durante a cópia)
+   ├── Wave 2..N: Dependências resolvidas progressivamente por FKs
+   └── Lookup Tables: Tabelas de domínio estáticas copiadas integralmente
+        │
         ▼
-Banco de Destino (DEV / QA) &rarr; Subconjunto íntegro e referencialmente perfeito</pre>
-        </div>
-
-        <!-- CLI & K8s Definition Examples -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 32px;">
-          <div class="tech-spec-block" style="margin-bottom: 0;">
-            <div class="tech-spec-header" style="margin-bottom: 8px;">
-              <span class="tech-spec-title" style="color: #8A6BFF;"># CI/CD CLI YAML (subsetter-job)</span>
-              <span class="mobile-scroll-hint">// deslize &rarr;</span>
-            </div>
-            <pre style="margin: 0; color: #848096; line-height: 1.4;">
-version: "1.0"
-source: "postgresql://prod-ro:5432/core"
-target: "postgresql://staging:5432/core_sub"
-seed:
-  table: "customers"
-  filter: "created_at >= '2026-01-01' AND country = 'BR'"
-options:
-  inline_masking: true
-  concurrency_waves: 4</pre>
-          </div>
-
-          <div class="tech-spec-block" style="margin-bottom: 0;">
-            <div class="tech-spec-header" style="margin-bottom: 8px;">
-              <span class="tech-spec-title" style="color: #7EE787;"># Kubernetes CRD (SubsetJob)</span>
-              <span class="mobile-scroll-hint">// deslize &rarr;</span>
-            </div>
-            <pre style="margin: 0; color: #848096; line-height: 1.4;">
-apiVersion: tessera.io/v1alpha1
-kind: SubsetJob
-metadata:
-  name: nightly-qa-subset
-spec:
-  sourceRef: prod-db-secret
-  destinationRef: qa-db-secret
-  graphSolver: neo4j-cluster
-  retentionPolicy: "DeleteOnSuccess"</pre>
-          </div>
+[ Destino Não-Produtivo ] (90%+ de redução de storage com integridade de FK 100%)</pre>
         </div>
 
         <div class="problem-grid">
           <div class="problem-item">
-            <strong>Solver Tarjan SCC</strong>
-            <span>Detecta ciclos de dependência em tabelas circulares e executa a migração em ondas sequenciais e paralelas.</span>
+            <strong>Resolução de Dependências Circulares</strong>
+            <span>O algoritmo Tarjan SCC identifica componentes fortemente conectados (ex: <code>orders &harr; transactions</code>) e extrai em etapas sem recursão infinita.</span>
           </div>
           <div class="problem-item">
-            <strong>6 Plataformas Homologadas</strong>
-            <span>PostgreSQL (com leitura paralela de partições declarativas), MySQL, SQL Server, Oracle, MongoDB e Object Storage.</span>
+            <strong>Estratégia de Ondas (Waves)</strong>
+            <span>Extração em lote paralela por profundidade, reduzindo locks de leitura em produção ao mínimo necessário.</span>
           </div>
           <div class="problem-item">
-            <strong>3 Superfícies de Engenharia</strong>
-            <span>Interface Web com progresso em Server-Sent Events (SSE), CLI headless para automação CI/CD e CRDs nativas do Kubernetes.</span>
-          </div>
-          <div class="problem-item">
-            <strong>Mapeamento Lógico de Grafos</strong>
+            <strong>Foreign Keys Virtuais</strong>
             <span>Conecta relações mesmo em sistemas legados sem Foreign Keys declaradas formalmente no banco.</span>
+          </div>
+          <div class="problem-item">
+            <strong>Suporte Multi-Engine</strong>
+            <span>Executa fatiamento consistente entre PostgreSQL, MySQL, SQL Server, Oracle e documentos MongoDB.</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ======================================================================
+       4. TESSERA CDC & SNAPSHOT
+       ====================================================================== -->
   <section id="cdc" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="product-header-block">
@@ -340,7 +583,82 @@ spec:
           Uma capacidade totalmente autônoma e independente: captura o estado inicial por snapshot consistente com isolamento MVCC e encadeia continuamente o fluxo incremental de mutações ordenado por commit, sem depender de stacks pesadas como Kafka ou Debezium.
         </p>
 
-        <!-- CDC Architecture Diagram -->
+        <!-- SIMULADOR INTERATIVO: CDC LSN0 HORIZON & STREAM -->
+        <div class="prod-sim-container" id="sim-cdc">
+          <div class="prod-sim-topbar">
+            <div class="prod-sim-title">
+              <span class="dot"></span>
+              <span>// SIMULADOR: COORDENAÇÃO DE FRONTEIRA LSN0 &amp; STREAM CONTÍNUO</span>
+            </div>
+            <div class="prod-sim-stats">
+              <span>Engine: <strong style="color: #7EE787;">Go pgoutput (Sem Kafka)</strong></span>
+              <span>Marco LSN0: <strong style="color: #FFB74D;">0/16B3F88</strong></span>
+              <span>Taxa: <strong id="cdc-ops-sec" style="color: #58A6FF;">4.2k ops/s</strong></span>
+              <span>Arquivo Ativo: <strong id="cdc-file-count" style="color: #BC8CFF;">part-0042.jsonl.zst</strong></span>
+            </div>
+            <div class="prod-sim-controls">
+              <button id="cdc-btn-play" class="sim-btn-sm active">❚❚ Pausar Stream</button>
+              <button id="cdc-btn-mut" class="sim-btn-sm">+ Mutação</button>
+              <button id="cdc-btn-ddl" class="sim-btn-sm">Injetar DDL (ALTER TABLE)</button>
+            </div>
+          </div>
+
+          <div class="cdc-stage">
+            <div class="cdc-pipeline-flow">
+              <!-- Origem -->
+              <div class="cdc-source-card">
+                <div class="cdc-card-title">
+                  <span style="color: #58A6FF;">◉</span> PostgreSQL 16+
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 0.625rem; color: #8C88A8;">WAL Logical Replication (pgoutput)</span>
+                <div class="s3-file-pill">
+                  <span>Slot: tessera_slot</span>
+                  <span style="color: #7EE787;">● Ativo</span>
+                </div>
+              </div>
+
+              <!-- Stream Chamber -->
+              <div class="cdc-stream-box">
+                <!-- Laser da barreira LSN0 -->
+                <div class="lsn0-laser-barrier"></div>
+                <span class="lsn0-tag">FRONTEIRA LSN0: 0/16B3F88</span>
+
+                <!-- Lado Esquerdo: Snapshot MVCC Inicial -->
+                <div class="snapshot-zone">
+                  <span style="font-family: var(--font-mono); font-size: 0.625rem; color: #58A6FF; font-weight: 700;">SNAPSHOT INICIAL MVCC</span>
+                  <div class="snapshot-block">
+                    <strong style="color: #FFF; font-family: var(--font-mono); font-size: 0.8125rem;">Estado Estático</strong>
+                    <div style="font-family: var(--font-mono); font-size: 0.625rem; color: #A5D1FF; margin-top: 4px;">4.8M linhas congeladas na fronteira LSN0</div>
+                  </div>
+                </div>
+
+                <!-- Lado Direito: Mutações Pós-LSN0 -->
+                <div class="stream-zone" id="cdc-stream-zone">
+                  <!-- Chips animados inseridos via JS -->
+                </div>
+              </div>
+
+              <!-- Destino -->
+              <div class="cdc-dest-card">
+                <div class="cdc-card-title">
+                  <span style="color: #BC8CFF;">▲</span> Amazon S3 Bucket
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 0.625rem; color: #8C88A8;">Eventos Canônicos JSONL Zstandard</span>
+                <div class="s3-file-pill">
+                  <span>Compressão: zstd</span>
+                  <span style="color: #BC8CFF;">-82% size</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prod-sim-footer">
+            <span>Diferencial: A fronteira LSN0 elimina transações duplicadas e janelas cegas na transição do snapshot para o stream incremental.</span>
+            <span style="color: #FFB74D;">Captura canônica de DDLs estruturados</span>
+          </div>
+        </div>
+
+        <!-- Technical Block -->
         <div class="tech-spec-block">
           <div class="tech-spec-header">
             <span class="tech-spec-title" style="color: #E65100;">// COORDENAÇÃO DE SNAPSHOT E STREAM DE MUTAÇÕES (BOUNDARY LSN0)</span>
@@ -388,6 +706,9 @@ PostgreSQL 16+ (pgoutput)  /  MySQL 8+ (binlog ROW / GTID)
     </div>
   </section>
 
+  <!-- ======================================================================
+       5. LIFECYCLE OPERATOR (ROADMAP)
+       ====================================================================== -->
   <section id="lifecycle">
     <div class="container">
       <div class="product-header-block">
@@ -428,19 +749,19 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
         <div class="problem-grid">
           <div class="problem-item">
             <strong>1. Provision</strong>
-            <span>Criação programática de réplicas leves e isoladas sob demanda para cada feature branch ou desenvolvedor.</span>
+            <span>Criação programática de clones em segundos baseados em cópias pontuais do Subsetter.</span>
           </div>
           <div class="problem-item">
-            <strong>2. Refresh</strong>
-            <span>Atualização contínua ou agendada com novos subsets sanitizados vindos de produção sem interferir nas réplicas ativas.</span>
+            <strong>2. Reset &amp; Branching</strong>
+            <span>Capacidade de redefinir o estado do banco para o marco inicial instantaneamente com rollback CoW.</span>
           </div>
           <div class="problem-item">
-            <strong>3. Snapshot</strong>
-            <span>Congelamento instantâneo do estado do banco antes de execuções de testes destrutivos ou migrações de schema.</span>
+            <strong>3. Teardown Automático</strong>
+            <span>Destruição automática de volumes não utilizados após o fechamento de Pull Requests.</span>
           </div>
           <div class="problem-item">
-            <strong>4. Rollback</strong>
-            <span>Restauração point-in-time em segundos caso um teste falhe ou um agente autônomo corrompa a base de sandbox.</span>
+            <strong>4. Sandboxes de IA</strong>
+            <span>Ambientes isolados para agentes executarem migrações e testes de estresse de dados sem risco colateral.</span>
           </div>
         </div>
       </div>
@@ -465,11 +786,11 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
         <div class="footer-col">
           <h4>Plataforma</h4>
           <ul>
-            <li><a href="../produtos/#discovery">Discovery</a></li>
-            <li><a href="../produtos/#masking">Masking</a></li>
-            <li><a href="../produtos/#subsetter">Subsetter</a></li>
-            <li><a href="../produtos/#cdc">CDC &amp; Snapshot</a></li>
-            <li><a href="../produtos/#lifecycle">K8s Operator (Roadmap)</a></li>
+            <li><a href="#discovery">Discovery</a></li>
+            <li><a href="#masking">Masking</a></li>
+            <li><a href="#subsetter">Subsetter</a></li>
+            <li><a href="#cdc">CDC &amp; Snapshot</a></li>
+            <li><a href="#lifecycle">K8s Operator (Roadmap)</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -496,7 +817,7 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
           <div class="lang-switch" role="group" aria-label="Language selector">
             <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
             <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
-          <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
+            <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
           </div>
         </div>
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 12px;">
@@ -507,6 +828,8 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
     </div>
   </footer>
 
-  <script src="../assets/app.js?v=20260910_17"></script>
+  <script src="../assets/app.js?v=20260910_22"></script>
+  <script src="../assets/subsetter-graph.js?v=20260910_22"></script>
+  <script src="../assets/products-animations.js?v=20260910_22"></script>
 </body>
 </html>
