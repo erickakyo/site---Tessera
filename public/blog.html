@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=20260910_9">
+  <link rel="stylesheet" href="assets/styles.css?v=20260910_10">
 </head>
 <body class="bg-grid-dots">
 
@@ -62,7 +62,7 @@
     <div class="container">
       <span class="eyebrow">ENGENHARIA &amp; PESQUISA</span>
       <h1 class="font-title">Blog &amp; Insights Técnicos</h1>
-      <p class="lead">
+      <p class="lead" style="margin-bottom: 0;">
         Estudos profundos sobre sistemas distribuídos, integridade relacional, criptografia aplicada e a infraestrutura necessária para a era da inteligência artificial.
       </p>
     </div>
@@ -71,58 +71,68 @@
   <!-- Articles List -->
   <section>
     <div class="container">
-      <div style="display: flex; flex-direction: column; gap: 40px; max-width: 860px;">
+      <div style="display: flex; flex-direction: column; gap: 32px; max-width: 860px;">
         
         <!-- Post 1 -->
-        <article style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px;">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+        <article style="background: #FFFFFF; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: clamp(24px, 4vw, 36px); box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;">
             <span class="badge badge-ready">ENGENHARIA DE DADOS</span>
             <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">09 de Setembro, 2026</span>
           </div>
-          <h2 class="font-title" style="font-size: 1.75rem; margin-bottom: 12px; line-height: 1.25;">
-            <a href="#" style="text-decoration: none; color: inherit;">Por que dados são o verdadeiro gargalo dos agentes de IA</a>
+          <h2 class="font-title" style="font-size: clamp(1.375rem, 2.5vw, 1.75rem); margin-bottom: 12px; line-height: 1.25;">
+            <a href="contato.html" style="text-decoration: none; color: inherit;">Por que dados são o verdadeiro gargalo dos agentes de IA</a>
           </h2>
           <p class="text-muted" style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
             A analogia do trem-bala puxando um vagão a vapor: hiper-automatizamos a escrita de código por LLMs, mas os modelos falham miseravelmente ao testar contra esquemas vazios ou dados sintéticos artificiais. Como réplicas reduzidas e determinísticas salvam a fidelidade da entrega.
           </p>
           <div style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); font-weight: 600;">
-            Ler artigo completo (8 min de leitura) &rarr;
+            <a href="contato.html" style="color: inherit; text-decoration: none;">Ler artigo completo (8 min de leitura) &rarr;</a>
           </div>
         </article>
 
         <!-- Post 2 -->
-        <article style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px;">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+        <article style="background: #FFFFFF; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: clamp(24px, 4vw, 36px); box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;">
             <span class="badge badge-core">TEORIA DOS GRAFOS</span>
             <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">28 de Agosto, 2026</span>
           </div>
-          <h2 class="font-title" style="font-size: 1.75rem; margin-bottom: 12px; line-height: 1.25;">
-            <a href="#" style="text-decoration: none; color: inherit;">Resolvendo ciclos relacionais com Tarjan SCC em bancos de produção</a>
+          <h2 class="font-title" style="font-size: clamp(1.375rem, 2.5vw, 1.75rem); margin-bottom: 12px; line-height: 1.25;">
+            <a href="contato.html" style="text-decoration: none; color: inherit;">Resolvendo ciclos relacionais com Tarjan SCC em bancos de produção</a>
           </h2>
           <p class="text-muted" style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
             Quando tabelas possuem dependências circulares (A &rarr; B &rarr; C &rarr; A) e foreign keys lógicas cross-database, um subsetter ingênuo entra em loop infinito. Veja como o algoritmo de Componentes Fortemente Conectados do Tarjan orquestra a extração em ondas ordenadas.
           </p>
           <div style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); font-weight: 600;">
-            Ler artigo completo (11 min de leitura) &rarr;
+            <a href="contato.html" style="color: inherit; text-decoration: none;">Ler artigo completo (11 min de leitura) &rarr;</a>
           </div>
         </article>
 
         <!-- Post 3 -->
-        <article style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px;">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+        <article style="background: #FFFFFF; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: clamp(24px, 4vw, 36px); box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;">
             <span class="badge badge-hardening">SEGURANÇA &amp; CRIPTOGRAFIA</span>
             <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">14 de Agosto, 2026</span>
           </div>
-          <h2 class="font-title" style="font-size: 1.75rem; margin-bottom: 12px; line-height: 1.25;">
-            <a href="#" style="text-decoration: none; color: inherit;">FF1 NIST SP 800-38G: Preservando integridade referencial com mascaramento determinístico</a>
+          <h2 class="font-title" style="font-size: clamp(1.375rem, 2.5vw, 1.75rem); margin-bottom: 12px; line-height: 1.25;">
+            <a href="contato.html" style="text-decoration: none; color: inherit;">FF1 NIST SP 800-38G: Preservando integridade referencial com mascaramento determinístico</a>
           </h2>
           <p class="text-muted" style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
             Por que números aleatórios quebram testes e relatórios contábeis. Exploramos a matemática por trás da criptografia com preservação de formato e por que a mesma semente com AWS KMS garante consistência em dezenas de microsserviços.
           </p>
           <div style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); font-weight: 600;">
-            Ler artigo completo (9 min de leitura) &rarr;
+            <a href="contato.html" style="color: inherit; text-decoration: none;">Ler artigo completo (9 min de leitura) &rarr;</a>
           </div>
         </article>
+
+        <!-- Blog Callout Banner -->
+        <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: clamp(24px, 4vw, 36px); margin-top: 8px;">
+          <span class="eyebrow" style="color: var(--tessera-violet);">ENGENHARIA DE DADOS EM PRODUÇÃO</span>
+          <h3 class="font-title" style="font-size: clamp(1.25rem, 2vw, 1.5rem); margin-bottom: 8px;">Acompanhe novos papers e releases de código</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 20px;">
+            Publicamos regularmente artigos aprofundados sobre teoria dos grafos aplicada a bancos relacionais, criptografia determinística e benchmarks de performance em Go.
+          </p>
+          <a href="contato.html" class="btn btn-primary" style="font-size: 0.875rem;">Falar com a Engenharia &rarr;</a>
+        </div>
 
       </div>
     </div>
@@ -186,6 +196,6 @@
     </div>
   </footer>
 
-  <script src="assets/app.js?v=20260910_9"></script>
+  <script src="assets/app.js?v=20260910_10"></script>
 </body>
 </html>

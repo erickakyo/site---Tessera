@@ -10,62 +10,120 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=20260910_9">
+  <link rel="stylesheet" href="assets/styles.css?v=20260910_10">
   <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 920px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    .form-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+      box-sizing: border-box;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
     .form-group {
       margin-bottom: 20px;
+      width: 100%;
+      box-sizing: border-box;
     }
     .form-group label {
       display: block;
       font-size: 0.875rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       color: var(--text-primary);
     }
     .form-control {
       width: 100%;
-      padding: 10px 14px;
+      box-sizing: border-box;
+      padding: 12px 14px;
       font-size: 0.9375rem;
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
       background: #FFFFFF;
       color: var(--text-primary);
       font-family: inherit;
-      transition: border-color 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      display: block;
     }
     .form-control:focus {
       outline: none;
       border-color: var(--tessera-violet);
       box-shadow: 0 0 0 3px rgba(107, 75, 240, 0.12);
     }
+    select.form-control {
+      height: 48px;
+      cursor: pointer;
+    }
     .checkbox-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
       margin-top: 8px;
+    }
+    @media (max-width: 640px) {
+      .checkbox-grid {
+        grid-template-columns: 1fr;
+      }
     }
     .checkbox-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.875rem;
+      gap: 10px;
+      font-size: 0.8125rem;
+      font-family: var(--font-mono);
       color: var(--text-secondary);
       background: var(--bg-primary);
-      padding: 8px 12px;
+      padding: 10px 14px;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: all 0.15s ease;
     }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 48px;
-      align-items: start;
+    .checkbox-item:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
     }
-    @media (max-width: 860px) {
-      .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
+    .checkbox-item input[type="checkbox"] {
+      accent-color: var(--tessera-violet);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .info-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+      box-sizing: border-box;
+      transition: border-color 0.2s ease;
+    }
+    .info-card:hover {
+      border-color: var(--border-strong);
     }
   </style>
 </head>
@@ -119,7 +177,7 @@
     <div class="container">
       <span class="eyebrow">DEMONSTRAÇÃO TÉCNICA</span>
       <h1 class="font-title">Fale com os arquitetos da Tessera</h1>
-      <p class="lead">
+      <p class="lead" style="margin-bottom: 0;">
         Descubra como automatizar seus ambientes de dados não-produtivos com segurança e fidelidade matemática.
       </p>
     </div>
@@ -131,27 +189,27 @@
       <div class="contact-grid">
         <!-- Left Side: Enterprise Contact & Deployment Info -->
         <div>
-          <h2 class="font-title" style="font-size: 1.875rem; margin-bottom: 16px;">Sua infraestrutura, suas regras.</h2>
+          <h2 class="font-title" style="font-size: clamp(1.5rem, 3vw, 1.875rem); margin-bottom: 16px;">Sua infraestrutura, suas regras.</h2>
           <p class="text-muted" style="font-size: 1rem; line-height: 1.6; margin-bottom: 32px;">
             A Tessera é projetada com modelo <strong>Zero Data Ingestion</strong>: todo o processamento de mascaramento, geração de subsets e CDC é executado dentro da sua própria VPC ou infraestrutura física.
           </p>
 
-          <div style="display: flex; flex-direction: column; gap: 24px;">
-            <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 20px;">
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="info-card">
               <strong style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-violet); text-transform: uppercase; display: block; margin-bottom: 6px;">Modelo de Entrega</strong>
               <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
                 In-VPC (AWS, GCP, Azure), Clusters Kubernetes On-premises ou Appliances dedicados. Seus dados nunca saem da sua rede.
               </p>
             </div>
 
-            <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 20px;">
+            <div class="info-card">
               <strong style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-cyan); text-transform: uppercase; display: block; margin-bottom: 6px;">Atendimento Especializado</strong>
               <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
                 Arquitetos de dados e especialistas em segurança disponíveis para desenhar a topologia ideal e calcular estimativas de redução de armazenamento.
               </p>
             </div>
 
-            <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 20px;">
+            <div class="info-card">
               <strong style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--tessera-gold); text-transform: uppercase; display: block; margin-bottom: 6px;">Contato Direto</strong>
               <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
                 E-mail: <a href="mailto:contact@gettessera.io" style="color: var(--text-primary); text-decoration: underline;">contact@gettessera.io</a><br>
@@ -162,9 +220,9 @@
         </div>
 
         <!-- Right Side: Form Card -->
-        <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: clamp(24px, 4vw, 40px); box-shadow: 0 4px 24px rgba(0,0,0,0.02);">
+        <div class="form-card">
           <form id="contact-form" onsubmit="event.preventDefault(); alert('Solicitação enviada com sucesso! Nossa equipe técnica entrará em contato em até 24 horas.');">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-row">
               <div class="form-group">
                 <label for="name">Nome Completo *</label>
                 <input type="text" id="name" class="form-control" placeholder="Ex: Alexandre Santos" required>
@@ -175,7 +233,7 @@
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-row">
               <div class="form-group">
                 <label for="company">Empresa / Organização *</label>
                 <input type="text" id="company" class="form-control" placeholder="Nome da empresa" required>
@@ -196,24 +254,24 @@
               <label>Módulos de Interesse</label>
               <div class="checkbox-grid">
                 <label class="checkbox-item">
-                  <input type="checkbox" checked> Tessera Discovery [READY]
+                  <input type="checkbox" checked> Discovery [READY]
                 </label>
                 <label class="checkbox-item">
-                  <input type="checkbox" checked> Tessera Masking [READY]
+                  <input type="checkbox" checked> Masking [READY]
                 </label>
                 <label class="checkbox-item">
-                  <input type="checkbox" checked> Tessera Subsetter [READY]
+                  <input type="checkbox" checked> Subsetter [READY]
                 </label>
                 <label class="checkbox-item">
                   <input type="checkbox"> CDC &amp; Snapshot [HARDENING]
                 </label>
                 <label class="checkbox-item">
-                  <input type="checkbox"> Database Operator [ROADMAP]
+                  <input type="checkbox"> K8s Operator [ROADMAP]
                 </label>
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-row">
               <div class="form-group">
                 <label for="db">Bancos de Dados Envolvidos</label>
                 <input type="text" id="db" class="form-control" placeholder="Ex: PostgreSQL, MongoDB, SQL Server">
@@ -296,6 +354,6 @@
     </div>
   </footer>
 
-  <script src="assets/app.js?v=20260910_9"></script>
+  <script src="assets/app.js?v=20260910_10"></script>
 </body>
 </html>

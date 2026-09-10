@@ -228,6 +228,10 @@ nav.main-nav a {
   transition: color 0.15s ease;
 }
 
+nav.main-nav a span {
+  display: none !important;
+}
+
 nav.main-nav a:hover,
 nav.main-nav a.active {
   color: var(--text-primary);
@@ -377,6 +381,10 @@ nav.main-nav .mobile-menu-footer {
 
   nav.main-nav > a:active {
     transform: translateX(4px);
+  }
+
+  nav.main-nav > a span {
+    display: inline-block !important;
   }
 
   nav.main-nav .mobile-menu-footer {
