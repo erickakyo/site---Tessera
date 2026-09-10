@@ -263,8 +263,9 @@ nav.main-nav .mobile-menu-footer {
 
 @media (max-width: 768px) {
   header.site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    width: 100%;
     z-index: 1000;
     background-color: #FAF9F5;
     backdrop-filter: none;
@@ -1070,6 +1071,13 @@ section {
   margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid var(--border-subtle);
+}
+
+.train-button-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 .train-toggle-btn {
