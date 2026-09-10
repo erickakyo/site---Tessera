@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260910_23">
-  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_23">
-  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_23">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_24">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_24">
+  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_24">
 </head>
 <body class="bg-grid-dots">
 
@@ -164,30 +164,7 @@
           </div>
         </div>
 
-        <!-- Technical Architecture Block -->
-        <div class="tech-spec-block">
-          <div class="tech-spec-header">
-            <span class="tech-spec-title" style="color: #8A6BFF;">// FLUXO DE EXECUÇÃO DO FRAMEWORK DISCOVERY (ZERO DIRECT I/O)</span>
-            <span class="mobile-scroll-hint">// deslize para ver &rarr;</span>
-          </div>
-          <pre style="margin: 0; line-height: 1.5; color: #A6A3B8;">
-Aplicação Consumidora (Web / CLI / K8s Job)
-        │
-        ├──> Metadados de Esquema (colunas, tipos, constraints)
-        ├──> Amostras de Linhas (valores em texto / JSON estruturado)
-        │
-        ▼
-[ Tessera Discovery Engine ]
-   ├── Classificadores de Caminho (Regex sobre Path / Coluna)
-   ├── Classificadores de Valor (Regex, Validador Luhn, Checksums)
-   ├── Dicionários &amp; Entropia de Shannon (Alta aleatoriedade)
-   └── Avaliação Recall-First (Matches ambíguos &rarr; needs_review)
-        │
-        ▼
-Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
-  Ex: customers.cpf  &rarr; Domínio: BR_CPF  &rarr; Algoritmo: CPF Masking (Confiança: 1.0)
-  Ex: billing.num_cc &rarr; Domínio: CC_PAN  &rarr; Algoritmo: Luhn FPE (Confiança: 0.98)</pre>
-        </div>
+
 
         <div class="problem-grid">
           <div class="problem-item">
@@ -356,28 +333,7 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
           </div>
         </div>
 
-        <!-- Technical Block -->
-        <div class="tech-spec-block">
-          <div class="tech-spec-header">
-            <span class="tech-spec-title" style="color: #7EE787;">// FLUXO DE MASCARAMENTO DETERMINÍSTICO (FF1 NIST SP 800-38G)</span>
-            <span class="mobile-scroll-hint">// deslize para ver &rarr;</span>
-          </div>
-          <pre style="margin: 0; line-height: 1.5; color: #A6A3B8;">
-Fontes de Produção (PostgreSQL / MySQL / Oracle / S3 JSONL)
-        │
-        ├──> customers.customer_id (#1042) ──> [ FF1 Engine + KMS Key ] ──> "US-981-D"
-        ├──> payments.customer_id  (#1042) ──> [ FF1 Engine + KMS Key ] ──> "US-981-D"
-        └──> billing.cpf (341.890.122-10)  ──> [ Luhn / CPF Masker   ] ──> "582.109.844-32"
-        │
-        ▼
-[ Motor Criptográfico Determinístico ]
-   ├── Algoritmos: FPE FF1, AES-256-SIV, Lookup Hash, HMAC-SHA256
-   ├── Provedores de Chave: AWS KMS, GCP Cloud KMS, HashiCorp Vault e K8s Secrets
-   └── Garantia: Mesma chave + mesmo salt = saída byte-idêntica (100% integridade de JOINs)
-        │
-        ▼
-Bancos de Testes &amp; Sandboxes de IA &rarr; Preservação relacional sem expor PII real</pre>
-        </div>
+
 
         <div class="problem-grid">
           <div class="problem-item">
@@ -517,30 +473,7 @@ Bancos de Testes &amp; Sandboxes de IA &rarr; Preservação relacional sem expor
           </div>
         </div>
 
-        <!-- Technical Architecture Block -->
-        <div class="tech-spec-block">
-          <div class="tech-spec-header">
-            <span class="tech-spec-title" style="color: #7EE787;">// ARQUITETURA DO MOTOR DE SUBSETTING (SCHEMA GRAPH &amp; TARJAN WAVES)</span>
-            <span class="mobile-scroll-hint">// deslize para ver &rarr;</span>
-          </div>
-          <pre style="margin: 0; line-height: 1.5; color: #A6A3B8;">
-Bancos de Dados de Origem (PostgreSQL / MySQL / SQL Server / Oracle / MongoDB)
-        │
-        ▼
-[ Neo4j Schema Graph ]  &lt;── Mapeia FKs físicas, relações lógicas declaradas e cross-database
-        │
-        ▼
-[ Planner de Extração ] &lt;── Tarjan Strongly Connected Components (SCC) quebra ciclos
-        │
-        ▼
-[ Executor em Ondas (Waves) ]
-   ├── Wave 1: Tabelas raiz independentes filtradas por seed
-   ├── Wave 2..N: Dependências resolvidas progressivamente por FKs
-   └── Lookup Tables: Tabelas de domínio estáticas copiadas integralmente
-        │
-        ▼
-[ Destino Não-Produtivo ] (90%+ de redução de storage com integridade de FK 100%)</pre>
-        </div>
+
 
         <div class="problem-grid">
           <div class="problem-item">
@@ -658,31 +591,7 @@ Bancos de Dados de Origem (PostgreSQL / MySQL / SQL Server / Oracle / MongoDB)
           </div>
         </div>
 
-        <!-- Technical Block -->
-        <div class="tech-spec-block">
-          <div class="tech-spec-header">
-            <span class="tech-spec-title" style="color: #E65100;">// COORDENAÇÃO DE SNAPSHOT E STREAM DE MUTAÇÕES (BOUNDARY LSN0)</span>
-            <span class="mobile-scroll-hint">// deslize para ver &rarr;</span>
-          </div>
-          <pre style="margin: 0; line-height: 1.5; color: #A6A3B8;">
-PostgreSQL 16+ (pgoutput)  /  MySQL 8+ (binlog ROW / GTID)
-                    │
-                    ▼
-          [ Coordenador CDC ]
-          Fixa o ponto LSN0
-          ┌─────────┴─────────┐
-          │                   │
-  [ Snapshot MVCC ]    [ Stream Incremental ]
-  (Estado inicial)     (Mutações pós-LSN0)
-          │                   │
-          └─────────┬─────────┘
-                    ▼
-          [ Serializador Canônico ]
-          (JSONL byte-estável, normalização de tipos e DDLs capturados)
-                    │
-                    ▼
-   Amazon S3 / Azure Blob / Filesystem Local (Replay Determinístico)</pre>
-        </div>
+
 
         <div class="problem-grid">
           <div class="problem-item">
@@ -725,26 +634,7 @@ PostgreSQL 16+ (pgoutput)  /  MySQL 8+ (binlog ROW / GTID)
           A etapa final da visão Tessera é unificar a entrega de dados em um plano de controle em nuvem nativa: gerenciar o ciclo de vida completo de réplicas de banco de dados efêmeras para desenvolvedores, pipelines de CI e agentes autônomos de IA.
         </p>
 
-        <!-- Lifecycle Architecture Plan -->
-        <div class="tech-spec-block">
-          <div class="tech-spec-header">
-            <span class="tech-spec-title" style="color: #8A6BFF;">// PLANO DE CONTROLE DO CICLO DE VIDA DE DADOS (ROADMAP)</span>
-            <span class="mobile-scroll-hint">// deslize para ver &rarr;</span>
-          </div>
-          <pre style="margin: 0; line-height: 1.5; color: #A6A3B8;">
-Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
-                            │
-                            ▼
-           [ Réplica Intermediária Sanitizada ]
-                            │
-                            ▼
-   [ Operador Kubernetes Tessera (Lifecycle Controller) ]
-             Integrado a Block Storage / EFS / ZFS Appliance
-          ┌─────────────────┼─────────────────┐
-          ▼                 ▼                 ▼
-   Branch de Dev       Sandbox de QA     Agente de IA Autônomo
-   (Clone Efêmero)     (Snapshot Test)   (Sandbox com Rollback)</pre>
-        </div>
+
 
         <div class="problem-grid">
           <div class="problem-item">
@@ -828,8 +718,8 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
     </div>
   </footer>
 
-  <script src="../assets/app.js?v=20260910_23"></script>
-  <script src="../assets/subsetter-graph.js?v=20260910_23"></script>
-  <script src="../assets/products-animations.js?v=20260910_23"></script>
+  <script src="../assets/app.js?v=20260910_24"></script>
+  <script src="../assets/subsetter-graph.js?v=20260910_24"></script>
+  <script src="../assets/products-animations.js?v=20260910_24"></script>
 </body>
 </html>
