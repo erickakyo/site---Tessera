@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260910_24">
-  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_24">
-  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_24">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_25">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_25">
+  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_25">
 </head>
 <body class="bg-grid-dots">
 
@@ -210,21 +210,21 @@
         <!-- Explicação Didática do Problema & Solução -->
         <div class="masking-concept-box">
           <div class="concept-col">
-            <h4 style="color: #FF7B72;">✕ O Problema: Mascaramento Comum Quebra Testes</h4>
+            <h4 style="color: #FF7B72 !important;"><span style="color: #FF7B72 !important;">✕ O Problema: Mascaramento Comum Quebra Testes</span></h4>
             <p>
               Ao mascarar bancos para ambientes de testes e QA, ferramentas tradicionais geram valores aleatórios desconectados. O mesmo cliente <code>1042</code> vira <code>FAKE-119</code> no PostgreSQL e vira <code>RANDOM-842</code> no Oracle.
             </p>
             <p style="margin-top: 8px;">
-              <strong style="color: #FF7B72;">Impacto:</strong> A chave estrangeira (FK) se quebra. As consultas com <code>JOIN</code> retornam zero registros e toda a suíte de testes de software falha!
+              <strong style="color: #FF7B72 !important;">Impacto:</strong> A chave estrangeira (FK) se quebra. As consultas com <code>JOIN</code> retornam zero registros e toda a suíte de testes de software falha!
             </p>
           </div>
           <div class="concept-col">
-            <h4 style="color: #7EE787;">✓ A Solução Tessera: Criptografia Determinística (NIST FF1)</h4>
+            <h4 style="color: #7EE787 !important;"><span style="color: #7EE787 !important;">✓ A Solução Tessera: Criptografia Determinística (NIST FF1)</span></h4>
             <p>
               A Tessera garante consistência matemática via KMS: <code>mesma chave + mesmo dado = mesma saída mascarada</code>, mesmo operando em bancos de dados totalmente separados.
             </p>
             <p style="margin-top: 8px;">
-              <strong style="color: #7EE787;">Benefício:</strong> O cliente <code>1042</code> vira <strong>exatamente <code>"US-981-D"</code> em todos os microsserviços simultaneamente</strong>. As consultas e testes funcionam 100%, com dados sensíveis (PII) totalmente anônimos e protegidos (LGPD).
+              <strong style="color: #7EE787 !important;">Benefício:</strong> O cliente <code>1042</code> vira <strong style="color: #FFFFFF !important;">exatamente <code>"US-981-D"</code> em todos os microsserviços simultaneamente</strong>. As consultas e testes funcionam 100%, com dados sensíveis (PII) totalmente anônimos e protegidos (LGPD).
             </p>
           </div>
         </div>
@@ -718,8 +718,8 @@
     </div>
   </footer>
 
-  <script src="../assets/app.js?v=20260910_24"></script>
-  <script src="../assets/subsetter-graph.js?v=20260910_24"></script>
-  <script src="../assets/products-animations.js?v=20260910_24"></script>
+  <script src="../assets/app.js?v=20260910_25"></script>
+  <script src="../assets/subsetter-graph.js?v=20260910_25"></script>
+  <script src="../assets/products-animations.js?v=20260910_25"></script>
 </body>
 </html>

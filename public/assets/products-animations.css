@@ -443,22 +443,33 @@
 }
 
 .concept-col:first-child {
-  border-left: 3px solid #FF7B72;
+  border-left: 3px solid #FF7B72 !important;
 }
 
 .concept-col:last-child {
-  border-left: 3px solid #7EE787;
+  border-left: 3px solid #7EE787 !important;
 }
 
 .concept-col h4 {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  font-weight: 700;
+  font-family: var(--font-mono) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
   margin-top: 0;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 6px;
+  color: #FFFFFF !important;
+}
+
+.concept-col:first-child h4,
+.concept-col:first-child h4 span {
+  color: #FF7B72 !important;
+}
+
+.concept-col:last-child h4,
+.concept-col:last-child h4 span {
+  color: #7EE787 !important;
 }
 
 .concept-col p {
@@ -470,6 +481,14 @@
 
 .concept-col p strong {
   color: #FFFFFF !important;
+}
+
+.concept-col:first-child p strong {
+  color: #FF7B72 !important;
+}
+
+.concept-col:last-child p strong {
+  color: #7EE787 !important;
 }
 
 .masking-stage {
