@@ -610,8 +610,24 @@ section {
   border-bottom: 1px solid var(--border-subtle);
 }
 
+@media (max-width: 768px) {
+  section {
+    padding: 56px 0;
+  }
+}
+
 .section-header {
   margin-bottom: 48px;
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    margin-bottom: 32px;
+  }
+  .section-header h2 {
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
 }
 
 .section-header h2 {
@@ -921,13 +937,20 @@ section {
 /* Fixação fluida dos seletores no topo no Mobile */
 @media (max-width: 860px) {
   .demo-header {
-    top: var(--header-height);
-    margin: -16px -16px 20px -16px;
+    margin: -16px -16px 16px -16px;
     padding: 14px 16px;
+    background: #121024;
     border-radius: var(--radius-md) var(--radius-md) 0 0;
-    border-bottom: 1px solid rgba(107, 75, 240, 0.3);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     gap: 12px;
+  }
+
+  .demo-tabs {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: calc(var(--header-height) + 10px) !important;
+    z-index: 500 !important;
+    background: #1B1836 !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   }
 }
 
