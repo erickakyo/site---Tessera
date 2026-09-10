@@ -142,9 +142,9 @@
 
 /* Tarjan SCC Warning Banner */
 .tarjan-banner {
-  background: rgba(230, 81, 0, 0.14);
-  border-top: 1px solid rgba(230, 81, 0, 0.35);
-  border-bottom: 1px solid rgba(230, 81, 0, 0.35);
+  background: rgba(45, 20, 5, 0.88) !important;
+  border-top: 1px solid rgba(255, 152, 0, 0.4) !important;
+  border-bottom: 1px solid rgba(255, 152, 0, 0.4) !important;
   padding: 10px 20px;
   display: none;
   align-items: center;
@@ -152,7 +152,7 @@
   gap: 12px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: #FFB74D;
+  color: #FFB74D !important;
   transition: opacity 0.3s ease;
 }
 
@@ -160,20 +160,44 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #FFB74D !important;
+}
+
+.tarjan-alert-content span {
+  color: #FFB74D !important;
+}
+
+.tarjan-banner strong,
+.tarjan-banner span strong,
+.tarjan-alert-content strong {
+  color: #FFE082 !important;
+  font-weight: 700 !important;
 }
 
 .tarjan-alert-icon {
   font-size: 1rem;
+  color: #FFB74D !important;
 }
 
 .tarjan-banner code {
-  color: #FFD54F;
+  color: #FFFFFF !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 183, 77, 0.4) !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
   font-family: var(--font-mono);
 }
 
 .tarjan-resolved {
-  color: #7EE787;
-  font-weight: 600;
+  color: #7EE787 !important;
+  font-weight: 700 !important;
+}
+
+/* Universal safeguard for .sim-container against global styles.css */
+.sim-container strong,
+.sim-container span strong,
+.sim-container p strong {
+  color: inherit;
 }
 
 /* Mobile Scroll Indicator */
