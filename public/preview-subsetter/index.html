@@ -10,350 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260910_17">
-
-  <style>
-    /* Preview Page Specific Styles */
-    .preview-hero {
-      padding: clamp(36px, 5vw, 60px) 0 24px;
-      text-align: center;
-    }
-    .preview-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(138, 107, 255, 0.12);
-      border: 1px solid rgba(138, 107, 255, 0.3);
-      color: var(--tessera-violet);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      margin-bottom: 16px;
-    }
-    .sim-container {
-      background: #0B0A16;
-      border: 1px solid rgba(138, 107, 255, 0.2);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
-      overflow: hidden;
-      margin-bottom: 48px;
-      position: relative;
-    }
-
-    /* Top Control Bar */
-    .sim-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
-      background: rgba(14, 12, 28, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .sim-info-group {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-    }
-    .sim-info-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-muted);
-    }
-    .sim-info-item strong {
-      color: #FFF;
-      font-weight: 600;
-    }
-    .sim-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .sim-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #E2E1EC;
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
-    }
-    .sim-btn:hover {
-      background: rgba(138, 107, 255, 0.2);
-      border-color: var(--tessera-violet);
-      color: #FFF;
-    }
-    .sim-btn.active {
-      background: var(--tessera-violet);
-      border-color: var(--tessera-violet);
-      color: #FFF;
-      box-shadow: 0 0 12px rgba(138, 107, 255, 0.4);
-    }
-
-    /* Stage Canvas */
-    .sim-stage-wrapper {
-      position: relative;
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      background: radial-gradient(circle at 50% 50%, #131024 0%, #0B0A16 100%);
-      background-size: cover;
-      min-height: 560px;
-    }
-    .sim-stage-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-    .sim-stage-wrapper::-webkit-scrollbar-thumb {
-      background: rgba(138, 107, 255, 0.3);
-      border-radius: 3px;
-    }
-    .sim-stage {
-      position: relative;
-      width: 1060px;
-      height: 580px;
-      margin: 0 auto;
-    }
-
-    /* SVG Overlay */
-    .sim-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* Nodes */
-    .sim-nodes {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 10;
-    }
-    .node-wrap {
-      position: absolute;
-      width: 180px;
-      height: 68px;
-      box-sizing: border-box;
-      transition: transform 0.3s ease;
-    }
-    .node-card {
-      width: 100%;
-      height: 100%;
-      box-sizing: border-box;
-      border-radius: 8px;
-      padding: 9px 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 4px;
-      background: rgba(22, 19, 39, 0.6);
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      color: #6C6882;
-      box-shadow: none;
-      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-      cursor: pointer;
-      user-select: none;
-    }
-    .node-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-    }
-    .node-title {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      font-family: var(--font-body);
-      color: #7E7A94;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .node-badge {
-      font-family: var(--font-mono);
-      font-size: 0.625rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #7E7A94;
-    }
-    .node-sub {
-      font-family: var(--font-mono);
-      font-size: 0.6875rem;
-      color: #55516B;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* State Styles for Active Nodes */
-    .node-wrap.state-anchor .node-card {
-      background: #1B1238;
-      border: 1.5px solid #8A6BFF;
-      box-shadow: 0 0 24px rgba(138, 107, 255, 0.35);
-    }
-    .node-wrap.state-anchor .node-title { color: #FFF; }
-    .node-wrap.state-anchor .node-badge { background: #8A6BFF; color: #FFF; }
-    .node-wrap.state-anchor .node-sub { color: #D2C4FF; }
-
-    .node-wrap.state-lookup .node-card {
-      background: #1F190E;
-      border: 1.5px solid #D29922;
-      box-shadow: 4px 4px 0 rgba(210, 153, 34, 0.25), 0 0 16px rgba(210, 153, 34, 0.2);
-    }
-    .node-wrap.state-lookup .node-title { color: #F7E4B6; }
-    .node-wrap.state-lookup .node-badge { background: #D29922; color: #1F190E; }
-    .node-wrap.state-lookup .node-sub { color: #D8BD82; }
-
-    .node-wrap.state-wave1 .node-card {
-      background: #0E1E17;
-      border: 1.5px solid #7EE787;
-      box-shadow: 0 0 20px rgba(126, 231, 135, 0.25);
-    }
-    .node-wrap.state-wave1 .node-title { color: #FFF; }
-    .node-wrap.state-wave1 .node-badge { background: #7EE787; color: #072212; }
-    .node-wrap.state-wave1 .node-sub { color: #A8F5B0; }
-
-    .node-wrap.state-wave2 .node-card {
-      background: #0D1A2B;
-      border: 1.5px solid #58A6FF;
-      box-shadow: 0 0 18px rgba(88, 166, 255, 0.25);
-    }
-    .node-wrap.state-wave2 .node-title { color: #FFF; }
-    .node-wrap.state-wave2 .node-badge { background: #58A6FF; color: #081B33; }
-    .node-wrap.state-wave2 .node-sub { color: #A5D1FF; }
-
-    .node-wrap.state-wave3 .node-card {
-      background: #141228;
-      border: 1.5px solid #BC8CFF;
-      box-shadow: 0 0 18px rgba(188, 140, 255, 0.25);
-    }
-    .node-wrap.state-wave3 .node-title { color: #FFF; }
-    .node-wrap.state-wave3 .node-badge { background: #BC8CFF; color: #160B29; }
-    .node-wrap.state-wave3 .node-sub { color: #DDC8FF; }
-
-    /* Pulsing Seed Ring */
-    .seed-pulse-ring {
-      position: absolute;
-      inset: -5px;
-      border-radius: 12px;
-      border: 2px solid #8A6BFF;
-      animation: seedPulse 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-      pointer-events: none;
-      display: none;
-    }
-    @keyframes seedPulse {
-      0% { transform: scale(0.98); opacity: 0.9; }
-      70% { transform: scale(1.08); opacity: 0; }
-      100% { transform: scale(1.08); opacity: 0; }
-    }
-
-    /* Edge Animation */
-    @keyframes dashflow {
-      to { stroke-dashoffset: -28; }
-    }
-    .edge-flow {
-      stroke-dasharray: 6 5;
-      animation: dashflow 1s linear infinite;
-    }
-
-    /* Tarjan SCC Warning Tag */
-    .tarjan-banner {
-      background: rgba(230, 81, 0, 0.12);
-      border: 1px solid rgba(230, 81, 0, 0.35);
-      border-radius: var(--radius-sm);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: #FFB74D;
-      margin: 16px 20px;
-    }
-
-    /* Legend / Bottom Bar */
-    .sim-legend-bar {
-      padding: 16px 20px;
-      background: rgba(14, 12, 28, 0.95);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-    }
-    .legend-items {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #A6A3B8;
-    }
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    /* Comparison Table / Architectural Rationale */
-    .rationale-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 60px;
-    }
-    @media (max-width: 768px) {
-      .rationale-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .rationale-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 24px;
-    }
-    .rationale-card h3 {
-      font-size: 1.125rem;
-      margin-top: 0;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_18">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_18">
 </head>
 <body class="bg-grid-dots">
 
@@ -401,15 +59,15 @@
   </header>
 
   <!-- Main Container -->
-  <main class="container" style="padding-top: 20px;">
+  <main class="container preview-main">
     
     <div class="preview-hero">
       <span class="preview-badge">LAB DE VALIDAÇÃO // TESSERA SUBSETTER</span>
-      <h1 class="font-title" style="font-size: clamp(2rem, 3.8vw, 3rem); margin-bottom: 16px;">
+      <h1 class="font-title">
         Simulador de Traversal Relacional &amp; Tarjan Waves
       </h1>
-      <p class="lead" style="max-width: 800px; margin: 0 auto;">
-        Demonstração interativa do motor de fatiamento determinístico da Tessera: como uma semente de dados (<code style="font-family: var(--font-mono); color: var(--tessera-violet);">customers</code>) navega pelas chaves estrangeiras, resolve ciclos relacionais com o algoritmo Tarjan SCC e descarta 96.4% do volume desnecessário.
+      <p class="lead">
+        Demonstração interativa do motor de fatiamento determinístico da Tessera: como uma semente de dados (<code class="preview-code-tag">customers</code>) navega pelas chaves estrangeiras, resolve ciclos relacionais com o algoritmo Tarjan SCC e descarta 96.4% do volume desnecessário.
       </p>
     </div>
 
@@ -421,19 +79,19 @@
         <div class="sim-info-group">
           <div class="sim-info-item">
             <span>Semente:</span>
-            <strong style="color: #BC8CFF;">customers (WHERE region = 'BR-SP')</strong>
+            <strong class="stat-seed">customers (WHERE region = 'BR-SP')</strong>
           </div>
           <div class="sim-info-item">
             <span>Tabelas no Subset:</span>
-            <strong id="stat-reached" style="color: #7EE787;">1 / 14</strong>
+            <strong id="stat-reached" class="stat-reached">1 / 14</strong>
           </div>
           <div class="sim-info-item">
             <span>Redução de Volume:</span>
-            <strong id="stat-reduction" style="color: #58A6FF;">96.4%</strong>
+            <strong id="stat-reduction" class="stat-reduction">96.4%</strong>
           </div>
           <div class="sim-info-item">
             <span>Integridade FK:</span>
-            <strong style="color: #7EE787;">100% Íntegro</strong>
+            <strong class="stat-integrity">100% Íntegro</strong>
           </div>
         </div>
 
@@ -450,12 +108,12 @@
       </div>
 
       <!-- Live Notification for Tarjan Cycle -->
-      <div id="tarjan-alert" class="tarjan-banner" style="display: none;">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 1rem;">&#9888;</span>
+      <div id="tarjan-alert" class="tarjan-banner">
+        <div class="tarjan-alert-content">
+          <span class="tarjan-alert-icon">&#9888;</span>
           <span><strong>Ciclo Relacional Detectado:</strong> <code>orders &harr; transactions</code> (dependência circular bidirecional).</span>
         </div>
-        <span style="color: #7EE787; font-weight: 600;">&check; Resolvido via Tarjan SCC Waves em 2 etapas</span>
+        <span class="tarjan-resolved">&check; Resolvido via Tarjan SCC Waves em 2 etapas</span>
       </div>
 
       <!-- Interactive Stage -->
@@ -473,7 +131,7 @@
                 <path d="M 0 1 L 9 5 L 0 9 z" fill="#7EE787"></path>
               </marker>
               <marker id="arrow-cycle" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 0 1 L 9 5 L 0 9 z" fill="#E65100"></path>
+                <path d="M 0 1 L 9 5 L 0 9 z" fill="#FF7B72"></path>
               </marker>
             </defs>
 
@@ -494,29 +152,29 @@
       <div class="sim-legend-bar">
         <div class="legend-items">
           <div class="legend-item">
-            <div class="legend-dot" style="background: #8A6BFF; box-shadow: 0 0 8px #8A6BFF;"></div>
+            <div class="legend-dot dot-seed"></div>
             <span>Semente / Âncora</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background: #7EE787; box-shadow: 0 0 8px #7EE787;"></div>
+            <div class="legend-dot dot-wave1"></div>
             <span>Onda 1 (FKs Diretas)</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background: #58A6FF; box-shadow: 0 0 8px #58A6FF;"></div>
+            <div class="legend-dot dot-wave2"></div>
             <span>Onda 2 (Cascata)</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background: #D29922; box-shadow: 0 0 8px #D29922;"></div>
+            <div class="legend-dot dot-lookup"></div>
             <span>Tabela Lookup (Full)</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background: #3A3654;"></div>
+            <div class="legend-dot dot-pruned"></div>
             <span>Fora do Subset (Descartada)</span>
           </div>
         </div>
 
-        <div style="color: #C5C2E0; font-family: var(--font-mono); font-size: 0.75rem;">
-          Status: <span id="status-text" style="color: #7EE787; font-weight: 600;">Aguardando execução...</span>
+        <div class="sim-status-box">
+          Status: <span id="status-text" class="stat-reached">Aguardando execução...</span>
         </div>
       </div>
 
@@ -526,20 +184,20 @@
     <div class="rationale-grid">
       <div class="rationale-card">
         <h3>
-          <span style="color: #8A6BFF;">&bull;</span>
+          <span class="bullet-violet">&bull;</span>
           Por que animações em grafo funcionam tão bem?
         </h3>
-        <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.6;">
+        <p>
           Test Data Management e Subsetting são conceitos difíceis de explicar apenas com texto. Quando CTOs e engenheiros veem o grafo de dependências sendo percorrido em tempo real — com as tabelas fora do escopo ficando apagadas —, eles compreendem instantaneamente como a Tessera economiza <strong>90%+ de storage</strong> sem quebrar chaves estrangeiras.
         </p>
       </div>
 
       <div class="rationale-card">
         <h3>
-          <span style="color: #7EE787;">&bull;</span>
+          <span class="bullet-green">&bull;</span>
           Cabe uma animação para cada um dos 4 produtos?
         </h3>
-        <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.6;">
+        <p>
           <strong>Sim!</strong> Nossa recomendação técnica e estratégica:
           <br>1. <strong>Subsetter (este módulo):</strong> Grafo de ondas Tarjan resolvendo dependências circulares.
           <br>2. <strong>Masking:</strong> Pipeline criptográfico demonstrando entrada com PII &rarr; saída determinística preservando formato FF1 e integridade de JOINs.
@@ -611,8 +269,7 @@
     </div>
   </footer>
 
-  <script src="../assets/app.js?v=20260910_17"></script>
-
-  <script src="../assets/subsetter-graph.js?v=20260910_17"></script>
+  <script src="../assets/app.js?v=20260910_18"></script>
+  <script src="../assets/subsetter-graph.js?v=20260910_18"></script>
 </body>
 </html>
