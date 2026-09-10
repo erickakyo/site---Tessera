@@ -176,7 +176,7 @@ nav, button, input, textarea, select, .btn, .badge, .eyebrow, .brand-logo, .lang
 header.site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background-color: rgba(250, 249, 245, 0.94);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -937,24 +937,21 @@ section {
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
   gap: 16px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: var(--header-height);
-  z-index: 100;
-  background: var(--bg-dark);
-  padding-top: 12px;
+  position: static;
+  background: transparent;
+  padding-top: 0;
 }
 
-/* Fixação fluida dos seletores no topo no Mobile */
+/* Fixação fluida dos seletores no topo somente no Mobile */
 @media (max-width: 860px) {
   .demo-header {
     position: -webkit-sticky !important;
     position: sticky !important;
     top: var(--header-height) !important;
-    z-index: 990 !important;
+    z-index: 90 !important;
     background: #121024 !important;
     margin: -16px -16px 20px -16px;
     padding: 16px;
@@ -1361,7 +1358,7 @@ footer.site-footer {
 .philosophy-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  gap: 32px;
   margin-top: 36px;
 }
 
@@ -1387,7 +1384,7 @@ footer.site-footer {
 @media (max-width: 880px) {
   .philosophy-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 32px;
     margin-top: 24px;
   }
 }
@@ -1560,17 +1557,17 @@ select.form-control {
 
 .info-card {
   background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+  padding: clamp(22px, 3.5vw, 28px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
   box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .info-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border-color: var(--tessera-violet);
+  box-shadow: 0 6px 24px rgba(107, 75, 240, 0.08);
 }
 
 /* ==========================================================================
@@ -1594,4 +1591,97 @@ select.form-control {
   box-shadow: 0 8px 30px rgba(107, 75, 240, 0.08);
   transform: translateY(-2px);
 }
+
+/* ==========================================================================
+   Produtos: Technical Specification & Architecture Blocks
+   ========================================================================== */
+.product-lead-desc {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 36px;
+}
+
+.tech-spec-block {
+  background: #0E0C1C;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 32px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #C5C2E0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(138, 107, 255, 0.4) rgba(0, 0, 0, 0.2);
+}
+
+.tech-spec-block::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tech-spec-block::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.tech-spec-block::-webkit-scrollbar-thumb {
+  background: rgba(138, 107, 255, 0.35);
+  border-radius: 3px;
+}
+
+.tech-spec-block pre {
+  margin: 0;
+  line-height: 1.5;
+  color: #A6A3B8;
+  white-space: pre;
+}
+
+.tech-spec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tech-spec-title {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mobile-scroll-hint {
+  display: none;
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: #848096;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .product-lead-desc {
+    margin-bottom: 24px;
+  }
+  .tech-spec-block {
+    padding: 14px;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    margin-bottom: 24px;
+  }
+  .mobile-scroll-hint {
+    display: inline-block;
+  }
+}
+
 
