@@ -1559,26 +1559,51 @@ select.form-control {
   background: #FFFFFF;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  padding: clamp(22px, 3.5vw, 28px);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  padding: clamp(24px, 3.5vw, 32px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .info-card:hover {
   border-color: var(--tessera-violet);
-  box-shadow: 0 6px 24px rgba(107, 75, 240, 0.08);
+  box-shadow: 0 8px 30px rgba(107, 75, 240, 0.09);
+}
+
+.info-cards-column {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+@media (max-width: 640px) {
+  .info-cards-column {
+    gap: 28px;
+  }
 }
 
 /* ==========================================================================
    Blog: Clean Editorial Cards
    ========================================================================== */
+.blog-posts-column {
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  max-width: 860px;
+}
+
+@media (max-width: 640px) {
+  .blog-posts-column {
+    gap: 36px;
+  }
+}
+
 .blog-card {
   background: #FFFFFF;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  padding: clamp(24px, 4vw, 36px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  padding: clamp(28px, 4vw, 40px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   display: block;
   text-decoration: none;
@@ -1588,7 +1613,7 @@ select.form-control {
 
 .blog-card:hover {
   border-color: var(--tessera-violet);
-  box-shadow: 0 8px 30px rgba(107, 75, 240, 0.08);
+  box-shadow: 0 10px 32px rgba(107, 75, 240, 0.1);
   transform: translateY(-2px);
 }
 
