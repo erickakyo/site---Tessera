@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=20260910_13">
+  <link rel="stylesheet" href="assets/styles.css?v=20260910_14">
 </head>
 <body class="bg-grid-dots">
 
@@ -30,28 +30,26 @@
         <a href="blog.html">Blog &amp; Insights <span>&rarr;</span></a>
         <a href="contato.html">Contato <span>&rarr;</span></a>
 
-        <!-- Lang Switcher inside mobile drawer -->
+        <!-- Mobile Menu Footer with Language Switcher -->
         <div class="mobile-menu-footer">
-          <span style="font-size: 0.8125rem; color: var(--text-muted);">Idioma</span>
-          <div class="lang-switch">
-            <span class="lang-btn active">PT</span>
-            <span class="lang-divider">/</span>
-            <span class="lang-btn">EN</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">Idioma / Language</span>
+          <div class="lang-switch" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
           </div>
         </div>
       </nav>
 
-      <div class="header-actions">
-        <div class="lang-switch">
-          <span class="lang-btn active">PT</span>
-          <span class="lang-divider">/</span>
-          <span class="lang-btn">EN</span>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button class="lang-btn active" data-lang="pt" onclick="setLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
         </div>
-        <a href="contato.html" class="btn btn-primary" style="font-size: 0.8125rem;">Agendar Demo</a>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
+        <a href="contato.html" class="btn btn-primary">Agendar Demo</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
@@ -193,11 +191,11 @@ Integridade de JOIN preservada a 100%.</pre>
             <div class="tech-spec-header" style="margin-bottom: 8px;">
               <span class="tech-spec-title" style="color: #8A6BFF;">// GESTÃO SEGURA DE CHAVES</span>
             </div>
-            <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.7; color: #A6A3B8; font-size: 0.8125rem;">
-              <li>&bull; AWS KMS Key Provider nativo</li>
-              <li>&bull; Provedor de Arquivos &amp; K8s Secrets</li>
-              <li>&bull; Execução 100% Thread-safe em Go</li>
-              <li>&bull; Detecção automática de ciclos de cadeia</li>
+            <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.8; color: #A6A3B8; font-size: 0.8125rem;">
+              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> AWS KMS Key Provider nativo</li>
+              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> Provedor de Arquivos &amp; K8s Secrets</li>
+              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> Execução 100% Thread-safe em Go</li>
+              <li style="display: flex; align-items: center; gap: 8px;"><span style="color: #8A6BFF; font-size: 1rem; line-height: 1;">&bull;</span> Detecção automática de ciclos de cadeia</li>
             </ul>
           </div>
         </div>

@@ -1663,6 +1663,18 @@ select.form-control {
   white-space: pre;
 }
 
+.tech-spec-block ul {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.tech-spec-block li {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
 .tech-spec-header {
   display: flex;
   align-items: center;
