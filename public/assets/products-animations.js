@@ -287,10 +287,10 @@
 
         if (joinBanner) {
           joinBanner.className = 'join-bridge-banner';
-          joinBanner.innerHTML = '<span><strong style="color:#7EE787;">✓ SUCESSO NO JOIN:</strong> <code>customers.id ("' + k.tag1 + '") == invoices.customer_id ("' + k.tag1 + '")</code></span><span style="color:#7EE787; font-weight:700;">100% Íntegro em Testes</span>';
+          joinBanner.innerHTML = '<span><strong style="color:#7EE787;">✓ SUCESSO NO JOIN:</strong> <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); border:1px solid rgba(126,231,135,0.4); padding:3px 8px; border-radius:4px;">customers.id ("' + k.tag1 + '") == invoices.customer_id ("' + k.tag1 + '")</code></span><span style="color:#7EE787; font-weight:700;">100% Íntegro em Testes</span>';
         }
         if (statusText) {
-          statusText.innerHTML = '<span style="color: #7EE787;"><strong>A Solução Tessera:</strong> Criptografia determinística (FF1). O mesmo ID de entrada <code>1042</code> gera exatamente a mesma saída <code>"' + k.tag1 + '"</code> no Postgres e no Oracle. Os testes de integração funcionam 100% sem expor PII real!</span>';
+          statusText.innerHTML = '<span style="color: #7EE787;"><strong style="color: #7EE787;">A Solução Tessera:</strong> Criptografia determinística (FF1). O mesmo ID de entrada <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); padding:2px 6px; border-radius:3px;">1042</code> gera exatamente a mesma saída <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); padding:2px 6px; border-radius:3px;">"' + k.tag1 + '"</code> no Postgres e no Oracle. Os testes de integração funcionam 100% sem expor PII real!</span>';
         }
       } else if (mode === 'naive') {
         // NAIVE / RANDOM MASKING (BREAKS JOINS)
@@ -304,10 +304,10 @@
 
         if (joinBanner) {
           joinBanner.className = 'join-bridge-banner join-error';
-          joinBanner.innerHTML = '<span><strong style="color:#FF7B72;">❌ ERRO DE JOIN:</strong> <code>customers.id ("FAKE-119") ≠ invoices.customer_id ("RANDOM-842")</code> &rarr; <strong>0 registros retornados!</strong></span><span style="color:#FF7B72; font-weight:700;">Ambiente Quebrado</span>';
+          joinBanner.innerHTML = '<span><strong style="color:#FF7B72;">❌ ERRO DE JOIN:</strong> <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); border:1px solid rgba(255,123,114,0.5); padding:3px 8px; border-radius:4px;">customers.id ("FAKE-119") ≠ invoices.customer_id ("RANDOM-842")</code> &rarr; <strong style="color:#FF7B72;">0 registros retornados!</strong></span><span style="color:#FF7B72; font-weight:700;">Ambiente Quebrado</span>';
         }
         if (statusText) {
-          statusText.innerHTML = '<span style="color: #FF7B72;"><strong>O Desastre do Mascaramento Comum:</strong> Os valores foram gerados aleatoriamente sem determinismo. As tabelas se desconectaram e qualquer teste que dependa de JOIN falha imediatamente.</span>';
+          statusText.innerHTML = '<span style="color: #FF7B72;"><strong style="color: #FF7B72;">O Desastre do Mascaramento Comum:</strong> Os valores foram gerados aleatoriamente sem determinismo. As tabelas se desconectaram e qualquer teste que dependa de JOIN falha imediatamente.</span>';
         }
       } else if (mode === 'real') {
         // REAL DATA / PRODUCTION
@@ -320,11 +320,11 @@
         if (elOFk2) elOFk2.textContent = rawData.oFk2;
 
         if (joinBanner) {
-          joinBanner.className = 'join-bridge-banner';
-          joinBanner.innerHTML = '<span><strong style="color:#FFB74D;">⚠ DADOS DE PRODUÇÃO EM CLARO:</strong> <code>customers.id (1042) == invoices.customer_id (1042)</code></span><span style="color:#FFB74D; font-weight:700;">Risco Grave de Multa LGPD</span>';
+          joinBanner.className = 'join-bridge-banner join-warning';
+          joinBanner.innerHTML = '<span><strong style="color:#FFB74D;">⚠ DADOS DE PRODUÇÃO EM CLARO:</strong> <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); border:1px solid rgba(255,183,77,0.5); padding:3px 8px; border-radius:4px;">customers.id (1042) == invoices.customer_id (1042)</code></span><span style="color:#FFB74D; font-weight:700;">Risco Grave de Multa LGPD</span>';
         }
         if (statusText) {
-          statusText.innerHTML = '<span style="color: #FFB74D;"><strong>Atenção:</strong> Dados reais de produção contendo CPF e Nome de clientes expostos em testes. Sujeito a sanções regulatórias e vazamento.</span>';
+          statusText.innerHTML = '<span style="color: #FFB74D;"><strong style="color: #FFB74D;">Atenção:</strong> Dados reais de produção contendo CPF e Nome de clientes expostos em testes. Sujeito a sanções regulatórias e vazamento.</span>';
         }
       }
 

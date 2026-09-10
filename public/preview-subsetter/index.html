@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260910_21">
-  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_21">
-  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_21">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_22">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_22">
+  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_22">
 </head>
 <body class="bg-grid-dots">
 
@@ -233,15 +233,21 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
         <!-- Explicação Didática do Problema & Solução -->
         <div class="masking-concept-box">
           <div class="concept-col">
-            <h4 style="color: #FF7B72;">✕ O Problema do Mascaramento Comum (Aleatório)</h4>
+            <h4 style="color: #FF7B72;">✕ O Problema: Mascaramento Comum Quebra Testes</h4>
             <p>
-              Ao mascarar bancos para testes, geradores comuns criam valores aleatórios desconectados. O cliente <code>1042</code> vira <code>FAKE-119</code> no PostgreSQL e vira <code>RANDOM-842</code> no Oracle. <strong>Resultado:</strong> Os registros perdem o vínculo, as consultas com <code>JOIN</code> retornam zero e todos os testes de QA quebram!
+              Ao mascarar bancos para ambientes de testes e QA, ferramentas tradicionais geram valores aleatórios desconectados. O mesmo cliente <code>1042</code> vira <code>FAKE-119</code> no PostgreSQL e vira <code>RANDOM-842</code> no Oracle.
+            </p>
+            <p style="margin-top: 8px;">
+              <strong style="color: #FF7B72;">Impacto:</strong> A chave estrangeira (FK) se quebra. As consultas com <code>JOIN</code> retornam zero registros e toda a suíte de testes de software falha!
             </p>
           </div>
           <div class="concept-col">
             <h4 style="color: #7EE787;">✓ A Solução Tessera: Criptografia Determinística (NIST FF1)</h4>
             <p>
-              A Tessera garante matematicamente: <code>mesma chave KMS + mesmo input = saída idêntica</code>. O cliente <code>1042</code> vira <strong>exatamente <code>"US-981-D"</code> em todos os bancos e microsserviços simultaneamente</strong>. As tabelas continuam se relacionando perfeitamente e nenhuma PII real é exposta!
+              A Tessera garante consistência matemática via KMS: <code>mesma chave + mesmo dado = mesma saída mascarada</code>, mesmo operando em bancos de dados totalmente separados.
+            </p>
+            <p style="margin-top: 8px;">
+              <strong style="color: #7EE787;">Benefício:</strong> O cliente <code>1042</code> vira <strong>exatamente <code>"US-981-D"</code> em todos os microsserviços simultaneamente</strong>. As consultas e testes funcionam 100%, com dados sensíveis (PII) totalmente anônimos e protegidos (LGPD).
             </p>
           </div>
         </div>
@@ -261,8 +267,8 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
             <div class="prod-sim-controls">
               <button id="mask-btn-tessera" class="sim-btn-sm active">✓ Tessera FPE (JOIN Íntegro)</button>
               <button id="mask-btn-naive" class="sim-btn-sm">✗ Mascaramento Comum (Quebra JOIN)</button>
-              <button id="mask-btn-real" class="sim-btn-sm">Dados Reais</button>
-              <button id="mask-btn-key" class="sim-btn-sm">Girar Chave KMS</button>
+              <button id="mask-btn-real" class="sim-btn-sm">⚠ Dados Reais (Risco)</button>
+              <button id="mask-btn-key" class="sim-btn-sm">⚿ Girar Chave KMS</button>
             </div>
           </div>
 
@@ -339,14 +345,14 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
 
             <!-- Faixa de Confirmação do JOIN -->
             <div id="mask-join-banner" class="join-bridge-banner">
-              <span><strong style="color:#7EE787;">✓ JOIN PRESERVADO:</strong> <code>customers.id ("US-981-D") == invoices.customer_id ("US-981-D")</code></span>
+              <span><strong style="color:#7EE787;">✓ JOIN PRESERVADO:</strong> <code style="color:#FFFFFF; background:rgba(0,0,0,0.65); border:1px solid rgba(126,231,135,0.4); padding:3px 8px; border-radius:4px;">customers.id ("US-981-D") == invoices.customer_id ("US-981-D")</code></span>
               <span style="color:#7EE787; font-weight:700;">100% Íntegro em Testes</span>
             </div>
           </div>
 
           <div class="prod-sim-footer">
-            <span id="mask-status-text" style="color: #7EE787; font-weight: 600;">Mascaramento Determinístico Ativo: FPE FF1 NIST SP 800-38G.</span>
-            <span>Garantia: mesma chave + mesmo salt = saída byte-idêntica entre microsserviços.</span>
+            <span id="mask-status-text" style="color: #7EE787; font-weight: 600;"><strong style="color: #7EE787;">A Solução Tessera:</strong> Criptografia determinística (FF1). O mesmo ID de entrada gera exatamente a mesma saída no Postgres e no Oracle. Testes funcionam sem expor PII real.</span>
+            <span style="color: #E2E1EC;">Garantia: mesma chave KMS = saída byte-idêntica entre microsserviços.</span>
           </div>
         </div>
 
@@ -822,8 +828,8 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
     </div>
   </footer>
 
-  <script src="../assets/app.js?v=20260910_21"></script>
-  <script src="../assets/subsetter-graph.js?v=20260910_21"></script>
-  <script src="../assets/products-animations.js?v=20260910_21"></script>
+  <script src="../assets/app.js?v=20260910_22"></script>
+  <script src="../assets/subsetter-graph.js?v=20260910_22"></script>
+  <script src="../assets/products-animations.js?v=20260910_22"></script>
 </body>
 </html>
