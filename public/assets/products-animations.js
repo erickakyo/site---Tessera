@@ -231,15 +231,17 @@
   // 2. MASKING SIMULATOR (DETERMINISTIC FPE & CROSS-SERVICE JOINS)
   // ========================================================================
   function initMaskingSim() {
-    var btnToggle = document.getElementById('mask-btn-toggle');
+    var btnTessera = document.getElementById('mask-btn-tessera');
+    var btnNaive = document.getElementById('mask-btn-naive');
+    var btnReal = document.getElementById('mask-btn-real');
     var btnKey = document.getElementById('mask-btn-key');
     var statusText = document.getElementById('mask-status-text');
     var joinBanner = document.getElementById('mask-join-banner');
     var kmsLabel = document.getElementById('mask-kms-key-label');
 
-    if (!btnToggle) return;
+    if (!btnTessera && !btnNaive) return;
 
-    var isMasked = false;
+    var mode = 'tessera'; // 'tessera' | 'naive' | 'real'
     var keyIndex = 0;
     var KEYS = [
       { name: 'aws-kms://tessera-prod-key', tag1: 'US-981-D', tag2: 'US-204-K', name1: 'Fernanda Castro', cpf1: '582.109.844-32' },
@@ -262,7 +264,19 @@
       var elPId2 = document.getElementById('cell-p-id2');
       var elOFk2 = document.getElementById('cell-o-fk2');
 
-      if (isMasked) {
+      // Update button active states
+      if (btnTessera) btnTessera.classList.toggle('active', mode === 'tessera');
+      if (btnNaive) btnNaive.classList.toggle('active', mode === 'naive');
+      if (btnReal) btnReal.classList.toggle('active', mode === 'real');
+
+      function clearClasses(el) {
+        if (!el) return;
+        el.classList.remove('val-masked', 'val-broken');
+      }
+      [elPId1, elPName1, elPCpf1, elOFk1, elPId2, elOFk2].forEach(clearClasses);
+
+      if (mode === 'tessera') {
+        // TESSERA FPE DETERMINISTIC
         if (elPId1) { elPId1.textContent = k.tag1; elPId1.classList.add('val-masked'); }
         if (elPName1) { elPName1.textContent = k.name1; elPName1.classList.add('val-masked'); }
         if (elPCpf1) { elPCpf1.textContent = k.cpf1; elPCpf1.classList.add('val-masked'); }
@@ -271,57 +285,83 @@
         if (elPId2) { elPId2.textContent = k.tag2; elPId2.classList.add('val-masked'); }
         if (elOFk2) { elOFk2.textContent = k.tag2; elOFk2.classList.add('val-masked'); }
 
-        if (btnToggle) {
-          btnToggle.textContent = '↺ Restaurar Original';
-          btnToggle.classList.add('active');
+        if (joinBanner) {
+          joinBanner.className = 'join-bridge-banner';
+          joinBanner.innerHTML = '<span><strong style="color:#7EE787;">✓ SUCESSO NO JOIN:</strong> <code>customers.id ("' + k.tag1 + '") == invoices.customer_id ("' + k.tag1 + '")</code></span><span style="color:#7EE787; font-weight:700;">100% Íntegro em Testes</span>';
         }
         if (statusText) {
-          statusText.textContent = 'Mascaramento Determinístico Ativo: FPE FF1 NIST SP 800-38G.';
-          statusText.style.color = '#7EE787';
+          statusText.innerHTML = '<span style="color: #7EE787;"><strong>A Solução Tessera:</strong> Criptografia determinística (FF1). O mesmo ID de entrada <code>1042</code> gera exatamente a mesma saída <code>"' + k.tag1 + '"</code> no Postgres e no Oracle. Os testes de integração funcionam 100% sem expor PII real!</span>';
         }
+      } else if (mode === 'naive') {
+        // NAIVE / RANDOM MASKING (BREAKS JOINS)
+        if (elPId1) { elPId1.textContent = 'FAKE-119'; elPId1.classList.add('val-broken'); }
+        if (elPName1) { elPName1.textContent = 'User Random'; elPName1.classList.add('val-broken'); }
+        if (elPCpf1) { elPCpf1.textContent = '000.000.000-00'; elPName1.classList.add('val-broken'); }
+        if (elOFk1) { elOFk1.textContent = 'RANDOM-842'; elOFk1.classList.add('val-broken'); }
+
+        if (elPId2) { elPId2.textContent = 'FAKE-332'; elPId2.classList.add('val-broken'); }
+        if (elOFk2) { elOFk2.textContent = 'RANDOM-991'; elOFk2.classList.add('val-broken'); }
+
         if (joinBanner) {
-          joinBanner.innerHTML = '<span><strong style="color:#7EE787;">✓ JOIN PRESERVADO:</strong> <code>customers.id ("' + k.tag1 + '") == invoices.customer_id ("' + k.tag1 + '")</code></span><span style="color:#7EE787; font-weight:700;">100% Íntegro em Testes</span>';
-        }
-      } else {
-        if (elPId1) { elPId1.textContent = rawData.pId1; elPId1.classList.remove('val-masked'); }
-        if (elPName1) { elPName1.textContent = rawData.pName1; elPName1.classList.remove('val-masked'); }
-        if (elPCpf1) { elPCpf1.textContent = rawData.pCpf1; elPCpf1.classList.remove('val-masked'); }
-        if (elOFk1) { elOFk1.textContent = rawData.oFk1; elOFk1.classList.remove('val-masked'); }
-
-        if (elPId2) { elPId2.textContent = rawData.pId2; elPId2.classList.remove('val-masked'); }
-        if (elOFk2) { elOFk2.textContent = rawData.oFk2; elOFk2.classList.remove('val-masked'); }
-
-        if (btnToggle) {
-          btnToggle.textContent = '▶ Anonimizar com FPE';
-          btnToggle.classList.remove('active');
+          joinBanner.className = 'join-bridge-banner join-error';
+          joinBanner.innerHTML = '<span><strong style="color:#FF7B72;">❌ ERRO DE JOIN:</strong> <code>customers.id ("FAKE-119") ≠ invoices.customer_id ("RANDOM-842")</code> &rarr; <strong>0 registros retornados!</strong></span><span style="color:#FF7B72; font-weight:700;">Ambiente Quebrado</span>';
         }
         if (statusText) {
-          statusText.textContent = 'Dados em Claro (Produção). PII real exposta.';
-          statusText.style.color = '#FFB74D';
+          statusText.innerHTML = '<span style="color: #FF7B72;"><strong>O Desastre do Mascaramento Comum:</strong> Os valores foram gerados aleatoriamente sem determinismo. As tabelas se desconectaram e qualquer teste que dependa de JOIN falha imediatamente.</span>';
         }
+      } else if (mode === 'real') {
+        // REAL DATA / PRODUCTION
+        if (elPId1) elPId1.textContent = rawData.pId1;
+        if (elPName1) elPName1.textContent = rawData.pName1;
+        if (elPCpf1) elPCpf1.textContent = rawData.pCpf1;
+        if (elOFk1) elOFk1.textContent = rawData.oFk1;
+
+        if (elPId2) elPId2.textContent = rawData.pId2;
+        if (elOFk2) elOFk2.textContent = rawData.oFk2;
+
         if (joinBanner) {
-          joinBanner.innerHTML = '<span><strong>Atenção:</strong> Dados em claro com PII real (CPF e Nome). Clique em <strong>Anonimizar</strong> para proteger.</span><span style="color:#FFB74D; font-weight:700;">Risco em Não-Produção</span>';
+          joinBanner.className = 'join-bridge-banner';
+          joinBanner.innerHTML = '<span><strong style="color:#FFB74D;">⚠ DADOS DE PRODUÇÃO EM CLARO:</strong> <code>customers.id (1042) == invoices.customer_id (1042)</code></span><span style="color:#FFB74D; font-weight:700;">Risco Grave de Multa LGPD</span>';
+        }
+        if (statusText) {
+          statusText.innerHTML = '<span style="color: #FFB74D;"><strong>Atenção:</strong> Dados reais de produção contendo CPF e Nome de clientes expostos em testes. Sujeito a sanções regulatórias e vazamento.</span>';
         }
       }
 
       if (kmsLabel) kmsLabel.textContent = k.name;
     }
 
-    btnToggle.addEventListener('click', function() {
-      isMasked = !isMasked;
-      updateView();
-    });
-
-    if (btnKey) {
-      btnKey.addEventListener('click', function() {
-        keyIndex = (keyIndex + 1) % KEYS.length;
-        if (!isMasked) isMasked = true;
+    if (btnTessera) {
+      btnTessera.addEventListener('click', function() {
+        mode = 'tessera';
         updateView();
       });
     }
 
-    // Start masked by default for impressive showcase
-    isMasked = true;
+    if (btnNaive) {
+      btnNaive.addEventListener('click', function() {
+        mode = 'naive';
+        updateView();
+      });
+    }
+
+    if (btnReal) {
+      btnReal.addEventListener('click', function() {
+        mode = 'real';
+        updateView();
+      });
+    }
+
+    if (btnKey) {
+      btnKey.addEventListener('click', function() {
+        keyIndex = (keyIndex + 1) % KEYS.length;
+        mode = 'tessera';
+        updateView();
+      });
+    }
+
+    // Default to Tessera
+    mode = 'tessera';
     updateView();
   }
 

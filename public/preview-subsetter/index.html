@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260910_20">
-  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_20">
-  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_20">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260910_21">
+  <link rel="stylesheet" href="../assets/subsetter-graph.css?v=20260910_21">
+  <link rel="stylesheet" href="../assets/products-animations.css?v=20260910_21">
 </head>
 <body class="bg-grid-dots">
 
@@ -230,6 +230,22 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
           O determinismo matemático é o pilar da integridade relacional da Tessera: <code>mesma chave + mesma config + mesmo input = saída byte-idêntica</code>. Ao aplicar o mascaramento em repouso (Static Masking), chaves estrangeiras e identificadores entre diferentes microsserviços continuam se relacionando perfeitamente sem nunca revelar dados brutos.
         </p>
 
+        <!-- Explicação Didática do Problema & Solução -->
+        <div class="masking-concept-box">
+          <div class="concept-col">
+            <h4 style="color: #FF7B72;">✕ O Problema do Mascaramento Comum (Aleatório)</h4>
+            <p>
+              Ao mascarar bancos para testes, geradores comuns criam valores aleatórios desconectados. O cliente <code>1042</code> vira <code>FAKE-119</code> no PostgreSQL e vira <code>RANDOM-842</code> no Oracle. <strong>Resultado:</strong> Os registros perdem o vínculo, as consultas com <code>JOIN</code> retornam zero e todos os testes de QA quebram!
+            </p>
+          </div>
+          <div class="concept-col">
+            <h4 style="color: #7EE787;">✓ A Solução Tessera: Criptografia Determinística (NIST FF1)</h4>
+            <p>
+              A Tessera garante matematicamente: <code>mesma chave KMS + mesmo input = saída idêntica</code>. O cliente <code>1042</code> vira <strong>exatamente <code>"US-981-D"</code> em todos os bancos e microsserviços simultaneamente</strong>. As tabelas continuam se relacionando perfeitamente e nenhuma PII real é exposta!
+            </p>
+          </div>
+        </div>
+
         <!-- SIMULADOR INTERATIVO: MASKING & JOIN PRESERVER -->
         <div class="prod-sim-container" id="sim-masking">
           <div class="prod-sim-topbar">
@@ -243,7 +259,9 @@ Inventário Estruturado de Classificação (Auditável &amp; Determinístico)
               <span>Integridade: <strong style="color: #7EE787;">100%</strong></span>
             </div>
             <div class="prod-sim-controls">
-              <button id="mask-btn-toggle" class="sim-btn-sm active">↺ Restaurar Original</button>
+              <button id="mask-btn-tessera" class="sim-btn-sm active">✓ Tessera FPE (JOIN Íntegro)</button>
+              <button id="mask-btn-naive" class="sim-btn-sm">✗ Mascaramento Comum (Quebra JOIN)</button>
+              <button id="mask-btn-real" class="sim-btn-sm">Dados Reais</button>
               <button id="mask-btn-key" class="sim-btn-sm">Girar Chave KMS</button>
             </div>
           </div>
@@ -804,8 +822,8 @@ Fontes de Produção &rarr; Subsetter ou CDC (com Mascaramento Determinístico)
     </div>
   </footer>
 
-  <script src="../assets/app.js?v=20260910_20"></script>
-  <script src="../assets/subsetter-graph.js?v=20260910_20"></script>
-  <script src="../assets/products-animations.js?v=20260910_20"></script>
+  <script src="../assets/app.js?v=20260910_21"></script>
+  <script src="../assets/subsetter-graph.js?v=20260910_21"></script>
+  <script src="../assets/products-animations.js?v=20260910_21"></script>
 </body>
 </html>

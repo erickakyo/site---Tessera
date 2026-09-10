@@ -87,10 +87,11 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #8C88A8;
+  color: #D2CDE4;
 }
 
 .sim-info-item strong {
+  color: #FFFFFF;
   font-weight: 600;
 }
 
@@ -262,10 +263,10 @@
   flex-direction: column;
   justify-content: center;
   gap: 4px;
-  background: rgba(22, 19, 39, 0.65);
-  border: 1px dashed rgba(255, 255, 255, 0.16);
-  color: #6C6882;
-  box-shadow: none;
+  background: rgba(26, 22, 48, 0.85);
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  color: #E2E1EC;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   user-select: none;
 }
@@ -281,7 +282,7 @@
   font-size: 0.8125rem;
   font-weight: 600;
   font-family: var(--font-body);
-  color: #7E7A94;
+  color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -297,14 +298,14 @@
   letter-spacing: 0.04em;
   padding: 2px 6px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #7E7A94;
+  background: rgba(255, 255, 255, 0.12);
+  color: #D2CDE4;
 }
 
 .node-sub {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: #55516B;
+  color: #C5C0DC;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -406,7 +407,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #A6A3B8;
+  color: #E2E1EC;
 }
 
 .legend-dot {
@@ -419,10 +420,10 @@
 .dot-wave1 { background: #7EE787; box-shadow: 0 0 8px #7EE787; }
 .dot-wave2 { background: #58A6FF; box-shadow: 0 0 8px #58A6FF; }
 .dot-lookup { background: #D29922; box-shadow: 0 0 8px #D29922; }
-.dot-pruned { background: #3A3654; }
+.dot-pruned { background: #55516B; }
 
 .sim-status-box {
-  color: #C5C2E0;
+  color: #FFFFFF;
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
