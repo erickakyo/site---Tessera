@@ -175,6 +175,26 @@
   font-weight: 600;
 }
 
+/* Mobile Scroll Indicator */
+.mobile-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(138, 107, 255, 0.1);
+  border-bottom: 1px solid rgba(138, 107, 255, 0.2);
+  color: #BC8CFF;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+
+@media (max-width: 991px) {
+  .mobile-scroll-hint {
+    display: flex;
+  }
+}
+
 /* Stage Canvas Wrapper */
 .sim-stage-wrapper {
   position: relative;
