@@ -235,7 +235,10 @@
       localStorage.setItem('tessera_cookie_consent', 'accepted');
     } catch (e) {}
     const banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'none';
+    if (banner) {
+      banner.style.display = 'none';
+      banner.remove();
+    }
   };
 
   window.declineCookies = function() {
@@ -243,7 +246,10 @@
       localStorage.setItem('tessera_cookie_consent', 'declined');
     } catch (e) {}
     const banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'none';
+    if (banner) {
+      banner.style.display = 'none';
+      banner.remove();
+    }
   };
 
   // On DOM Ready
@@ -276,12 +282,22 @@
 
   // Close mobile menu when clicking a link or backdrop & handle event delegation for controls
   document.addEventListener('click', (e) => {
+    // 0. Cookie banner actions delegation
+    if (e.target.closest('button[onclick*="acceptCookies"]') || e.target.getAttribute('data-i18n') === 'cookie_accept') {
+      window.acceptCookies();
+      return;
+    }
+    if (e.target.closest('button[onclick*="declineCookies"]') || e.target.getAttribute('data-i18n') === 'cookie_decline') {
+      window.declineCookies();
+      return;
+    }
+
     // 1. Mobile menu closing
     const nav = document.querySelector('nav.main-nav');
     const btn = document.querySelector('.mobile-menu-btn');
     const backdrop = document.querySelector('.mobile-menu-backdrop');
     if (nav && nav.classList.contains('open')) {
-      if (e.target.closest('nav.main-nav a') || e.target.classList.contains('mobile-menu-backdrop') || (!e.target.closest('nav.main-nav') && !e.target.closest('.mobile-menu-btn'))) {
+      if (e.target.closest('nav.main-nav a') || e.target.classList.contains('mobile-menu-backdrop') || (!e.target.closest('nav.main-nav') && !e.target.closest('.mobile-menu-btn') && !e.target.closest('#cookie-banner'))) {
         nav.classList.remove('open');
         if (backdrop) backdrop.classList.remove('open');
         if (btn) btn.setAttribute('aria-expanded', 'false');

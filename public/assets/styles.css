@@ -1255,9 +1255,18 @@ footer.site-footer {
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
   display: none;
+}
+
+@media (max-width: 640px) {
+  #cookie-banner {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: calc(100% - 32px);
+  }
 }
 
 #cookie-banner p {
