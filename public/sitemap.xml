@@ -4,6 +4,7 @@
     <loc>https://tessera.com.br/</loc>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tessera.com.br/?lang=pt" />
     <xhtml:link rel="alternate" hreflang="en" href="https://tessera.com.br/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://tessera.com.br/?lang=es" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

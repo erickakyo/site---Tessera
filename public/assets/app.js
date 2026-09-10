@@ -60,6 +60,29 @@
       cookie_text: "We use minimal and anonymized technical cookies to enhance navigation and performance, adhering to LGPD and GDPR standards.",
       cookie_accept: "Accept",
       cookie_decline: "Decline"
+    },
+    es: {
+      nav_products: "Productos",
+      nav_about: "Quiénes Somos",
+      nav_blog: "Blog & Insights",
+      nav_contact: "Contacto",
+      nav_demo: "Agendar Demo",
+      eyebrow_hero: "DATA ENVIRONMENT AUTOMATION",
+      hero_title: "Datos con fidelidad de producción. Sin el riesgo de producción.",
+      hero_desc: "Tessera automatiza cómo los datos protegidos y realistas se descubren, enmascaran, reducen y entregan para ingeniería, pruebas e IA agéntica.",
+      btn_explore: "Explorar Arquitectura",
+      problem_eyebrow: "EL CUELLO DE BOTELLA DE LA INGENIERÍA",
+      problem_title: "Tu código e infraestructura se aceleraron. Tus datos siguen lentos.",
+      problem_desc: "Mientras CI/CD, la nube y los agentes de IA automatizaron el software, los entornos de datos no productivos todavía dependen de scripts manuales, tickets a DBAs y réplicas brutas de producción con datos sensibles expuestos.",
+      demo_title: "Simulación Interactiva de Entornos de Datos",
+      demo_desc: "Alterna los módulos para ver cómo Tessera aisla cortes íntegros, neutraliza PII y preserva las relaciones relacionales.",
+      ready_badge: "LISTO",
+      core_badge: "CORE LISTO",
+      hardening_badge: "EN HARDENING",
+      roadmap_badge: "ROADMAP",
+      cookie_text: "Utilizamos cookies técnicas mínimas y anonimizadas para mejorar su experiencia y evaluar el rendimiento del sitio, en conformidad con LGPD y GDPR.",
+      cookie_accept: "Aceptar",
+      cookie_decline: "Rechazar"
     }
   };
 
@@ -76,7 +99,7 @@
       localStorage.setItem('tessera_lang', lang);
     } catch (e) {}
 
-    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : (lang === 'es' ? 'es' : 'en');
 
     // Update active button classes
     document.querySelectorAll('.lang-btn').forEach(btn => {
